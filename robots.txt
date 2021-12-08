@@ -1,0 +1,3 @@
+User-agent: *
+Disallow:
+Sitemap: https://yl4869.github.io/sitemap.xml
