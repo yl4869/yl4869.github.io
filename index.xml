@@ -9,7 +9,18 @@
       <link>http://yl4869.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</link>
     </image>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Mon, 13 Dec 2021 23:36:06 +0800</lastBuildDate><atom:link href="http://yl4869.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 17 Dec 2021 11:14:14 +0800</lastBuildDate><atom:link href="http://yl4869.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Datalab实验记录</title>
+      <link>http://yl4869.github.io/csapp/datalab/</link>
+      <pubDate>Fri, 17 Dec 2021 11:14:14 +0800</pubDate>
+      
+      <guid>http://yl4869.github.io/csapp/datalab/</guid>
+      <description>CSAPP:Data Lab 记录   bitXor(x,y)
+使用两种运算实现异或操作（&amp;amp;与～），要求指令数最多为14
+//1  /* * bitXor - x^y using only ~ and &amp;amp; * Example: bitXor(4, 5) = 1 * Legal ops: ~ &amp;amp; * Max ops: 14 * Rating: 1 */ int bitXor(int x, int y) { int nx = ~x; int ny = ~y; int fx = x &amp;amp; ny; int fy = nx &amp;amp; y; return ~( (~fx) &amp;amp; (~fy) ); }  采用的是离散数学中亦或的另一种定义方式,$$P \oplus Q = (P \wedge \neg Q) \vee (\neg P \vee Q)$$.</description>
+    </item>
+    
     <item>
       <title>C语言的声明</title>
       <link>http://yl4869.github.io/learn_c_cpp/declarations/</link>

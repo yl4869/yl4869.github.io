@@ -3,11 +3,11 @@
 <meta http-equiv=x-ua-compatible content="IE=edge">
 <meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no">
 <meta name=robots content="index, follow">
-<title>Categories | HomeSite</title>
+<title>CSAPPs | HomeSite</title>
 <meta name=keywords content>
-<meta name=description content="ExampleSite description">
+<meta name=description content="CSAPPs - HomeSite">
 <meta name=author content="yunlang">
-<link rel=canonical href=http://yl4869.github.io/categories/>
+<link rel=canonical href=http://yl4869.github.io/csapp/>
 <meta name=google-site-verification content="XYZabc">
 <meta name=yandex-verification content="XYZabc">
 <meta name=msvalidate.01 content="XYZabc">
@@ -21,19 +21,20 @@
 <meta name=theme-color content="#2e2e33">
 <meta name=msapplication-TileColor content="#2e2e33">
 <meta name=generator content="Hugo 0.89.4">
-<link rel=alternate type=application/rss+xml href=http://yl4869.github.io/categories/index.xml>
+<link rel=alternate type=application/rss+xml href=http://yl4869.github.io/csapp/index.xml>
 <noscript>
 <style>#theme-toggle,.top-link{display:none}</style>
 <style>@media(prefers-color-scheme:dark){:root{--theme:rgb(29, 30, 32);--entry:rgb(46, 46, 51);--primary:rgb(218, 218, 219);--secondary:rgb(155, 156, 157);--tertiary:rgb(65, 66, 68);--content:rgb(196, 196, 197);--hljs-bg:rgb(46, 46, 51);--code-bg:rgb(55, 56, 62);--border:rgb(51, 51, 51)}.list{background:var(--theme)}.list:not(.dark)::-webkit-scrollbar-track{background:0 0}.list:not(.dark)::-webkit-scrollbar-thumb{border-color:var(--theme)}}</style>
 </noscript>
-<script type=application/javascript>var doNotTrack=!1;doNotTrack||(function(a,e,f,g,b,c,d){a.GoogleAnalyticsObject=b,a[b]=a[b]||function(){(a[b].q=a[b].q||[]).push(arguments)},a[b].l=1*new Date,c=e.createElement(f),d=e.getElementsByTagName(f)[0],c.async=1,c.src=g,d.parentNode.insertBefore(c,d)}(window,document,'script','https://www.google-analytics.com/analytics.js','ga'),ga('create','UA-123-45','auto'),ga('send','pageview'))</script><meta property="og:title" content="Categories">
+<script type=application/javascript>var doNotTrack=!1;doNotTrack||(function(a,e,f,g,b,c,d){a.GoogleAnalyticsObject=b,a[b]=a[b]||function(){(a[b].q=a[b].q||[]).push(arguments)},a[b].l=1*new Date,c=e.createElement(f),d=e.getElementsByTagName(f)[0],c.async=1,c.src=g,d.parentNode.insertBefore(c,d)}(window,document,'script','https://www.google-analytics.com/analytics.js','ga'),ga('create','UA-123-45','auto'),ga('send','pageview'))</script><meta property="og:title" content="CSAPPs">
 <meta property="og:description" content="ExampleSite description">
 <meta property="og:type" content="website">
-<meta property="og:url" content="http://yl4869.github.io/categories/"><meta property="og:image" content="http://yl4869.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E"><meta property="og:site_name" content="ExampleSite">
+<meta property="og:url" content="http://yl4869.github.io/csapp/"><meta property="og:image" content="http://yl4869.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E"><meta property="og:site_name" content="ExampleSite">
 <meta name=twitter:card content="summary_large_image">
 <meta name=twitter:image content="http://yl4869.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E">
-<meta name=twitter:title content="Categories">
+<meta name=twitter:title content="CSAPPs">
 <meta name=twitter:description content="ExampleSite description">
+<script type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"CSAPPs","item":"http://yl4869.github.io/csapp/"}]}</script>
 </head>
 <body class=list id=top>
 <script>localStorage.getItem("pref-theme")==="dark"?document.body.classList.add('dark'):localStorage.getItem("pref-theme")==="light"?document.body.classList.remove('dark'):window.matchMedia('(prefers-color-scheme: dark)').matches&&document.body.classList.add('dark')</script>
@@ -50,7 +51,7 @@
 <ul id=menu>
 <li>
 <a href=http://yl4869.github.io/categories/ title=categories>
-<span class=active>categories</span>
+<span>categories</span>
 </a>
 </li>
 <li>
@@ -60,18 +61,29 @@
 </li>
 <li>
 <a href=http://yl4869.github.io/csapp/ title=CSAPP>
-<span>CSAPP</span>
+<span class=active>CSAPP</span>
 </a>
 </li>
 </ul>
 </nav>
 </header>
 <main class=main>
-<header class=page-header>
-<h1>Categories</h1>
+<header class=page-header><div class=breadcrumbs><a href=http://yl4869.github.io/>Home</a></div>
+<h1>CSAPPs</h1>
 </header>
-<ul class=terms-tags>
-</ul>
+<article class=post-entry>
+<header class=entry-header>
+<h2>Datalab实验记录
+</h2>
+</header>
+<section class=entry-content>
+<p>CSAPP:Data Lab 记录 bitXor(x,y)
+使用两种运算实现异或操作（&与～），要求指令数最多为14
+//1 /* * bitXor - x^y using only ~ and & * Example: bitXor(4, 5) = 1 * Legal ops: ~ & * Max ops: 14 * Rating: 1 */ int bitXor(int x, int y) { int nx = ~x; int ny = ~y; int fx = x & ny; int fy = nx & y; return ~( (~fx) & (~fy) ); } 采用的是离散数学中亦或的另一种定义方式,$$P \oplus Q = (P \wedge \neg Q) \vee (\neg P \vee Q)$$....</p>
+</section>
+<footer class=entry-footer><span title="2021-12-17 11:14:14 +0800 CST">December 17, 2021</span>&nbsp;·&nbsp;4 min&nbsp;·&nbsp;yunlang</footer>
+<a class=entry-link aria-label="post link to Datalab实验记录" href=http://yl4869.github.io/csapp/datalab/></a>
+</article>
 </main>
 <script type=text/javascript src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
