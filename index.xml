@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>HomeSite</title>
+    <title>FunForever</title>
     <link>http://yl4869.github.io/</link>
-    <description>Recent content on HomeSite</description>
+    <description>Recent content on FunForever</description>
     <image>
       <url>http://yl4869.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</url>
       <link>http://yl4869.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</link>
@@ -49,6 +49,7 @@ dynamic_cast 有需要提前指出的是，dynamic_cast运算符更多是用来�
 举例说明
 #include&amp;lt;iostream&amp;gt;#include&amp;lt;exception&amp;gt;using namespace std; class Base {virtual void dummy() {} }; class Derived : public Base { int a; }; int main() { try { Base * pba = new Derived; Base * pbb = new Base; Derived * pd; pd = dynamic_cast&amp;lt;Derived*&amp;gt;(pba); if( pd == 0 ) cout &amp;lt;&amp;lt; &amp;#34;Null pointer on first type-case.</description>
     </item>
+    
     
   </channel>
 </rss>
