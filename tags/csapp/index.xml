@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>CSAPPs on FunForever</title>
-    <link>http://yl4869.github.io/csapp/</link>
-    <description>Recent content in CSAPPs on FunForever</description>
+    <title>CSAPP on FunForever</title>
+    <link>http://yl4869.github.io/tags/csapp/</link>
+    <description>Recent content in CSAPP on FunForever</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Fri, 17 Dec 2021 11:14:14 +0800</lastBuildDate><atom:link href="http://yl4869.github.io/csapp/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 17 Dec 2021 11:14:14 +0800</lastBuildDate><atom:link href="http://yl4869.github.io/tags/csapp/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Datalab实验记录</title>
       <link>http://yl4869.github.io/csapp/datalab/</link>

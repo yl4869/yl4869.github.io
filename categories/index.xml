@@ -4,10 +4,6 @@
     <title>Categories on FunForever</title>
     <link>http://yl4869.github.io/categories/</link>
     <description>Recent content in Categories on FunForever</description>
-    <image>
-      <url>http://yl4869.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</url>
-      <link>http://yl4869.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</link>
-    </image>
     <generator>Hugo -- gohugo.io</generator><atom:link href="http://yl4869.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
   </channel>
 </rss>

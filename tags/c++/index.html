@@ -3,11 +3,11 @@
 <meta http-equiv=x-ua-compatible content="IE=edge">
 <meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no">
 <meta name=robots content="index, follow">
-<title>Tags | FunForever</title>
+<title>C++ | FunForever</title>
 <meta name=keywords content>
 <meta name=description content="ExampleSite description">
 <meta name=author content="yunlang">
-<link rel=canonical href=http://yl4869.github.io/tags/>
+<link rel=canonical href=http://yl4869.github.io/tags/c++/>
 <meta name=google-site-verification content="XYZabc">
 <meta name=yandex-verification content="XYZabc">
 <meta name=msvalidate.01 content="XYZabc">
@@ -20,17 +20,17 @@
 <meta name=theme-color content="#2e2e33">
 <meta name=msapplication-TileColor content="#2e2e33">
 <meta name=generator content="Hugo 0.92.0">
-<link rel=alternate type=application/rss+xml href=http://yl4869.github.io/tags/index.xml>
+<link rel=alternate type=application/rss+xml href=http://yl4869.github.io/tags/c++/index.xml>
 <noscript>
 <style>#theme-toggle,.top-link{display:none}</style>
 <style>@media(prefers-color-scheme:dark){:root{--theme:rgb(29, 30, 32);--entry:rgb(46, 46, 51);--primary:rgb(218, 218, 219);--secondary:rgb(155, 156, 157);--tertiary:rgb(65, 66, 68);--content:rgb(196, 196, 197);--hljs-bg:rgb(46, 46, 51);--code-bg:rgb(55, 56, 62);--border:rgb(51, 51, 51)}.list{background:var(--theme)}.list:not(.dark)::-webkit-scrollbar-track{background:0 0}.list:not(.dark)::-webkit-scrollbar-thumb{border-color:var(--theme)}}</style>
 </noscript>
-<script type=application/javascript>var doNotTrack=!1;doNotTrack||(function(a,e,f,g,b,c,d){a.GoogleAnalyticsObject=b,a[b]=a[b]||function(){(a[b].q=a[b].q||[]).push(arguments)},a[b].l=1*new Date,c=e.createElement(f),d=e.getElementsByTagName(f)[0],c.async=1,c.src=g,d.parentNode.insertBefore(c,d)}(window,document,'script','https://www.google-analytics.com/analytics.js','ga'),ga('create','UA-123-45','auto'),ga('send','pageview'))</script><meta property="og:title" content="Tags">
+<script type=application/javascript>var doNotTrack=!1;doNotTrack||(function(a,e,f,g,b,c,d){a.GoogleAnalyticsObject=b,a[b]=a[b]||function(){(a[b].q=a[b].q||[]).push(arguments)},a[b].l=1*new Date,c=e.createElement(f),d=e.getElementsByTagName(f)[0],c.async=1,c.src=g,d.parentNode.insertBefore(c,d)}(window,document,'script','https://www.google-analytics.com/analytics.js','ga'),ga('create','UA-123-45','auto'),ga('send','pageview'))</script><meta property="og:title" content="C++">
 <meta property="og:description" content="ExampleSite description">
 <meta property="og:type" content="website">
-<meta property="og:url" content="http://yl4869.github.io/tags/"><meta property="og:site_name" content="HomeSite">
+<meta property="og:url" content="http://yl4869.github.io/tags/c++/"><meta property="og:site_name" content="HomeSite">
 <meta name=twitter:card content="summary">
-<meta name=twitter:title content="Tags">
+<meta name=twitter:title content="C++">
 <meta name=twitter:description content="ExampleSite description">
 </head>
 <body class=list id=top>
@@ -57,7 +57,7 @@
 </li>
 <li>
 <a href=http://yl4869.github.io/tags/ title=tags>
-<span class=active>tags</span>
+<span>tags</span>
 </a>
 </li>
 <li>
@@ -69,29 +69,28 @@
 </nav>
 </header>
 <main class=main>
-<header class=page-header>
-<h1>Tags</h1>
+<header class=page-header><div class=breadcrumbs><a href=http://yl4869.github.io/>Home</a>&nbsp;»&nbsp;<a href=http://yl4869.github.io/tags/>Tags</a></div>
+<h1>C++</h1>
 </header>
-<ul class=terms-tags>
-<li>
-<a href=http://yl4869.github.io/tags/c++/>C++ <sup><strong><sup>1</sup></strong></sup> </a>
-</li>
-<li>
-<a href=http://yl4869.github.io/tags/c/c++/>C/C++ <sup><strong><sup>1</sup></strong></sup> </a>
-</li>
-<li>
-<a href=http://yl4869.github.io/tags/csapp/>CSAPP <sup><strong><sup>1</sup></strong></sup> </a>
-</li>
-<li>
-<a href=http://yl4869.github.io/tags/games/>games <sup><strong><sup>1</sup></strong></sup> </a>
-</li>
-<li>
-<a href=http://yl4869.github.io/tags/linux/>linux <sup><strong><sup>2</sup></strong></sup> </a>
-</li>
-<li>
-<a href=http://yl4869.github.io/tags/tools/>tools <sup><strong><sup>1</sup></strong></sup> </a>
-</li>
-</ul>
+<article class="post-entry tag-entry">
+<header class=entry-header>
+<h2>C++下的四种cast转换方法
+</h2>
+</header>
+<section class=entry-content>
+<p>前言 C++有四种显式类型转换方法，分别是dynamic_cast, reinterpret_cast, static_cast, const_cast。
+他们的使用方法为
+dynamic_cast &lt;new_type> (expression) reinterpret_cast &lt;new_type> (expression) static_cast &lt;new_type> (expression) const_cast &lt;new_type> (expression) 与之相对，我们也回忆一下传统的类型转换方法
+(new_type) expression new_type (expression) 下面就四种类型转换进行简单介绍。
+dynamic_cast 有需要提前指出的是，dynamic_cast运算符更多是用来实现RTTI（运行时类型识别 run-time type identification） 功能,其中dynamic_cast用来将基类的指针或引用安全地转移成派生类的指针或引用。
+使用RTTI时必须加倍小心，更多时候最好定义虚函数，使用时程序员必须清楚地知道转换的目标模型并且必须检查类型转换是否被成功执行。
+dynamic_cast只用在指向类的指针，引用（或void *)上。这种转换允许upcast（从派生类向基类的转换）也能downcast（从基类向派生类的转换），这时需要转过去的指针所指向的目标有效且完整。
+举例说明
+#include&lt;iostream>#include&lt;exception>using namespace std; class Base {virtual void dummy() {} }; class Derived : public Base { int a; }; int main() { try { Base * pba = new Derived; Base * pbb = new Base; Derived * pd; pd = dynamic_cast&lt;Derived*>(pba); if( pd == 0 ) cout &lt;&lt; "Null pointer on first type-case....</p>
+</section>
+<footer class=entry-footer><span title="2021-12-08 19:36:06 +0800 CST">2021-6-08</span>&nbsp;·&nbsp;yunlang</footer>
+<a class=entry-link aria-label="post link to C++下的四种cast转换方法" href=http://yl4869.github.io/learn_c_cpp/type_coversions_cast/></a>
+</article>
 </main>
 <footer class=footer>
 <span>&copy; 2022 <a href=http://yl4869.github.io/>FunForever</a></span>
