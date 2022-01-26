@@ -5,13 +5,14 @@
     <link>http://yl4869.github.io/tags/games/</link>
     <description>Recent content in games on FunForever</description>
     <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
     <lastBuildDate>Sun, 23 Jan 2022 23:42:33 +0800</lastBuildDate><atom:link href="http://yl4869.github.io/tags/games/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>在linux上游玩星际争霸2</title>
-      <link>http://yl4869.github.io/learn_linux/starcraftii/</link>
+      <link>http://yl4869.github.io/posts/learn_linux/starcraftii/</link>
       <pubDate>Sun, 23 Jan 2022 23:42:33 +0800</pubDate>
       
-      <guid>http://yl4869.github.io/learn_linux/starcraftii/</guid>
+      <guid>http://yl4869.github.io/posts/learn_linux/starcraftii/</guid>
       <description>简介 限制想要将工作从windows迁移到linux上的一个方面就是游戏。Steam已经通过proton给到了游戏玩家更多的选择。暴雪尚未出现linux版本，但好在还有wine的存在。通过lutris，现在你可以更轻松地在linux上享受游戏。
 我会尽量给出官方文档，以便于不同时间的不同用户进行操作时可以减少错误。
 操作系统：manjaro
