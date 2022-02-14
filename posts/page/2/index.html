@@ -80,6 +80,19 @@
 </header>
 <article class=post-entry>
 <header class=entry-header>
+<h2>Datalab实验记录
+</h2>
+</header>
+<section class=entry-content>
+<p>CSAPP:Data Lab 记录 bitXor(x,y)
+使用两种运算实现异或操作（&与～），要求指令数最多为14
+//1 /* * bitXor - x^y using only ~ and & * Example: bitXor(4, 5) = 1 * Legal ops: ~ & * Max ops: 14 * Rating: 1 */ int bitXor(int x, int y) { int nx = ~x; int ny = ~y; int fx = x & ny; int fy = nx & y; return ~( (~fx) & (~fy) ); } 采用的是离散数学中亦或的另一种定义方式,$$P \oplus Q = (P \wedge \neg Q) \vee (\neg P \vee Q)$$....</p>
+</section>
+<footer class=entry-footer><span title="2021-12-17 11:14:14 +0800 CST">2021-6-17</span>&nbsp;·&nbsp;yunlang</footer>
+<a class=entry-link aria-label="post link to Datalab实验记录" href=http://yl4869.github.io/posts/csapp/datalab/></a>
+</article>
+<article class=post-entry>
+<header class=entry-header>
 <h2>C语言的声明
 </h2>
 </header>
