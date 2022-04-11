@@ -2,11 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>http://yl4869.github.io/tags/ad/</loc>
+    <lastmod>2022-04-11T19:11:10+08:00</lastmod>
+  </url><url>
+    <loc>http://yl4869.github.io/posts/ad/dijkstra/</loc>
+    <lastmod>2022-04-11T19:11:10+08:00</lastmod>
+  </url><url>
     <loc>http://yl4869.github.io/</loc>
-    <lastmod>2022-03-18T15:24:02+08:00</lastmod>
+    <lastmod>2022-04-11T19:11:10+08:00</lastmod>
   </url><url>
     <loc>http://yl4869.github.io/posts/</loc>
-    <lastmod>2022-03-18T15:24:02+08:00</lastmod>
+    <lastmod>2022-04-11T19:11:10+08:00</lastmod>
+  </url><url>
+    <loc>http://yl4869.github.io/tags/</loc>
+    <lastmod>2022-04-11T19:11:10+08:00</lastmod>
   </url><url>
     <loc>http://yl4869.github.io/posts/rust/rust_1/</loc>
     <lastmod>2022-03-18T15:24:02+08:00</lastmod>
@@ -18,9 +27,6 @@
     <lastmod>2022-01-23T23:42:33+08:00</lastmod>
   </url><url>
     <loc>http://yl4869.github.io/tags/linux/</loc>
-    <lastmod>2022-01-23T23:42:33+08:00</lastmod>
-  </url><url>
-    <loc>http://yl4869.github.io/tags/</loc>
     <lastmod>2022-01-23T23:42:33+08:00</lastmod>
   </url><url>
     <loc>http://yl4869.github.io/posts/learn_linux/starcraftii/</loc>
