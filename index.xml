@@ -6,7 +6,27 @@
     <description>Recent content on FunForever</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Fri, 15 Apr 2022 23:07:20 +0800</lastBuildDate><atom:link href="http://yl4869.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 14 May 2022 14:58:15 +0800</lastBuildDate><atom:link href="http://yl4869.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>数据处理练习</title>
+      <link>http://yl4869.github.io/posts/learn_linux/data_wrangling/</link>
+      <pubDate>Sat, 14 May 2022 14:58:15 +0800</pubDate>
+      
+      <guid>http://yl4869.github.io/posts/learn_linux/data_wrangling/</guid>
+      <description>目标 对这个 网页中的数据集进行数据处理,选择一列 找出最大值和最小值, 选择其中两列求出差值并求和.
+步骤 对于html, 可以使用wget或curl读入. 处理html内容可以采用pup工具来实现.
+下载网页到本地
+wget https://stats.wikimedia.org/EN/TablesWikipediaZZ.htm -O pra.html 对网站元素进行查看 最好的方法是使用浏览器的审查元素方式进行查看, 能够较快的找到自己所需的内容.
+可以看到我们所需的数据表格在table中,id为table1.更近一步观察可以看到位于tbody中.可以通过pup过滤并 输出内容.
+数据处理 通过pup获取html中第一个表格的数据 cat pra.html | pup &amp;#39;table#table1 tbody td next{}&amp;#39; 此时内容如图
+去除头部和尾部部分行 对于表格文件,我只关心表格中间的数据，而忽略表头和表尾，这里采用head和tail进行过滤.
+删除尾部30行,删除头部208（209-1）行.
+head -n -30 tail -n +209 将列变为行，以空格分割 相对于一列，我更喜欢处理以整行数据,这样就可以利用awk的$获取分割.
+通过tr命令进行替换
+tr &amp;#39;\n&amp;#39; &amp;#39; &amp;#39; awk awk是一种善于处理文本的编程语言,他太强大了,以至于我们可以用awk完成其余的所有操作.
+awk &amp;#39;{sum = 0;max = 0; min = 65536;for(i = 2;i &amp;lt; 4302; i+=20) {if(max &amp;lt; $i) max = $i; if(min &amp;gt; $i) \ min = $i; if($i &amp;gt; $(i+1)) sum += $i - $(i+1); if($i &amp;lt;= $(i+1)) sum += $(i+1) - $i;}print max; print \ min; print sum } 正如我们所说，awk是一种编程语言，代码块中，$0 表示整行的内容，$1 到 $n 为一行中的 n 个区域，区域的 分割基于 awk 的域分隔符（默认是空格，可以通过-F来修改）。</description>
+    </item>
+    
     <item>
       <title>对大一应该学些什么的一点思考</title>
       <link>http://yl4869.github.io/posts/learn/</link>
