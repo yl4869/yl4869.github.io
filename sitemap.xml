@@ -2,11 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>http://yl4869.github.io/tags/database-system/</loc>
+    <lastmod>2022-09-02T23:45:14+08:00</lastmod>
+  </url><url>
     <loc>http://yl4869.github.io/</loc>
-    <lastmod>2022-09-02T16:21:09+08:00</lastmod>
+    <lastmod>2022-09-02T23:45:14+08:00</lastmod>
   </url><url>
     <loc>http://yl4869.github.io/posts/</loc>
-    <lastmod>2022-09-02T16:21:09+08:00</lastmod>
+    <lastmod>2022-09-02T23:45:14+08:00</lastmod>
+  </url><url>
+    <loc>http://yl4869.github.io/tags/</loc>
+    <lastmod>2022-09-02T23:45:14+08:00</lastmod>
+  </url><url>
+    <loc>http://yl4869.github.io/posts/database_systems/dbs1/</loc>
+    <lastmod>2022-09-02T23:45:14+08:00</lastmod>
   </url><url>
     <loc>http://yl4869.github.io/posts/make_better_github_pages/</loc>
     <lastmod>2022-09-02T16:21:09+08:00</lastmod>
@@ -21,9 +30,6 @@
     <lastmod>2022-04-11T19:11:10+08:00</lastmod>
   </url><url>
     <loc>http://yl4869.github.io/posts/ad/dijkstra/</loc>
-    <lastmod>2022-04-11T19:11:10+08:00</lastmod>
-  </url><url>
-    <loc>http://yl4869.github.io/tags/</loc>
     <lastmod>2022-04-11T19:11:10+08:00</lastmod>
   </url><url>
     <loc>http://yl4869.github.io/tags/rust/</loc>
