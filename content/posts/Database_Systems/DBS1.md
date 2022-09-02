@@ -1,8 +1,9 @@
 ---
 TocOpen: true
+tags: ["Database System"]
 title: "数据库系统（一）"
 date: 2022-09-02T23:45:14+08:00
-draft: true
+draft: false
 ---
 # 数据库系统
 
