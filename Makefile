@@ -2,6 +2,7 @@
 .PHONY: clean
 .PHONY: build
 .PHONY: commit
+COMMIT=deployed on $(shell date) by ${USER}
 
 clean: 
 	rm -rf public
@@ -15,7 +16,7 @@ deploy: public
 	cp -rp public/* /tmp/blog/
 	cd /tmp/blog && \
 	git add -A && \
-	git commit -m "deployed on $(shell date) by ${USER}" && \
+	git commit -m "$(COMMIT)" && \
 	git push origin deploy
 	cd -
 
@@ -24,6 +25,6 @@ build:
 
 commit:
 	git add Makefile config.yml assets static content layouts archetypes
-	git commit -m "commit on $(shell date) by ${USER}" && \
+	git commit -m "$(COMMIT)" && \
 	git push origin main
 
