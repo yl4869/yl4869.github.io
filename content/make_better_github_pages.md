@@ -2,7 +2,7 @@
 TocOpen: true
 title: "利用分支完成 github pages 博客内容存放和页面部署"
 date: 2022-09-02T16:21:09+08:00
-draft: true
+draft: false
 ---
 
 # 前言
@@ -21,3 +21,39 @@ draft: true
 4. 设置 github pages，用 deploy 分支作为 github pages 部署分支。
 
 现在你可以将内容提交到 main 分支，而将部署提交到 deploy分支。
+
+## 为什么使用临时目录
+使用临时目录的样例来自 mdbook 的[文档](https://github.com/rust-lang/mdBook/wiki/Automated-Deployment%3A-GitHub-Pages)。因此我只是当一个黑盒来使用。我的想法是为了不破坏其他数据，不过有了解的朋友也欢迎来给我答疑解惑。     
+
+## 我的 Makefile 文件
+
+```Makefile
+.PHONY: deploy
+.PHONY: clean
+.PHONY: build
+.PHONY: commit
+
+clean: 
+	rm -rf public
+
+deploy: public
+	@echo "====> deploying to github"
+	-mkdir /tmp/blog
+	git worktree prune
+	-git worktree add /tmp/blog deploy
+	rm -rf /tmp/blog/*
+	cp -rp public/* /tmp/blog/
+	cd /tmp/blog && \
+	git add -A && \
+	git commit -m "deployed on $(shell date) by ${USER}" && \
+	git push origin deploy
+	cd -
+
+build:
+	hugo
+
+commit:
+	git add Makefile config.yml assets static content layouts archetypes
+	git commit -m "commit on $(shell date) by ${USER}" && \
+	git push origin main
+```
