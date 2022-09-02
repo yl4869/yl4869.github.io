@@ -6,13 +6,13 @@
     <description>Recent content on FunForever</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sat, 14 May 2022 14:58:15 +0800</lastBuildDate><atom:link href="http://yl4869.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 02 Sep 2022 16:21:09 +0800</lastBuildDate><atom:link href="http://yl4869.github.io/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>利用分支完成 github pages 博客内容存放和页面部署</title>
-      <link>http://yl4869.github.io/make_better_github_pages/</link>
+      <link>http://yl4869.github.io/posts/make_better_github_pages/</link>
       <pubDate>Fri, 02 Sep 2022 16:21:09 +0800</pubDate>
       
-      <guid>http://yl4869.github.io/make_better_github_pages/</guid>
+      <guid>http://yl4869.github.io/posts/make_better_github_pages/</guid>
       <description>前言 我利用github pages作为平台搭建我的博客，我开始选择将博客内容和部署分成两个仓库存放，但这显然造成了复杂性的提升。在阅读 mdbook 的官方文档时，我发现他部署 book 的一个方式是利用一个新的分支进行部署，这样可以将内容和页面放在不同的分支上共同保存，同时有好的规整感。
 原理 在 github 仓库的 Settings/Pages 下可以选择利用哪一个分支进行部署。
 利用 github worktree 可以将当前分支绑定到一个新建的 worktree 目录上，并通过新的目录进行分支操作。
