@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>games on FunForever</title>
+    <link>http://yl4869.github.io/tags/games/</link>
+    <description>Recent content in games on FunForever</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Sun, 23 Jan 2022 23:42:33 +0800</lastBuildDate><atom:link href="http://yl4869.github.io/tags/games/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>在linux上游玩星际争霸2</title>
+      <link>http://yl4869.github.io/posts/learn_linux/starcraftii/</link>
+      <pubDate>Sun, 23 Jan 2022 23:42:33 +0800</pubDate>
+      
+      <guid>http://yl4869.github.io/posts/learn_linux/starcraftii/</guid>
+      <description>简介 限制想要将工作从windows迁移到linux上的一个方面就是游戏。Steam已经通过proton给到了游戏玩家更多的选择。暴雪尚未出现linux版本，但好在还有wine的存在。通过lutris，现在你可以更轻松地在linux上享受游戏。
+我会尽量给出官方文档，以便于不同时间的不同用户进行操作时可以减少错误。
+操作系统：manjaro
+显卡：Nvidia no-free驱动
+步骤 1.安装合适的Gpu驱动 https://github.com/lutris/docs/blob/master/InstallingDrivers.md
+lutris为我们创建了一个良好的文档说明。你可以选择与你电脑相符的介绍并继续操作。对我的系统manjaro而言，我已经在安装时选择了no-free驱动，因此已经有了一套正确的驱动支持。
+安装wine https://github.com/lutris/docs/blob/master/WineDependencies.md
+同样，选择你的发行版并按步骤进行操作,这里以我的系统manjaro为例。
+修改/etc/pacman.conf,添加[multilib]启动multilib仓库，在文件中添加以下内容：
+/etc/pacman.conf -------------------------------------------------------------------------------------- [multilib] Include = /etc/pacman.d/mirrorlist 更新pacman仓库
+sudo pacman -Syu 安装wine，要安装的包有点多，但其实很多你已经安装过了，全部的依赖安装可以避免之后出现奇奇怪怪的问题。
+sudo pacman -S --needed wine-staging giflib lib32-giflib libpng lib32-libpng libldap lib32-libldap gnutls lib32-gnutls \ mpg123 lib32-mpg123 openal lib32-openal v4l-utils lib32-v4l-utils libpulse lib32-libpulse libgpg-error \ lib32-libgpg-error alsa-plugins lib32-alsa-plugins alsa-lib lib32-alsa-lib libjpeg-turbo lib32-libjpeg-turbo \ sqlite lib32-sqlite libxcomposite lib32-libxcomposite libxinerama lib32-libgcrypt libgcrypt lib32-libxinerama \ ncurses lib32-ncurses opencl-icd-loader lib32-opencl-icd-loader libxslt lib32-libxslt libva lib32-libva gtk3 \ lib32-gtk3 gst-plugins-base-libs lib32-gst-plugins-base-libs vulkan-icd-loader lib32-vulkan-icd-loader 以上，wine安装完成。</description>
+    </item>
+    
+  </channel>
+</rss>
