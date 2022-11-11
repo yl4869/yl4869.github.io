@@ -6,7 +6,46 @@
     <description>Recent content in Posts on FunForever</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Fri, 02 Sep 2022 23:45:14 +0800</lastBuildDate><atom:link href="http://yl4869.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 11 Nov 2022 19:10:13 +0800</lastBuildDate><atom:link href="http://yl4869.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Verilog 实现双边沿触发器Dual Edge_triggered_flip Flop</title>
+      <link>http://yl4869.github.io/posts/verilog/dual-edge_triggered_flip-flop/</link>
+      <pubDate>Fri, 11 Nov 2022 19:10:13 +0800</pubDate>
+      
+      <guid>http://yl4869.github.io/posts/verilog/dual-edge_triggered_flip-flop/</guid>
+      <description>Verilog 实现双边沿触发器Dual Edge_triggered_flip Flop 在做HDLbits时，有一道很有趣的双边沿触发器问题 ，这里记录一下相关内容和解答方式。
+问题描述 实现一个双边沿触发器，即在时钟的上升沿和下降沿都被触发。
+module top_module ( input clk, input d, output q ); 问题 无法直接通过always @(posedge clk or negedge clk)直接创建双边沿触发器，FPGA 中只能存在单边沿触发器。
+但是你可以创建两个触发器，分别是上升沿和下降沿。
+解决方案（1） 虽然我们无法直接创建双边沿触发器，但是可以通过使用两个触发器和一个多路选择器实现相同的功能。
+module top_module ( input clk, input d, output q ); reg q1; reg q2; always @(posedge clk) begin q1 &amp;lt;= d; end always @(negedge clk) begin q2 &amp;lt;= d; end assign q = clk ? q1 : q2; endmodule 注意，你可能想要两个触发器内都填写q &amp;lt;= d，这在思维上是合理的，但是在实现中会引入多驱问题。</description>
+    </item>
+    
+    <item>
+      <title>右值引用: 移动语义</title>
+      <link>http://yl4869.github.io/posts/learn_c_cpp/rvalue1/</link>
+      <pubDate>Fri, 07 Oct 2022 14:58:49 +0800</pubDate>
+      
+      <guid>http://yl4869.github.io/posts/learn_c_cpp/rvalue1/</guid>
+      <description>右值引用：移动语义 左值与右值 左值有标识 标识：你有某个值，并有某个值的内存地址，可以安全的使用它
+左值(lvalue)可以出现在赋值的左侧（当我们使用他的名称时），也可以出现在赋值的右侧（当我们使用他的值时）。因此当我们称某个值为左值时，他未必出现在等号左侧，而是认为他有标识。
+这里的左值严格意义上称为泛左值，包括左值和将亡值两种。
+右值可移动，左值不能 有些值并非泛左值，换句话说你无法获得其内存地址并使用。这类值的优点是可以移动他而不是复制它。（通常情况下移动要比赋值开销小很多）。移动一个值意味着他不会在原来的位置，当你称一个值可以移动时，我们认为是右值。
+左值是不可移动的，因为这破坏了左值的概念：通过内存地址使用
+右值引用的对象，是临时的，即将被销毁。
+纯右值 纯右值没有标识，因此我们无法使用他的内存地址，但他是可以移动的（因为是右值）。
+值类别汇总 泛左值（glvalue）：有标识 左值：有标识但不能移动 将亡值：有标识，但也可以移动，是之前的某个左值变成了右值引用。 纯右值：没有标识，可以移动。 右值：可移动 左值持久，右值短暂
+左值引用与右值引用 重新观察T&amp;amp; 重新观察T&amp;amp;和const T&amp;amp;，他们现在实际上是对左值的引用。左值引用可以绑定到左值，但不可以绑定到右值。
+左值引用时，我们将一个对象的内存空间绑定到另一个变量上，因此我们使用的是一个对象在内存中的位置，这是一个左值。
+右值引用 通过T&amp;amp;&amp;amp;可以标识一个类型T的右值引用，右值引用引用了一个可移动值，其内容在使用后无需保留。右值引用绑定到右值而非左值（右值引用假定内容无需保留而进行移动的值）。
+右值引用意味着：1.右值是临时的，即将被销毁。 2.右值引用的对象不会在其他地方使用。
+这两个特性意味着：接受和使用右值引用的代码，可以自由地接管所引用的对象的资源，而无需担心对其他代码逻辑造成数据破坏。
+右值引用是左值还是右值 对于左值引用，当我们想要使用他的值时，他是右值，当我们想要使用他的地址（内存空间）时，他是左值。对于右值引用也一样，当我们进行右值引用时，右值的变量已经被右值引用接管了，这个时候的变量可以通过右值引用保存下来，因此可以成为左值。而我们也可以直接使用右值引用的值，这个时候右值引用会作为右值。
+移动语义 右值引用支持“移动语义”，利用移动语义，你可以让一个对象转移到另一个对象而非使用拷贝构造，他也可以使用临时对象转移资源。
+右值中的数据可以被安全移走使得右值可以用来表达移动语义。
+考虑vector对象的实例，当vector容量满时，我们会开辟一块新的空间并将内容拷贝构造到新空间，销毁之前的空间。但拥有了移动语义后，我们可以实现移动而非拷贝，这可以避免成本高昂的内存分配和复制操作。</description>
+    </item>
+    
     <item>
       <title>数据库系统（一）</title>
       <link>http://yl4869.github.io/posts/database_systems/dbs1/</link>
