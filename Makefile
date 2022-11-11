@@ -7,6 +7,9 @@ COMMIT=deployed on $(shell date) by ${USER}
 clean: 
 	rm -rf public
 
+run: 
+	make build && make commit && make deploy
+
 deploy: public
 	@echo "====> deploying to github"
 	-mkdir /tmp/blog

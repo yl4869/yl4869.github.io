@@ -1,5 +1,6 @@
 ---
 TocOpen: true
+tags: ["verilog"]
 title: "Verilog 实现双边沿触发器Dual Edge_triggered_flip Flop"
 date: 2022-11-11T19:10:13+08:00
 draft: false
