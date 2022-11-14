@@ -6,7 +6,27 @@
     <description>Recent content on FunForever</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Fri, 11 Nov 2022 19:10:13 +0800</lastBuildDate><atom:link href="http://yl4869.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 14 Nov 2022 10:05:15 +0800</lastBuildDate><atom:link href="http://yl4869.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Rust: 泛型，特征与特征对象</title>
+      <link>http://yl4869.github.io/posts/rust/generics_trait/</link>
+      <pubDate>Mon, 14 Nov 2022 10:05:15 +0800</pubDate>
+      
+      <guid>http://yl4869.github.io/posts/rust/generics_trait/</guid>
+      <description>Rust: 泛型，特征与特征对象 最近在学习 Rust 的一些概念思想，记录一下自己对 Rust 中泛型，特征与特征对象的理解。
+泛型 泛型与 CPP 中的模版类似，可以减少代码的重复。泛型会在编译时实现单态化（monomorphization），会将通用代码转换为特定代码，因此不会出现运行时开销。
+可以理解为编译器帮你把写的泛型代码重新转换为写了具体类型的代码。
+泛型可以用在结构体，枚举，函数乃至方法中，其中枚举和方法可以多讲一下。
+泛型在枚举中的实现 泛型在枚举中的实现本身没有要讲的，不过标准库实现的Option&amp;lt;T&amp;gt;和Result&amp;lt;T, E&amp;gt;很想讲一下。
+Option 标准库中的泛型定义
+pub enum Option&amp;lt;T&amp;gt; { None, Some(T), } 简约而又简单，rust 中并不存在空指针，通过 None 进行替代，Option常使用在返回值中。当返回值可能为一个结果，也有可能失败或缺值时，可以通过模式匹配进行处理。这里的 T 就是泛型说明
+Result&amp;lt;T, E&amp;gt; 标准库中的泛型定义
+pub enum Result&amp;lt;T, E&amp;gt; { Ok(T), Err(E), } 除了Option可以在结果失败时传递 None，但有时我们想要知道具体的失败信息，Result 实现了这一点。Result&amp;lt;T, E&amp;gt; 拥有两个泛型 T 和 E，在不同的场景下你可以将他们作为不同的类型。
+泛型在方法中 泛型在方法中需要在impl后面声明&amp;lt;T&amp;gt;，这里是为了告诉 Rust 类型后面的 T 是一个泛型而不是具体类型，注意这里impl后面提供的泛型声明只与后面具体类型要实现的泛型有关。
+与之相应的，你也可以为一个泛型实现他具体类型的方法。
+// 对一个泛型实现具体方法，其中方法中又提供了更多的泛型声明 struct Mix&amp;lt;T, U&amp;gt; { x: T, y: U, } impl&amp;lt;T, U&amp;gt; Mix&amp;lt;T, U&amp;gt; { fn mixup&amp;lt;V, W&amp;gt;(self, other: Mix&amp;lt;V, W&amp;gt;) -&amp;gt; Mix&amp;lt;T, W&amp;gt; { //这里提供了另外两个泛型: V和W, 代表other的类型参数 Mix { x: self.</description>
+    </item>
+    
     <item>
       <title>Verilog 实现双边沿触发器Dual Edge_triggered_flip Flop</title>
       <link>http://yl4869.github.io/posts/verilog/dual-edge_triggered_flip-flop/</link>
