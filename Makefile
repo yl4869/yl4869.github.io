@@ -2,7 +2,7 @@
 .PHONY: clean
 .PHONY: build
 .PHONY: commit
-COMMIT=deployed on $(shell date) by ${USER}
+COMMIT=deployed on $(shell date) by ${USER}: ${MESSAGE}
 
 clean: 
 	rm -rf public
