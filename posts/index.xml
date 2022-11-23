@@ -166,10 +166,10 @@ awk &amp;#39;{sum = 0;max = 0; min = 65536;for(i = 2;i &amp;lt; 4302; i+=20) {if
       <description>介绍 Dijkstra算法解决的是带权重的有向图上单源最短路径问题，该算法要求所有边的权重都为非负值。
 算法主要通过维护结点集合S。通过从结点集V-S中选择最短路径最小的结点u,将其加入进S中，并对所有从u发出可到达V-S集合中结点的边进行松弛操作。
 对邻接表进行操作
-松弛操作：对于一条从 顶点u指向 顶点v的边 u&amp;ndash;&amp;gt;v来说，如果满足 d[u]+w(u,v)&amp;lt;d[v],就更新 d[v],使得 d[v]=d[u]+w(u,v)；这就是对 边uv的一次放松操作；
+松弛操作：对于一条从 顶点u指向 顶点v的边 u&amp;ndash;&amp;gt;v来说，如果满足 d[u]+w(u,v)&amp;lt;d[v],就更新 d[v],使得 d[v]=d[u]+w(u,v)；这就是对 边uv的一次松弛操作；
 其中，w(u,v)表示边的权重，d(u)表示顶点u到达源s的最短距离(目前已知)
-因此我们可以将算法理解为三个操作：1.找到V-S集合中距离S集合最小结点 2.将结点加入S集合中 3.对V-S中剩余结点进行松弛操作。
-算法描述 解释 算法的主要逻辑为while循环。Q始终为Q=V-S。每一次通过EXTRACT-MIN(Q)取出Q中距离最小值u。并将u放入S集合中。之后在for循环中对Q中剩余结点进行松弛操作。
+因此我们可以将算法理解为三个操作：
+找到V-S集合中距离S集合最小结点 将结点加入S集合中 对V-S中剩余结点进行松弛操作。 算法描述 解释 算法的主要逻辑为while循环。Q始终为Q=V-S。每一次通过EXTRACT-MIN(Q)取出Q中距离最小值u。并将u放入S集合中。之后在for循环中对Q中剩余结点进行松弛操作。
 对距离进行更新。
 分析 算法通过每次从Q中找出距离最小的一个结点插入到S中，并将Q中剩余的结点距离进行松弛，直到Q中没有结点结束。因为Q中初始结点一共有V个，因此一定会有一次O(V)操作(全部插入)。
 注意到我们每次只需要松弛刚插入结点连接到的表，由于采用邻接表操作，我们对每一个边只会松弛一次，因此一共会执行|E|次。
@@ -260,7 +260,8 @@ sudo pacman -S --needed wine-staging giflib lib32-giflib libpng lib32-libpng lib
       <guid>http://yl4869.github.io/posts/learn_linux/standard_input_output/</guid>
       <description>简介 数据流重定向是将某个指令执行后要输出在屏幕上的数据，传输到其他的地方。一是可以简化我们的屏幕输出， 去获取我们有用的数据。同时我们还可以将我们想要的数据存储下来。
 你可以通过echo &amp;quot;123&amp;quot;和echo &amp;quot;123&amp;quot; &amp;gt; filename 去简单尝试一下这种方式的特点，第二种可以通过 查看新增的file文件观看内容。
-标准输入输出与标准错误输出 基本使用 &amp;gt; 是我们实现这种数据流重导向所用的特殊字符，数据流重导向包括标准输入，标准输出和标准错误输出， 他们的规则如下所示： 名称 代码 符号 标准输入(stdin) 0 &amp;lt;或&amp;laquo; 标准输出(stdout) 1 &amp;gt;或&amp;raquo; 标准错误输出(stderr) 2 2&amp;gt;或2&amp;raquo; &amp;gt; 和 &amp;raquo; 的区别是 &amp;gt; 以覆盖的方法输出内容， &amp;raquo; 则是以累加的方式输出内容。你可以自 己试一试。 标准输入的用法类似，可以尝试一下cat &amp;gt; file 尝试键盘输出，使用[ctrl]+d退出，然后看一下得到的 文件。
+标准输入输出与标准错误输出 基本使用 &amp;gt; 是我们实现这种数据流重导向所用的特殊字符，数据流重导向包括标准输入，标准输出和标准错误输出， 他们的规则如下所示：
+名称 代码 符号 标准输入(stdin) 0 &amp;lt;或&amp;laquo; 标准输出(stdout) 1 &amp;gt;或&amp;raquo; 标准错误输出(stderr) 2 2&amp;gt;或2&amp;raquo; &amp;gt; 和 &amp;raquo; 的区别是 &amp;gt; 以覆盖的方法输出内容， &amp;raquo; 则是以累加的方式输出内容。你可以自 己试一试。 标准输入的用法类似，可以尝试一下cat &amp;gt; file 尝试键盘输出，使用[ctrl]+d退出，然后看一下得到的 文件。
 /dev/null 垃圾桶 在linux一切皆文件的哲学中 /dev/null是一个特殊的&amp;quot;装置&amp;quot; 你可以将任何你想忽略的内容导向到它，而这些 内容将彻底被丢弃。
 特殊写法 如果我们想要将正确与错误数据写入同一个文件时，可能会发生数据交叉写入该文件内的情况，造成次序的错乱， 这个时候你可以使用 2&amp;gt;&amp;amp;1 和 &amp;amp;&amp;gt; 的语法。
 find /home -name .bashrc &amp;gt; list 2&amp;gt; list &amp;lt;=错误 find /home -name .bashrc &amp;gt; list 2&amp;amp;&amp;gt;1 &amp;lt;=正确 find /home -name .</description>
