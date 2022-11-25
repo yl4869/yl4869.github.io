@@ -6,7 +6,19 @@
     <description>Recent content in Posts on FunForever</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Mon, 14 Nov 2022 10:05:15 +0800</lastBuildDate><atom:link href="http://yl4869.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 25 Nov 2022 15:46:10 +0800</lastBuildDate><atom:link href="http://yl4869.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>路径规划算法：DFS，BFS，Dijkstra, GBFS 和 A*</title>
+      <link>http://yl4869.github.io/posts/ad/pathplan1/</link>
+      <pubDate>Fri, 25 Nov 2022 15:46:10 +0800</pubDate>
+      
+      <guid>http://yl4869.github.io/posts/ad/pathplan1/</guid>
+      <description>介绍 图搜索算法中最常见的一个应用就是路径规划，常见的针对无权图的搜索有DFS和BFS，引入权重后，Dijkstra算法解决了单源最短路径问题，而启发式搜索的存在（GBFS，A*）则能够通过启发函数来提高搜索效率。
+DFS 深度优先搜索(Depth First Search)通过维护栈这一数据结构，能够实现对全部路径的搜索，但他会沿着一条路走到最后，在没有结果时才会回头选择另一条路，因此无法保证找到的路径是最优路径。
+def dfs(start_point, goal_point): path = [] seen = set() stack = [] seen.add(start_point) stack.append(goal_point) while len(stack) &amp;gt; 0: current = stack.pop() path.append(current) if current == goal_point: break if not graph.neighbors(current): path.pop() continue for next in graph.neighbors(current): if next not in seen: stack.append(next) seen.add(next) return path BFS 广度优先搜索（Breadth First Search）在搜索无权图最短路径时很有用，他会优先探索当前位置的所有方向而不是向着一个方向探索到最后，这也是广度的由来。实现BFS通常依靠队列。同时，我们通过字典来保存我们走过的路径，并通过从终点开始的反向遍历得到路径。
+def bfs(start_point, goal_point): frontier = Queue() frontier.put(start_point) came_from = dict() came_from[start_point] = None seen = set() seen.</description>
+    </item>
+    
     <item>
       <title>Rust: 泛型，特征与特征对象</title>
       <link>http://yl4869.github.io/posts/rust/generics_trait/</link>
