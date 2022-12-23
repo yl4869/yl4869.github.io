@@ -27,7 +27,7 @@ build:
 	hugo
 
 commit:
-	git add Makefile config.yml assets static content layouts archetypes
+	git add -A
 	git commit -m "$(COMMIT)" && \
 	git push origin main
 
