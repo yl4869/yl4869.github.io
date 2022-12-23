@@ -14,11 +14,8 @@
       <guid>http://yl4869.github.io/posts/learn_c_cpp/declarations/</guid>
       <description>前言 编程语言的类型模型（type model）一直都是编程语言学习的重点。虽然但是，C语言声明的语法实在是过于奇怪，以至于我们需要花费一些时间认真理解一下，首先思考一下简单的类型模型,考虑下面的C语言声明:
 typedef char * string; string punchline = &amp;#34;I&amp;#39;m a frayed knot&amp;#34;; 可以将其分为两部分：变量的类型和变量来理解
-被称作 是 变量的类型 string char * 变量 punchline &amp;ldquo;I;m a frayed knot&amp;rdquo; C语言声明的产生 C语言中的声明器（declarator） 简单地说，声明器就是标识符以及和他组合在一起的任何指针、函数符号、数组下标（本表额外添加了初始化内容）
-数量 C语言中的名字 C语言中出现的形式 零个或多个 指针 const volatile;volatile;; const; * volatile const 有且只有一个 直接声明器 标识符;标识符[下标];标识符(参数);(声明器) 零个或一个 初始化内容 = 初始值 声明器是一个很模糊的概念，一个简单的思考方式是C语言的声明器是声明中缺少类型以及对类型限定后剩下的部分，这也可以理解 int *p,*q,r 都是什么类型了（p，q是指针，r是int型变量）
-C语言的声明 声明增加了至少一个类型说明符（包括类型说明，存储说明和类型限定符），声明器（一个或多个，逗号分割）分号（语句结束）但也请注意，合法的声明存在限定条件，举例说明：
-函数的返回值不能是一个函数，所以 foo()() 是非法的 函数的返回值不能是一个数组，所以 foo()[] 是非法的 数组里面不能有函数，所以 foo 是非法的 你也许很快想到，针对这些问题可以用指针解决，所以
-函数的返回值允许是一个函数指针，如 int(* fun()) () 函数的返回值允许是一个指向数组的指针， 如 int(*foo())[] 数组里面允许有函数指针 如 int (*foo[])() 数组里面允许有其他数组，所以你经常看到 int foo[][] 优先级规则 C语言声明的优先级规则是阅读C语言声明关键的一步：因为C语言的声明并不是简单的从左到右，下面给出这条规则</description>
+    被称作 是     变量的类型 string char *   变量 punchline &amp;ldquo;I;m a frayed knot&amp;rdquo;    C语言声明的产生 C语言中的声明器（declarator） 简单地说，声明器就是标识符以及和他组合在一起的任何指针、函数符号、数组下标（本表额外添加了初始化内容）
+   数量 C语言中的名字 C语言中出现的形式     零个或多个 指针 const volatile;volatile;; const; * volatile const   有且只有一个 直接声明器 标识符;标识符[下标];标识符(参数);(声明器)   零个或一个 初始化内容 = 初始值     声明器是一个很模糊的概念，一个简单的思考方式是C语言的声明器是声明中缺少类型以及对类型限定后剩下的部分，这也可以理解 int *p,*q,r 都是什么类型了（p，q是指针，r是int型变量）</description>
     </item>
     
     <item>
@@ -32,10 +29,10 @@ C语言的声明 声明增加了至少一个类型说明符（包括类型说明
 dynamic_cast &amp;lt;new_type&amp;gt; (expression) reinterpret_cast &amp;lt;new_type&amp;gt; (expression) static_cast &amp;lt;new_type&amp;gt; (expression) const_cast &amp;lt;new_type&amp;gt; (expression) 与之相对，我们也回忆一下传统的类型转换方法
 (new_type) expression new_type (expression) 下面就四种类型转换进行简单介绍。
 dynamic_cast 有需要提前指出的是，dynamic_cast运算符更多是用来实现RTTI（运行时类型识别 run-time type identification） 功能,其中dynamic_cast用来将基类的指针或引用安全地转移成派生类的指针或引用。
-使用RTTI时必须加倍小心，更多时候最好定义虚函数，使用时程序员必须清楚地知道转换的目标模型并且必须检查类型转换是否被成功执行。
-dynamic_cast只用在指向类的指针，引用（或void *)上。这种转换允许upcast（从派生类向基类的转换）也能downcast（从基类向派生类的转换），这时需要转过去的指针所指向的目标有效且完整。
+ 使用RTTI时必须加倍小心，更多时候最好定义虚函数，使用时程序员必须清楚地知道转换的目标模型并且必须检查类型转换是否被成功执行。
+ dynamic_cast只用在指向类的指针，引用（或void *)上。这种转换允许upcast（从派生类向基类的转换）也能downcast（从基类向派生类的转换），这时需要转过去的指针所指向的目标有效且完整。
 举例说明
-#include&amp;lt;iostream&amp;gt; #include&amp;lt;exception&amp;gt; using namespace std; class Base {virtual void dummy() {} }; class Derived : public Base { int a; }; int main() { try { Base * pba = new Derived; Base * pbb = new Base; Derived * pd; pd = dynamic_cast&amp;lt;Derived*&amp;gt;(pba); if( pd == 0 ) cout &amp;lt;&amp;lt; &amp;#34;Null pointer on first type-case.</description>
+#include&amp;lt;iostream&amp;gt;#include&amp;lt;exception&amp;gt;using namespace std; class Base {virtual void dummy() {} }; class Derived : public Base { int a; }; int main() { try { Base * pba = new Derived; Base * pbb = new Base; Derived * pd; pd = dynamic_cast&amp;lt;Derived*&amp;gt;(pba); if( pd == 0 ) cout &amp;lt;&amp;lt; &amp;#34;Null pointer on first type-case.</description>
     </item>
     
   </channel>

@@ -1,0 +1,334 @@
+<!doctype html><html lang=en dir=auto>
+<head><meta charset=utf-8>
+<meta http-equiv=x-ua-compatible content="IE=edge">
+<meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no">
+<meta name=robots content="index, follow">
+<title>计算机体系结构-CPU性能提升简述 | FunForever</title>
+<meta name=keywords content>
+<meta name=description content="前言 随着半导体工艺的升级和芯片技术的发展，为了充分提升CPU的性能出现了各种各样的方式，提升工艺能够极大提升CPU性能，但随着摩尔定律的逐渐失效，优化CPU结构成为了提升CPU性能中越来越重要的一部分。
+局部性原理 在CPU频率不断提升的情况下，和CPU进行频繁数据交换的内存速度却提升不够。在这种情况下，CPU直接通过内存进行数据交换时，由于需要等待内存的回应，往往会降低CPU的性能。通过在CPU和内存中间插入Cache作为缓存，能够一定程度上弥补这个问题。
+Cache的实现原理 Cache利用空间局部性和时间局部性原理，通过在内存和CPU中间插入一块速度更快的存储器，进而CPU可以先尝试和Cache进行交互，减少CPU访问内存的次数，进而提高系统的整体性能。当Cache中不存在相应数据时，我们会将存储器中的数据和相邻的数据“搬运”到Cache中，这样只需一次访问内存我们可以减少n次内存的访问。
+多级Cache 如果都用最先进的工艺实现一个Cache,价格和功耗都是我们无法接受的（当Cache过大时，会由于复杂逻辑产生大的功耗）。因此我们采用多级Cache的方案，不同Cache满足不同需求，如Icache和Dcache代表的L1cache独立于每个Core,L2cache可能在由几个Core进行共用，L3cache可能是整个CPU共用一份。
+ L1cache分解成Icache和Dcache由于流水线的存在。
+ 无Cache Cache虽好，但并不是所有的处理器都提供了Cache,原因主要有三点：
+ Cache会增加功耗和成本，占用过大的芯片面积和发热了。 一些处理器本身工作频率不高，没有需要Cache解决的带宽问题。 Cache无法保证实时性，缓存命中和未命中需要不同的CPU处理时间，无法满足实时控制场景的需要。  流水线 CPU工作的执行单调而乏味，正如流水线上的工人一样，因此我们也可以通过流水线的方式提升CPU的处理速度。
+流水线的原理 流水线通过将一个任务分成多个部分，利用类似并行的处理方式提高了模块的利用率，提升了吞吐量。
+ 想象一个拧螺丝的工作需要4步，每一步需要2s中，那我们从开始到最后完成任务需要8s，也就是说这个时候我们8s可以生产一个产品，但无论我们执行那一步，其他的三步（材料+设备）都是空闲的，因此我们可以通过流水线的方式进行全速前进，这样在全速前进下我们2s就可以生产一个产品（虽然第一个产品生产完成其实也需要8s等待）。
+ 流水线并不是越深越好 首先流水线的分级需要插入寄存器；流水线间如果出现依赖可能还需要增加逻辑进行判断；同时一旦发生了跳转，我们需要丢弃掉前面所有的预取指令。
+更多情况下，我们的流水线需要在性能和功耗间做一个平衡。
+乱序执行 不同指令间的执行在流水线中可能存在冒险，这种情况下我们可能需要停顿流水线或添加更多逻辑，而还有一种方式就是通过乱序执行，让数据相关的指令不在一起执行，从而根本上避免了冒险的产生。
+SISD和SIMD 我们学习过的大多数指令都是SISD（Single Instruction Single Data），这种数据操作会通过一个指令完成一次数据的运算。而SIMD（Single Instruction Multiple Data）可以完成单指令多数据的操作，一次性读取所有的操作数并进行运算。
+为什么要有SIMD 数据密集型计算的大规模出现：图像、视频、音频等数据的处理需求催生了SIMD类型指令的出现。如果说之前处理一帧数据需要无数条SISD的指令，那么可能只需要一条SIMD指令，极大提升了这类处理需求的指令效率。
+单发射与多发射 多发射可以在一个时钟周期执行多条指令，这是由于处理器内部多个执行单元的存在（又增加了处理器核的面积和逻辑复杂性）。让我们的处理器可以达到指令级的并行。
+静态多发射 静态多发射依赖于编译阶段对可以并行的指令打包，合并成一个长指令，这种实现实现又叫做VLIW（Very long Instruction Wrod），这种实现简单，所需硬件也简单，但由于指令集的兼容问题，这种实现并不能完全被主流处理器支持。
+动态多发射 动态多发射在硬件上完成了指令的并行话操作，实现这种方式的处理器又被叫做超标量处理器（SuperScalar）。需要在处理器硬件上实现增加很多逻辑。
+EPIC EPIC结合了VILW和SuperScaler的优点，通过在指令中显式提供bit位表达两条指令间有没有相关性，简化了硬件处理两条指令相关的逻辑。
+多核 提升芯片面积（如多发射或其他类似的设计增加）在提升CPU性能的同时也带来了更高的功耗，更昂贵的成本。因此对单核的提升出现了一个瓶颈：无法在提升性能的同时降低功耗（相同工艺）。针对于此，多核的时代来临了。
+多核处理器能够让多个任务级做到真正并行，而单核处理器只能称之为并发，现代计算机一般都是多个任务同时运行，在这种情况下多核的优势开始显现出来。
+片上多核互联 正如在单核流水线和多发射中存在的冲突问题，多核处理器也不能每个核心单独存在，需要进行互联通信。CPU的通信经历了星型连接，总线连接，交叉开关（Crossbar）连接，到达RingBus阶段。RingBus结合总线型和开关型的优点，在成本功耗与通信效率间达到了平衡。但当处理器核心进一步增多时，RingBus的延迟又成为了新的瓶颈。因此面向众核处理器领域又出现了新的片上互联技术：片上网络（Net On Chip, Noc)。
+大小核 当工作任务均匀分配到每个核心，并且实现大的负载时，多核处理器的性能得到了充分的发挥。但当工作任务不是很多时，往往会造成处理器中某些核心的空转，白白浪费了电费。为了解决这个问题，不同的厂商都提出了他们的大小核架构方案。可以通过操作系统的调度实现处理器的均匀负载，针对不同的人物，可以使用不同的核心处理问题。
+ 不同厂商的实现不同，比如ARM的big.LITTLE架构中小核心的存在就是为了低功耗，而Intel的E-Core则提供了多线程处理能力，提供的更多是“能效”方面的提升。
+ 超线程（Hyper-Threading） 在主流的X86处理器中，主流CPU都提供了超线程技术，通过增加一定的控制逻辑电路将一个物理处理器当作两个逻辑处理器使用，更大限度提升CPU的资源利用率。
+实现原理 通过增加控制逻辑电路，保存各个线程的状态，使不同线程共享一个核心的资源，通过进行上下文切换进行线程转移。
+ 在超线程处理器上这种线程切换可能只需要一个时钟周期，而对于一般处理器的线程切换可能需要上万个时钟周期。">
+<meta name=author content="yunlang">
+<link rel=canonical href=http://yl4869.github.io/posts/read/1/>
+<meta name=google-site-verification content="XYZabc">
+<meta name=yandex-verification content="XYZabc">
+<meta name=msvalidate.01 content="XYZabc">
+<link crossorigin=anonymous href=/assets/css/stylesheet.16d8436cad224c4d1bc5b976fa722facabe72a9afc5a338a823186c9b3ef4685.css integrity="sha256-FthDbK0iTE0bxbl2+nIvrKvnKpr8WjOKgjGGybPvRoU=" rel="preload stylesheet" as=style>
+<script defer crossorigin=anonymous src=/assets/js/highlight.f413e19d0714851f6474e7ee9632408e58ac146fbdbe62747134bea2fa3415e0.js integrity="sha256-9BPhnQcUhR9kdOfuljJAjlisFG+9vmJ0cTS+ovo0FeA=" onload=hljs.initHighlightingOnLoad()></script>
+<link rel=icon href=http://yl4869.github.io/%3Clink%20/%20abs%20url%3E>
+<link rel=icon type=image/png sizes=16x16 href=http://yl4869.github.io/%3Clink%20/%20abs%20url%3E>
+<link rel=icon type=image/png sizes=32x32 href=http://yl4869.github.io/%3Clink%20/%20abs%20url%3E>
+<link rel=apple-touch-icon href=http://yl4869.github.io/%3Clink%20/%20abs%20url%3E>
+<link rel=mask-icon href=http://yl4869.github.io/%3Clink%20/%20abs%20url%3E>
+<meta name=theme-color content="#2e2e33">
+<meta name=msapplication-TileColor content="#2e2e33">
+<noscript>
+<style>#theme-toggle,.top-link{display:none}</style>
+<style>@media(prefers-color-scheme:dark){:root{--theme:rgb(29, 30, 32);--entry:rgb(46, 46, 51);--primary:rgb(218, 218, 219);--secondary:rgb(155, 156, 157);--tertiary:rgb(65, 66, 68);--content:rgb(196, 196, 197);--hljs-bg:rgb(46, 46, 51);--code-bg:rgb(55, 56, 62);--border:rgb(51, 51, 51)}.list{background:var(--theme)}.list:not(.dark)::-webkit-scrollbar-track{background:0 0}.list:not(.dark)::-webkit-scrollbar-thumb{border-color:var(--theme)}}</style>
+</noscript>
+<script type=application/javascript>var doNotTrack=!1;doNotTrack||(function(a,e,f,g,b,c,d){a.GoogleAnalyticsObject=b,a[b]=a[b]||function(){(a[b].q=a[b].q||[]).push(arguments)},a[b].l=1*new Date,c=e.createElement(f),d=e.getElementsByTagName(f)[0],c.async=1,c.src=g,d.parentNode.insertBefore(c,d)}(window,document,'script','https://www.google-analytics.com/analytics.js','ga'),ga('create','UA-123-45','auto'),ga('send','pageview'))</script><meta property="og:title" content="计算机体系结构-CPU性能提升简述">
+<meta property="og:description" content="前言 随着半导体工艺的升级和芯片技术的发展，为了充分提升CPU的性能出现了各种各样的方式，提升工艺能够极大提升CPU性能，但随着摩尔定律的逐渐失效，优化CPU结构成为了提升CPU性能中越来越重要的一部分。
+局部性原理 在CPU频率不断提升的情况下，和CPU进行频繁数据交换的内存速度却提升不够。在这种情况下，CPU直接通过内存进行数据交换时，由于需要等待内存的回应，往往会降低CPU的性能。通过在CPU和内存中间插入Cache作为缓存，能够一定程度上弥补这个问题。
+Cache的实现原理 Cache利用空间局部性和时间局部性原理，通过在内存和CPU中间插入一块速度更快的存储器，进而CPU可以先尝试和Cache进行交互，减少CPU访问内存的次数，进而提高系统的整体性能。当Cache中不存在相应数据时，我们会将存储器中的数据和相邻的数据“搬运”到Cache中，这样只需一次访问内存我们可以减少n次内存的访问。
+多级Cache 如果都用最先进的工艺实现一个Cache,价格和功耗都是我们无法接受的（当Cache过大时，会由于复杂逻辑产生大的功耗）。因此我们采用多级Cache的方案，不同Cache满足不同需求，如Icache和Dcache代表的L1cache独立于每个Core,L2cache可能在由几个Core进行共用，L3cache可能是整个CPU共用一份。
+ L1cache分解成Icache和Dcache由于流水线的存在。
+ 无Cache Cache虽好，但并不是所有的处理器都提供了Cache,原因主要有三点：
+ Cache会增加功耗和成本，占用过大的芯片面积和发热了。 一些处理器本身工作频率不高，没有需要Cache解决的带宽问题。 Cache无法保证实时性，缓存命中和未命中需要不同的CPU处理时间，无法满足实时控制场景的需要。  流水线 CPU工作的执行单调而乏味，正如流水线上的工人一样，因此我们也可以通过流水线的方式提升CPU的处理速度。
+流水线的原理 流水线通过将一个任务分成多个部分，利用类似并行的处理方式提高了模块的利用率，提升了吞吐量。
+ 想象一个拧螺丝的工作需要4步，每一步需要2s中，那我们从开始到最后完成任务需要8s，也就是说这个时候我们8s可以生产一个产品，但无论我们执行那一步，其他的三步（材料+设备）都是空闲的，因此我们可以通过流水线的方式进行全速前进，这样在全速前进下我们2s就可以生产一个产品（虽然第一个产品生产完成其实也需要8s等待）。
+ 流水线并不是越深越好 首先流水线的分级需要插入寄存器；流水线间如果出现依赖可能还需要增加逻辑进行判断；同时一旦发生了跳转，我们需要丢弃掉前面所有的预取指令。
+更多情况下，我们的流水线需要在性能和功耗间做一个平衡。
+乱序执行 不同指令间的执行在流水线中可能存在冒险，这种情况下我们可能需要停顿流水线或添加更多逻辑，而还有一种方式就是通过乱序执行，让数据相关的指令不在一起执行，从而根本上避免了冒险的产生。
+SISD和SIMD 我们学习过的大多数指令都是SISD（Single Instruction Single Data），这种数据操作会通过一个指令完成一次数据的运算。而SIMD（Single Instruction Multiple Data）可以完成单指令多数据的操作，一次性读取所有的操作数并进行运算。
+为什么要有SIMD 数据密集型计算的大规模出现：图像、视频、音频等数据的处理需求催生了SIMD类型指令的出现。如果说之前处理一帧数据需要无数条SISD的指令，那么可能只需要一条SIMD指令，极大提升了这类处理需求的指令效率。
+单发射与多发射 多发射可以在一个时钟周期执行多条指令，这是由于处理器内部多个执行单元的存在（又增加了处理器核的面积和逻辑复杂性）。让我们的处理器可以达到指令级的并行。
+静态多发射 静态多发射依赖于编译阶段对可以并行的指令打包，合并成一个长指令，这种实现实现又叫做VLIW（Very long Instruction Wrod），这种实现简单，所需硬件也简单，但由于指令集的兼容问题，这种实现并不能完全被主流处理器支持。
+动态多发射 动态多发射在硬件上完成了指令的并行话操作，实现这种方式的处理器又被叫做超标量处理器（SuperScalar）。需要在处理器硬件上实现增加很多逻辑。
+EPIC EPIC结合了VILW和SuperScaler的优点，通过在指令中显式提供bit位表达两条指令间有没有相关性，简化了硬件处理两条指令相关的逻辑。
+多核 提升芯片面积（如多发射或其他类似的设计增加）在提升CPU性能的同时也带来了更高的功耗，更昂贵的成本。因此对单核的提升出现了一个瓶颈：无法在提升性能的同时降低功耗（相同工艺）。针对于此，多核的时代来临了。
+多核处理器能够让多个任务级做到真正并行，而单核处理器只能称之为并发，现代计算机一般都是多个任务同时运行，在这种情况下多核的优势开始显现出来。
+片上多核互联 正如在单核流水线和多发射中存在的冲突问题，多核处理器也不能每个核心单独存在，需要进行互联通信。CPU的通信经历了星型连接，总线连接，交叉开关（Crossbar）连接，到达RingBus阶段。RingBus结合总线型和开关型的优点，在成本功耗与通信效率间达到了平衡。但当处理器核心进一步增多时，RingBus的延迟又成为了新的瓶颈。因此面向众核处理器领域又出现了新的片上互联技术：片上网络（Net On Chip, Noc)。
+大小核 当工作任务均匀分配到每个核心，并且实现大的负载时，多核处理器的性能得到了充分的发挥。但当工作任务不是很多时，往往会造成处理器中某些核心的空转，白白浪费了电费。为了解决这个问题，不同的厂商都提出了他们的大小核架构方案。可以通过操作系统的调度实现处理器的均匀负载，针对不同的人物，可以使用不同的核心处理问题。
+ 不同厂商的实现不同，比如ARM的big.LITTLE架构中小核心的存在就是为了低功耗，而Intel的E-Core则提供了多线程处理能力，提供的更多是“能效”方面的提升。
+ 超线程（Hyper-Threading） 在主流的X86处理器中，主流CPU都提供了超线程技术，通过增加一定的控制逻辑电路将一个物理处理器当作两个逻辑处理器使用，更大限度提升CPU的资源利用率。
+实现原理 通过增加控制逻辑电路，保存各个线程的状态，使不同线程共享一个核心的资源，通过进行上下文切换进行线程转移。
+ 在超线程处理器上这种线程切换可能只需要一个时钟周期，而对于一般处理器的线程切换可能需要上万个时钟周期。">
+<meta property="og:type" content="article">
+<meta property="og:url" content="http://yl4869.github.io/posts/read/1/"><meta property="article:section" content="posts">
+<meta property="article:published_time" content="2022-12-19T21:03:52+08:00">
+<meta property="article:modified_time" content="2022-12-19T21:03:52+08:00"><meta property="og:site_name" content="HomeSite">
+<meta name=twitter:card content="summary">
+<meta name=twitter:title content="计算机体系结构-CPU性能提升简述">
+<meta name=twitter:description content="前言 随着半导体工艺的升级和芯片技术的发展，为了充分提升CPU的性能出现了各种各样的方式，提升工艺能够极大提升CPU性能，但随着摩尔定律的逐渐失效，优化CPU结构成为了提升CPU性能中越来越重要的一部分。
+局部性原理 在CPU频率不断提升的情况下，和CPU进行频繁数据交换的内存速度却提升不够。在这种情况下，CPU直接通过内存进行数据交换时，由于需要等待内存的回应，往往会降低CPU的性能。通过在CPU和内存中间插入Cache作为缓存，能够一定程度上弥补这个问题。
+Cache的实现原理 Cache利用空间局部性和时间局部性原理，通过在内存和CPU中间插入一块速度更快的存储器，进而CPU可以先尝试和Cache进行交互，减少CPU访问内存的次数，进而提高系统的整体性能。当Cache中不存在相应数据时，我们会将存储器中的数据和相邻的数据“搬运”到Cache中，这样只需一次访问内存我们可以减少n次内存的访问。
+多级Cache 如果都用最先进的工艺实现一个Cache,价格和功耗都是我们无法接受的（当Cache过大时，会由于复杂逻辑产生大的功耗）。因此我们采用多级Cache的方案，不同Cache满足不同需求，如Icache和Dcache代表的L1cache独立于每个Core,L2cache可能在由几个Core进行共用，L3cache可能是整个CPU共用一份。
+ L1cache分解成Icache和Dcache由于流水线的存在。
+ 无Cache Cache虽好，但并不是所有的处理器都提供了Cache,原因主要有三点：
+ Cache会增加功耗和成本，占用过大的芯片面积和发热了。 一些处理器本身工作频率不高，没有需要Cache解决的带宽问题。 Cache无法保证实时性，缓存命中和未命中需要不同的CPU处理时间，无法满足实时控制场景的需要。  流水线 CPU工作的执行单调而乏味，正如流水线上的工人一样，因此我们也可以通过流水线的方式提升CPU的处理速度。
+流水线的原理 流水线通过将一个任务分成多个部分，利用类似并行的处理方式提高了模块的利用率，提升了吞吐量。
+ 想象一个拧螺丝的工作需要4步，每一步需要2s中，那我们从开始到最后完成任务需要8s，也就是说这个时候我们8s可以生产一个产品，但无论我们执行那一步，其他的三步（材料+设备）都是空闲的，因此我们可以通过流水线的方式进行全速前进，这样在全速前进下我们2s就可以生产一个产品（虽然第一个产品生产完成其实也需要8s等待）。
+ 流水线并不是越深越好 首先流水线的分级需要插入寄存器；流水线间如果出现依赖可能还需要增加逻辑进行判断；同时一旦发生了跳转，我们需要丢弃掉前面所有的预取指令。
+更多情况下，我们的流水线需要在性能和功耗间做一个平衡。
+乱序执行 不同指令间的执行在流水线中可能存在冒险，这种情况下我们可能需要停顿流水线或添加更多逻辑，而还有一种方式就是通过乱序执行，让数据相关的指令不在一起执行，从而根本上避免了冒险的产生。
+SISD和SIMD 我们学习过的大多数指令都是SISD（Single Instruction Single Data），这种数据操作会通过一个指令完成一次数据的运算。而SIMD（Single Instruction Multiple Data）可以完成单指令多数据的操作，一次性读取所有的操作数并进行运算。
+为什么要有SIMD 数据密集型计算的大规模出现：图像、视频、音频等数据的处理需求催生了SIMD类型指令的出现。如果说之前处理一帧数据需要无数条SISD的指令，那么可能只需要一条SIMD指令，极大提升了这类处理需求的指令效率。
+单发射与多发射 多发射可以在一个时钟周期执行多条指令，这是由于处理器内部多个执行单元的存在（又增加了处理器核的面积和逻辑复杂性）。让我们的处理器可以达到指令级的并行。
+静态多发射 静态多发射依赖于编译阶段对可以并行的指令打包，合并成一个长指令，这种实现实现又叫做VLIW（Very long Instruction Wrod），这种实现简单，所需硬件也简单，但由于指令集的兼容问题，这种实现并不能完全被主流处理器支持。
+动态多发射 动态多发射在硬件上完成了指令的并行话操作，实现这种方式的处理器又被叫做超标量处理器（SuperScalar）。需要在处理器硬件上实现增加很多逻辑。
+EPIC EPIC结合了VILW和SuperScaler的优点，通过在指令中显式提供bit位表达两条指令间有没有相关性，简化了硬件处理两条指令相关的逻辑。
+多核 提升芯片面积（如多发射或其他类似的设计增加）在提升CPU性能的同时也带来了更高的功耗，更昂贵的成本。因此对单核的提升出现了一个瓶颈：无法在提升性能的同时降低功耗（相同工艺）。针对于此，多核的时代来临了。
+多核处理器能够让多个任务级做到真正并行，而单核处理器只能称之为并发，现代计算机一般都是多个任务同时运行，在这种情况下多核的优势开始显现出来。
+片上多核互联 正如在单核流水线和多发射中存在的冲突问题，多核处理器也不能每个核心单独存在，需要进行互联通信。CPU的通信经历了星型连接，总线连接，交叉开关（Crossbar）连接，到达RingBus阶段。RingBus结合总线型和开关型的优点，在成本功耗与通信效率间达到了平衡。但当处理器核心进一步增多时，RingBus的延迟又成为了新的瓶颈。因此面向众核处理器领域又出现了新的片上互联技术：片上网络（Net On Chip, Noc)。
+大小核 当工作任务均匀分配到每个核心，并且实现大的负载时，多核处理器的性能得到了充分的发挥。但当工作任务不是很多时，往往会造成处理器中某些核心的空转，白白浪费了电费。为了解决这个问题，不同的厂商都提出了他们的大小核架构方案。可以通过操作系统的调度实现处理器的均匀负载，针对不同的人物，可以使用不同的核心处理问题。
+ 不同厂商的实现不同，比如ARM的big.LITTLE架构中小核心的存在就是为了低功耗，而Intel的E-Core则提供了多线程处理能力，提供的更多是“能效”方面的提升。
+ 超线程（Hyper-Threading） 在主流的X86处理器中，主流CPU都提供了超线程技术，通过增加一定的控制逻辑电路将一个物理处理器当作两个逻辑处理器使用，更大限度提升CPU的资源利用率。
+实现原理 通过增加控制逻辑电路，保存各个线程的状态，使不同线程共享一个核心的资源，通过进行上下文切换进行线程转移。
+ 在超线程处理器上这种线程切换可能只需要一个时钟周期，而对于一般处理器的线程切换可能需要上万个时钟周期。">
+<script type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Posts","item":"http://yl4869.github.io/posts/"},{"@type":"ListItem","position":2,"name":"计算机体系结构-CPU性能提升简述","item":"http://yl4869.github.io/posts/read/1/"}]}</script>
+<script type=application/ld+json>{"@context":"https://schema.org","@type":"BlogPosting","headline":"计算机体系结构-CPU性能提升简述","name":"计算机体系结构-CPU性能提升简述","description":"前言 随着半导体工艺的升级和芯片技术的发展，为了充分提升CPU的性能出现了各种各样的方式，提升工艺能够极大提升CPU性能，但随着摩尔定律的逐渐失效，优化CPU结构成为了提升CPU性能中越来越重要的一部分。\n局部性原理 在CPU频率不断提升的情况下，和CPU进行频繁数据交换的内存速度却提升不够。在这种情况下，CPU直接通过内存进行数据交换时，由于需要等待内存的回应，往往会降低CPU的性能。通过在CPU和内存中间插入Cache作为缓存，能够一定程度上弥补这个问题。\nCache的实现原理 Cache利用空间局部性和时间局部性原理，通过在内存和CPU中间插入一块速度更快的存储器，进而CPU可以先尝试和Cache进行交互，减少CPU访问内存的次数，进而提高系统的整体性能。当Cache中不存在相应数据时，我们会将存储器中的数据和相邻的数据“搬运”到Cache中，这样只需一次访问内存我们可以减少n次内存的访问。\n多级Cache 如果都用最先进的工艺实现一个Cache,价格和功耗都是我们无法接受的（当Cache过大时，会由于复杂逻辑产生大的功耗）。因此我们采用多级Cache的方案，不同Cache满足不同需求，如Icache和Dcache代表的L1cache独立于每个Core,L2cache可能在由几个Core进行共用，L3cache可能是整个CPU共用一份。\n L1cache分解成Icache和Dcache由于流水线的存在。\n 无Cache Cache虽好，但并不是所有的处理器都提供了Cache,原因主要有三点：\n Cache会增加功耗和成本，占用过大的芯片面积和发热了。 一些处理器本身工作频率不高，没有需要Cache解决的带宽问题。 Cache无法保证实时性，缓存命中和未命中需要不同的CPU处理时间，无法满足实时控制场景的需要。  流水线 CPU工作的执行单调而乏味，正如流水线上的工人一样，因此我们也可以通过流水线的方式提升CPU的处理速度。\n流水线的原理 流水线通过将一个任务分成多个部分，利用类似并行的处理方式提高了模块的利用率，提升了吞吐量。\n 想象一个拧螺丝的工作需要4步，每一步需要2s中，那我们从开始到最后完成任务需要8s，也就是说这个时候我们8s可以生产一个产品，但无论我们执行那一步，其他的三步（材料+设备）都是空闲的，因此我们可以通过流水线的方式进行全速前进，这样在全速前进下我们2s就可以生产一个产品（虽然第一个产品生产完成其实也需要8s等待）。\n 流水线并不是越深越好 首先流水线的分级需要插入寄存器；流水线间如果出现依赖可能还需要增加逻辑进行判断；同时一旦发生了跳转，我们需要丢弃掉前面所有的预取指令。\n更多情况下，我们的流水线需要在性能和功耗间做一个平衡。\n乱序执行 不同指令间的执行在流水线中可能存在冒险，这种情况下我们可能需要停顿流水线或添加更多逻辑，而还有一种方式就是通过乱序执行，让数据相关的指令不在一起执行，从而根本上避免了冒险的产生。\nSISD和SIMD 我们学习过的大多数指令都是SISD（Single Instruction Single Data），这种数据操作会通过一个指令完成一次数据的运算。而SIMD（Single Instruction Multiple Data）可以完成单指令多数据的操作，一次性读取所有的操作数并进行运算。\n为什么要有SIMD 数据密集型计算的大规模出现：图像、视频、音频等数据的处理需求催生了SIMD类型指令的出现。如果说之前处理一帧数据需要无数条SISD的指令，那么可能只需要一条SIMD指令，极大提升了这类处理需求的指令效率。\n单发射与多发射 多发射可以在一个时钟周期执行多条指令，这是由于处理器内部多个执行单元的存在（又增加了处理器核的面积和逻辑复杂性）。让我们的处理器可以达到指令级的并行。\n静态多发射 静态多发射依赖于编译阶段对可以并行的指令打包，合并成一个长指令，这种实现实现又叫做VLIW（Very long Instruction Wrod），这种实现简单，所需硬件也简单，但由于指令集的兼容问题，这种实现并不能完全被主流处理器支持。\n动态多发射 动态多发射在硬件上完成了指令的并行话操作，实现这种方式的处理器又被叫做超标量处理器（SuperScalar）。需要在处理器硬件上实现增加很多逻辑。\nEPIC EPIC结合了VILW和SuperScaler的优点，通过在指令中显式提供bit位表达两条指令间有没有相关性，简化了硬件处理两条指令相关的逻辑。\n多核 提升芯片面积（如多发射或其他类似的设计增加）在提升CPU性能的同时也带来了更高的功耗，更昂贵的成本。因此对单核的提升出现了一个瓶颈：无法在提升性能的同时降低功耗（相同工艺）。针对于此，多核的时代来临了。\n多核处理器能够让多个任务级做到真正并行，而单核处理器只能称之为并发，现代计算机一般都是多个任务同时运行，在这种情况下多核的优势开始显现出来。\n片上多核互联 正如在单核流水线和多发射中存在的冲突问题，多核处理器也不能每个核心单独存在，需要进行互联通信。CPU的通信经历了星型连接，总线连接，交叉开关（Crossbar）连接，到达RingBus阶段。RingBus结合总线型和开关型的优点，在成本功耗与通信效率间达到了平衡。但当处理器核心进一步增多时，RingBus的延迟又成为了新的瓶颈。因此面向众核处理器领域又出现了新的片上互联技术：片上网络（Net On Chip, Noc)。\n大小核 当工作任务均匀分配到每个核心，并且实现大的负载时，多核处理器的性能得到了充分的发挥。但当工作任务不是很多时，往往会造成处理器中某些核心的空转，白白浪费了电费。为了解决这个问题，不同的厂商都提出了他们的大小核架构方案。可以通过操作系统的调度实现处理器的均匀负载，针对不同的人物，可以使用不同的核心处理问题。\n 不同厂商的实现不同，比如ARM的big.LITTLE架构中小核心的存在就是为了低功耗，而Intel的E-Core则提供了多线程处理能力，提供的更多是“能效”方面的提升。\n 超线程（Hyper-Threading） 在主流的X86处理器中，主流CPU都提供了超线程技术，通过增加一定的控制逻辑电路将一个物理处理器当作两个逻辑处理器使用，更大限度提升CPU的资源利用率。\n实现原理 通过增加控制逻辑电路，保存各个线程的状态，使不同线程共享一个核心的资源，通过进行上下文切换进行线程转移。\n 在超线程处理器上这种线程切换可能只需要一个时钟周期，而对于一般处理器的线程切换可能需要上万个时钟周期。","keywords":[],"articleBody":"前言 随着半导体工艺的升级和芯片技术的发展，为了充分提升CPU的性能出现了各种各样的方式，提升工艺能够极大提升CPU性能，但随着摩尔定律的逐渐失效，优化CPU结构成为了提升CPU性能中越来越重要的一部分。\n局部性原理 在CPU频率不断提升的情况下，和CPU进行频繁数据交换的内存速度却提升不够。在这种情况下，CPU直接通过内存进行数据交换时，由于需要等待内存的回应，往往会降低CPU的性能。通过在CPU和内存中间插入Cache作为缓存，能够一定程度上弥补这个问题。\nCache的实现原理 Cache利用空间局部性和时间局部性原理，通过在内存和CPU中间插入一块速度更快的存储器，进而CPU可以先尝试和Cache进行交互，减少CPU访问内存的次数，进而提高系统的整体性能。当Cache中不存在相应数据时，我们会将存储器中的数据和相邻的数据“搬运”到Cache中，这样只需一次访问内存我们可以减少n次内存的访问。\n多级Cache 如果都用最先进的工艺实现一个Cache,价格和功耗都是我们无法接受的（当Cache过大时，会由于复杂逻辑产生大的功耗）。因此我们采用多级Cache的方案，不同Cache满足不同需求，如Icache和Dcache代表的L1cache独立于每个Core,L2cache可能在由几个Core进行共用，L3cache可能是整个CPU共用一份。\n L1cache分解成Icache和Dcache由于流水线的存在。\n 无Cache Cache虽好，但并不是所有的处理器都提供了Cache,原因主要有三点：\n Cache会增加功耗和成本，占用过大的芯片面积和发热了。 一些处理器本身工作频率不高，没有需要Cache解决的带宽问题。 Cache无法保证实时性，缓存命中和未命中需要不同的CPU处理时间，无法满足实时控制场景的需要。  流水线 CPU工作的执行单调而乏味，正如流水线上的工人一样，因此我们也可以通过流水线的方式提升CPU的处理速度。\n流水线的原理 流水线通过将一个任务分成多个部分，利用类似并行的处理方式提高了模块的利用率，提升了吞吐量。\n 想象一个拧螺丝的工作需要4步，每一步需要2s中，那我们从开始到最后完成任务需要8s，也就是说这个时候我们8s可以生产一个产品，但无论我们执行那一步，其他的三步（材料+设备）都是空闲的，因此我们可以通过流水线的方式进行全速前进，这样在全速前进下我们2s就可以生产一个产品（虽然第一个产品生产完成其实也需要8s等待）。\n 流水线并不是越深越好 首先流水线的分级需要插入寄存器；流水线间如果出现依赖可能还需要增加逻辑进行判断；同时一旦发生了跳转，我们需要丢弃掉前面所有的预取指令。\n更多情况下，我们的流水线需要在性能和功耗间做一个平衡。\n乱序执行 不同指令间的执行在流水线中可能存在冒险，这种情况下我们可能需要停顿流水线或添加更多逻辑，而还有一种方式就是通过乱序执行，让数据相关的指令不在一起执行，从而根本上避免了冒险的产生。\nSISD和SIMD 我们学习过的大多数指令都是SISD（Single Instruction Single Data），这种数据操作会通过一个指令完成一次数据的运算。而SIMD（Single Instruction Multiple Data）可以完成单指令多数据的操作，一次性读取所有的操作数并进行运算。\n为什么要有SIMD 数据密集型计算的大规模出现：图像、视频、音频等数据的处理需求催生了SIMD类型指令的出现。如果说之前处理一帧数据需要无数条SISD的指令，那么可能只需要一条SIMD指令，极大提升了这类处理需求的指令效率。\n单发射与多发射 多发射可以在一个时钟周期执行多条指令，这是由于处理器内部多个执行单元的存在（又增加了处理器核的面积和逻辑复杂性）。让我们的处理器可以达到指令级的并行。\n静态多发射 静态多发射依赖于编译阶段对可以并行的指令打包，合并成一个长指令，这种实现实现又叫做VLIW（Very long Instruction Wrod），这种实现简单，所需硬件也简单，但由于指令集的兼容问题，这种实现并不能完全被主流处理器支持。\n动态多发射 动态多发射在硬件上完成了指令的并行话操作，实现这种方式的处理器又被叫做超标量处理器（SuperScalar）。需要在处理器硬件上实现增加很多逻辑。\nEPIC EPIC结合了VILW和SuperScaler的优点，通过在指令中显式提供bit位表达两条指令间有没有相关性，简化了硬件处理两条指令相关的逻辑。\n多核 提升芯片面积（如多发射或其他类似的设计增加）在提升CPU性能的同时也带来了更高的功耗，更昂贵的成本。因此对单核的提升出现了一个瓶颈：无法在提升性能的同时降低功耗（相同工艺）。针对于此，多核的时代来临了。\n多核处理器能够让多个任务级做到真正并行，而单核处理器只能称之为并发，现代计算机一般都是多个任务同时运行，在这种情况下多核的优势开始显现出来。\n片上多核互联 正如在单核流水线和多发射中存在的冲突问题，多核处理器也不能每个核心单独存在，需要进行互联通信。CPU的通信经历了星型连接，总线连接，交叉开关（Crossbar）连接，到达RingBus阶段。RingBus结合总线型和开关型的优点，在成本功耗与通信效率间达到了平衡。但当处理器核心进一步增多时，RingBus的延迟又成为了新的瓶颈。因此面向众核处理器领域又出现了新的片上互联技术：片上网络（Net On Chip, Noc)。\n大小核 当工作任务均匀分配到每个核心，并且实现大的负载时，多核处理器的性能得到了充分的发挥。但当工作任务不是很多时，往往会造成处理器中某些核心的空转，白白浪费了电费。为了解决这个问题，不同的厂商都提出了他们的大小核架构方案。可以通过操作系统的调度实现处理器的均匀负载，针对不同的人物，可以使用不同的核心处理问题。\n 不同厂商的实现不同，比如ARM的big.LITTLE架构中小核心的存在就是为了低功耗，而Intel的E-Core则提供了多线程处理能力，提供的更多是“能效”方面的提升。\n 超线程（Hyper-Threading） 在主流的X86处理器中，主流CPU都提供了超线程技术，通过增加一定的控制逻辑电路将一个物理处理器当作两个逻辑处理器使用，更大限度提升CPU的资源利用率。\n实现原理 通过增加控制逻辑电路，保存各个线程的状态，使不同线程共享一个核心的资源，通过进行上下文切换进行线程转移。\n 在超线程处理器上这种线程切换可能只需要一个时钟周期，而对于一般处理器的线程切换可能需要上万个时钟周期。\n 超线程的本质时通过让操作系统分配给CPU更多任务，减少CPU的空闲时间：一个线程空闲时就可以切换到另一个线程了。\n超线程一定有利吗 超线程更多适用于高并发的任务中，但对于游戏这种比较吃单核性能的任务下，超线程反而会增加系统开销，影响性能。\n 现今一些游戏也开始尝试对多线程提供优化，操作系统和各种应用也越来越支持多线程技术。\n ","wordCount":"65","inLanguage":"en","datePublished":"2022-12-19T21:03:52+08:00","dateModified":"2022-12-19T21:03:52+08:00","author":{"@type":"Person","name":"yunlang"},"mainEntityOfPage":{"@type":"WebPage","@id":"http://yl4869.github.io/posts/read/1/"},"publisher":{"@type":"Organization","name":"FunForever","logo":{"@type":"ImageObject","url":"http://yl4869.github.io/%3Clink%20/%20abs%20url%3E"}}}</script>
+</head>
+<body id=top>
+<script>localStorage.getItem("pref-theme")==="dark"?document.body.classList.add('dark'):localStorage.getItem("pref-theme")==="light"?document.body.classList.remove('dark'):window.matchMedia('(prefers-color-scheme: dark)').matches&&document.body.classList.add('dark')</script>
+<header class=header>
+<nav class=nav>
+<div class=logo>
+<a href=http://yl4869.github.io/ accesskey=h title="主页 (Alt + H)">主页</a>
+<div class=logo-switches>
+<button id=theme-toggle accesskey=t title="(Alt + T)"><svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg><svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+</button>
+</div>
+</div>
+<ul id=menu>
+<li>
+<a href=http://yl4869.github.io/archives/ title=归档>
+<span>归档</span>
+</a>
+</li>
+<li>
+<a href=http://yl4869.github.io/categories/ title=种类>
+<span>种类</span>
+</a>
+</li>
+<li>
+<a href=http://yl4869.github.io/tags/ title=标签>
+<span>标签</span>
+</a>
+</li>
+<li>
+<a href=http://yl4869.github.io/search/ title="搜索 (Alt + /)" accesskey=/>
+<span>搜索</span>
+</a>
+</li>
+<li>
+<a href=http://yl4869.github.io/links/ title=友链>
+<span>友链</span>
+</a>
+</li>
+</ul>
+</nav>
+</header>
+<main class=main>
+<article class=post-single>
+<header class=post-header>
+<div class=breadcrumbs><a href=http://yl4869.github.io/>Home</a>&nbsp;»&nbsp;<a href=http://yl4869.github.io/posts/>Posts</a></div>
+<h1 class=post-title>
+计算机体系结构-CPU性能提升简述
+</h1>
+<div class=post-meta><span title="2022-12-19 21:03:52 +0800 CST">December 19, 2022</span>&nbsp;·&nbsp;yunlang&nbsp;|&nbsp;<a href="mailto://yunlanglang@outlook.com?subject=Suggesting%20changes%20for/posts/read/1.md" rel="noopener noreferrer" target=_blank>发送建议给作者</a>
+</div>
+</header> <div class=toc>
+<details open>
+<summary accesskey=c title="(Alt + C)">
+<span class=details>Table of Contents</span>
+</summary>
+<div class=inner><ul>
+<li>
+<a href=#%e5%89%8d%e8%a8%80 aria-label=前言>前言</a><ul>
+<li>
+<a href=#%e5%b1%80%e9%83%a8%e6%80%a7%e5%8e%9f%e7%90%86 aria-label=局部性原理>局部性原理</a><ul>
+<li>
+<a href=#cache%e7%9a%84%e5%ae%9e%e7%8e%b0%e5%8e%9f%e7%90%86 aria-label=Cache的实现原理>Cache的实现原理</a></li>
+<li>
+<a href=#%e5%a4%9a%e7%ba%a7cache aria-label=多级Cache>多级Cache</a></li>
+<li>
+<a href=#%e6%97%a0cache aria-label=无Cache>无Cache</a></li></ul>
+</li>
+<li>
+<a href=#%e6%b5%81%e6%b0%b4%e7%ba%bf aria-label=流水线>流水线</a><ul>
+<li>
+<a href=#%e6%b5%81%e6%b0%b4%e7%ba%bf%e7%9a%84%e5%8e%9f%e7%90%86 aria-label=流水线的原理>流水线的原理</a></li>
+<li>
+<a href=#%e6%b5%81%e6%b0%b4%e7%ba%bf%e5%b9%b6%e4%b8%8d%e6%98%af%e8%b6%8a%e6%b7%b1%e8%b6%8a%e5%a5%bd aria-label=流水线并不是越深越好>流水线并不是越深越好</a></li></ul>
+</li>
+<li>
+<a href=#%e4%b9%b1%e5%ba%8f%e6%89%a7%e8%a1%8c aria-label=乱序执行>乱序执行</a></li>
+<li>
+<a href=#sisd%e5%92%8csimd aria-label=SISD和SIMD>SISD和SIMD</a><ul>
+<li>
+<a href=#%e4%b8%ba%e4%bb%80%e4%b9%88%e8%a6%81%e6%9c%89simd aria-label=为什么要有SIMD>为什么要有SIMD</a></li></ul>
+</li>
+<li>
+<a href=#%e5%8d%95%e5%8f%91%e5%b0%84%e4%b8%8e%e5%a4%9a%e5%8f%91%e5%b0%84 aria-label=单发射与多发射>单发射与多发射</a><ul>
+<li>
+<a href=#%e9%9d%99%e6%80%81%e5%a4%9a%e5%8f%91%e5%b0%84 aria-label=静态多发射>静态多发射</a></li>
+<li>
+<a href=#%e5%8a%a8%e6%80%81%e5%a4%9a%e5%8f%91%e5%b0%84 aria-label=动态多发射>动态多发射</a></li>
+<li>
+<a href=#epic aria-label=EPIC>EPIC</a></li></ul>
+</li>
+<li>
+<a href=#%e5%a4%9a%e6%a0%b8 aria-label=多核>多核</a><ul>
+<li>
+<a href=#%e7%89%87%e4%b8%8a%e5%a4%9a%e6%a0%b8%e4%ba%92%e8%81%94 aria-label=片上多核互联>片上多核互联</a></li>
+<li>
+<a href=#%e5%a4%a7%e5%b0%8f%e6%a0%b8 aria-label=大小核>大小核</a></li>
+<li>
+<a href=#%e8%b6%85%e7%ba%bf%e7%a8%8bhyper-threading aria-label=超线程（Hyper-Threading）>超线程（Hyper-Threading）</a><ul>
+<li>
+<a href=#%e5%ae%9e%e7%8e%b0%e5%8e%9f%e7%90%86 aria-label=实现原理>实现原理</a></li>
+<li>
+<a href=#%e8%b6%85%e7%ba%bf%e7%a8%8b%e4%b8%80%e5%ae%9a%e6%9c%89%e5%88%a9%e5%90%97 aria-label=超线程一定有利吗>超线程一定有利吗</a>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</details>
+</div>
+<div class=post-content><h1 id=前言>前言<a hidden class=anchor aria-hidden=true href=#前言>#</a></h1>
+<p>随着半导体工艺的升级和芯片技术的发展，为了充分提升CPU的性能出现了各种各样的方式，提升工艺能够极大提升CPU性能，但随着摩尔定律的逐渐失效，优化CPU结构成为了提升CPU性能中越来越重要的一部分。</p>
+<h2 id=局部性原理>局部性原理<a hidden class=anchor aria-hidden=true href=#局部性原理>#</a></h2>
+<p>在CPU频率不断提升的情况下，和CPU进行频繁数据交换的内存速度却提升不够。在这种情况下，CPU直接通过内存进行数据交换时，由于需要等待内存的回应，往往会降低CPU的性能。通过在CPU和内存中间插入Cache作为缓存，能够一定程度上弥补这个问题。</p>
+<h3 id=cache的实现原理>Cache的实现原理<a hidden class=anchor aria-hidden=true href=#cache的实现原理>#</a></h3>
+<p>Cache利用空间局部性和时间局部性原理，通过在内存和CPU中间插入一块速度更快的存储器，进而CPU可以先尝试和Cache进行交互，减少CPU访问内存的次数，进而提高系统的整体性能。当Cache中不存在相应数据时，我们会将存储器中的数据和相邻的数据“搬运”到Cache中，这样只需一次访问内存我们可以减少n次内存的访问。</p>
+<h3 id=多级cache>多级Cache<a hidden class=anchor aria-hidden=true href=#多级cache>#</a></h3>
+<p>如果都用最先进的工艺实现一个Cache,价格和功耗都是我们无法接受的（当Cache过大时，会由于复杂逻辑产生大的功耗）。因此我们采用多级Cache的方案，不同Cache满足不同需求，如Icache和Dcache代表的L1cache独立于每个Core,L2cache可能在由几个Core进行共用，L3cache可能是整个CPU共用一份。</p>
+<blockquote>
+<p>L1cache分解成Icache和Dcache由于流水线的存在。</p>
+</blockquote>
+<h3 id=无cache>无Cache<a hidden class=anchor aria-hidden=true href=#无cache>#</a></h3>
+<p>Cache虽好，但并不是所有的处理器都提供了Cache,原因主要有三点：</p>
+<ol>
+<li>Cache会增加功耗和成本，占用过大的芯片面积和发热了。</li>
+<li>一些处理器本身工作频率不高，没有需要Cache解决的带宽问题。</li>
+<li>Cache无法保证实时性，缓存命中和未命中需要不同的CPU处理时间，无法满足实时控制场景的需要。</li>
+</ol>
+<h2 id=流水线>流水线<a hidden class=anchor aria-hidden=true href=#流水线>#</a></h2>
+<p>CPU工作的执行单调而乏味，正如流水线上的工人一样，因此我们也可以通过流水线的方式提升CPU的处理速度。</p>
+<h3 id=流水线的原理>流水线的原理<a hidden class=anchor aria-hidden=true href=#流水线的原理>#</a></h3>
+<p>流水线通过将一个任务分成多个部分，利用<strong>类似并行</strong>的处理方式提高了模块的利用率，提升了吞吐量。</p>
+<blockquote>
+<p>想象一个拧螺丝的工作需要4步，每一步需要2s中，那我们从开始到最后完成任务需要8s，也就是说这个时候我们8s可以生产一个产品，但无论我们执行那一步，其他的三步（材料+设备）都是空闲的，因此我们可以通过流水线的方式进行全速前进，这样在全速前进下我们2s就可以生产一个产品（虽然第一个产品生产完成其实也需要8s等待）。</p>
+</blockquote>
+<h3 id=流水线并不是越深越好>流水线并不是越深越好<a hidden class=anchor aria-hidden=true href=#流水线并不是越深越好>#</a></h3>
+<p>首先流水线的分级需要插入寄存器；流水线间如果出现依赖可能还需要增加逻辑进行判断；同时一旦发生了跳转，我们需要丢弃掉前面所有的预取指令。</p>
+<p>更多情况下，我们的流水线需要在性能和功耗间做一个平衡。</p>
+<h2 id=乱序执行>乱序执行<a hidden class=anchor aria-hidden=true href=#乱序执行>#</a></h2>
+<p>不同指令间的执行在流水线中可能存在冒险，这种情况下我们可能需要停顿流水线或添加更多逻辑，而还有一种方式就是通过乱序执行，让数据相关的指令不在一起执行，从而根本上避免了冒险的产生。</p>
+<h2 id=sisd和simd>SISD和SIMD<a hidden class=anchor aria-hidden=true href=#sisd和simd>#</a></h2>
+<p>我们学习过的大多数指令都是SISD（Single Instruction Single Data），这种数据操作会通过一个指令完成一次数据的运算。而SIMD（Single Instruction Multiple Data）可以完成单指令多数据的操作，一次性读取所有的操作数并进行运算。</p>
+<h3 id=为什么要有simd>为什么要有SIMD<a hidden class=anchor aria-hidden=true href=#为什么要有simd>#</a></h3>
+<p>数据密集型计算的大规模出现：图像、视频、音频等数据的处理需求催生了SIMD类型指令的出现。如果说之前处理一帧数据需要无数条SISD的指令，那么可能只需要一条SIMD指令，极大提升了这类处理需求的指令效率。</p>
+<h2 id=单发射与多发射>单发射与多发射<a hidden class=anchor aria-hidden=true href=#单发射与多发射>#</a></h2>
+<p>多发射可以在一个时钟周期执行多条指令，这是由于处理器内部多个执行单元的存在（又增加了处理器核的面积和逻辑复杂性）。让我们的处理器可以达到指令级的并行。</p>
+<h3 id=静态多发射>静态多发射<a hidden class=anchor aria-hidden=true href=#静态多发射>#</a></h3>
+<p>静态多发射依赖于编译阶段对可以并行的指令打包，合并成一个长指令，这种实现实现又叫做<strong>VLIW</strong>（Very long Instruction Wrod），这种实现简单，所需硬件也简单，但由于指令集的兼容问题，这种实现并不能完全被主流处理器支持。</p>
+<h3 id=动态多发射>动态多发射<a hidden class=anchor aria-hidden=true href=#动态多发射>#</a></h3>
+<p>动态多发射在硬件上完成了指令的并行话操作，实现这种方式的处理器又被叫做超标量处理器（SuperScalar）。需要在处理器硬件上实现增加很多逻辑。</p>
+<h3 id=epic>EPIC<a hidden class=anchor aria-hidden=true href=#epic>#</a></h3>
+<p>EPIC结合了VILW和SuperScaler的优点，通过在指令中显式提供bit位表达两条指令间有没有相关性，简化了硬件处理两条指令相关的逻辑。</p>
+<h2 id=多核>多核<a hidden class=anchor aria-hidden=true href=#多核>#</a></h2>
+<p>提升芯片面积（如多发射或其他类似的设计增加）在提升CPU性能的同时也带来了更高的功耗，更昂贵的成本。因此对单核的提升出现了一个瓶颈：无法在提升性能的同时降低功耗（相同工艺）。针对于此，多核的时代来临了。</p>
+<p>多核处理器能够让多个任务级做到真正并行，而单核处理器只能称之为并发，现代计算机一般都是多个任务同时运行，在这种情况下多核的优势开始显现出来。</p>
+<h3 id=片上多核互联>片上多核互联<a hidden class=anchor aria-hidden=true href=#片上多核互联>#</a></h3>
+<p>正如在单核流水线和多发射中存在的冲突问题，多核处理器也不能每个核心单独存在，需要进行互联通信。CPU的通信经历了<strong>星型连接</strong>，<strong>总线连接</strong>，<strong>交叉开关（Crossbar）连接</strong>，到达<strong>RingBus</strong>阶段。RingBus结合总线型和开关型的优点，在成本功耗与通信效率间达到了平衡。但当处理器核心进一步增多时，RingBus的延迟又成为了新的瓶颈。因此面向众核处理器领域又出现了新的片上互联技术：<strong>片上网络（Net On Chip, Noc)</strong>。</p>
+<h3 id=大小核>大小核<a hidden class=anchor aria-hidden=true href=#大小核>#</a></h3>
+<p>当工作任务均匀分配到每个核心，并且实现大的负载时，多核处理器的性能得到了充分的发挥。但当工作任务不是很多时，往往会造成处理器中某些核心的<strong>空转</strong>，白白浪费了电费。为了解决这个问题，不同的厂商都提出了他们的大小核架构方案。可以通过操作系统的调度实现处理器的均匀负载，针对不同的人物，可以使用不同的核心处理问题。</p>
+<blockquote>
+<p>不同厂商的实现不同，比如ARM的big.LITTLE架构中小核心的存在就是为了低功耗，而Intel的E-Core则提供了多线程处理能力，提供的更多是“能效”方面的提升。</p>
+</blockquote>
+<h3 id=超线程hyper-threading>超线程（Hyper-Threading）<a hidden class=anchor aria-hidden=true href=#超线程hyper-threading>#</a></h3>
+<p>在主流的X86处理器中，主流CPU都提供了超线程技术，通过增加一定的控制逻辑电路将一个物理处理器当作两个逻辑处理器使用，更大限度提升CPU的资源利用率。</p>
+<h4 id=实现原理>实现原理<a hidden class=anchor aria-hidden=true href=#实现原理>#</a></h4>
+<p>通过增加控制逻辑电路，保存各个线程的状态，使不同线程共享一个核心的资源，通过进行上下文切换进行线程转移。</p>
+<blockquote>
+<p>在超线程处理器上这种线程切换可能只需要一个时钟周期，而对于一般处理器的线程切换可能需要上万个时钟周期。</p>
+</blockquote>
+<p>超线程的本质时通过让操作系统分配给CPU更多任务，减少CPU的空闲时间：一个线程空闲时就可以切换到另一个线程了。</p>
+<h4 id=超线程一定有利吗>超线程一定有利吗<a hidden class=anchor aria-hidden=true href=#超线程一定有利吗>#</a></h4>
+<p>超线程更多适用于高并发的任务中，但对于游戏这种比较吃单核性能的任务下，超线程反而会增加系统开销，影响性能。</p>
+<blockquote>
+<p>现今一些游戏也开始尝试对多线程提供优化，操作系统和各种应用也越来越支持多线程技术。</p>
+</blockquote>
+</div>
+<footer class=post-footer>
+<ul class=post-tags>
+</ul>
+<nav class=paginav>
+<a class=next href=http://yl4869.github.io/posts/learn_linux/reserved_space/>
+<span class=title>Next »</span>
+<br>
+<span>新硬盘挂载后发现 df 查询大小和实际大小不一致--Linux的保留空间</span>
+</a>
+</nav>
+<div class=share-buttons>
+<a target=_blank rel="noopener noreferrer" aria-label="share 计算机体系结构-CPU性能提升简述 on twitter" href="https://twitter.com/intent/tweet/?text=%e8%ae%a1%e7%ae%97%e6%9c%ba%e4%bd%93%e7%b3%bb%e7%bb%93%e6%9e%84-CPU%e6%80%a7%e8%83%bd%e6%8f%90%e5%8d%87%e7%ae%80%e8%bf%b0&url=http%3a%2f%2fyl4869.github.io%2fposts%2fread%2f1%2f&hashtags="><svg viewBox="0 0 512 512" height="30" width="30" fill="currentcolor"><path d="M449.446.0C483.971.0 512 28.03 512 62.554v386.892C512 483.97 483.97 512 449.446 512H62.554c-34.524.0-62.554-28.03-62.554-62.554V62.554c0-34.524 28.029-62.554 62.554-62.554h386.892zM195.519 424.544c135.939.0 210.268-112.643 210.268-210.268.0-3.218.0-6.437-.153-9.502 14.406-10.421 26.973-23.448 36.935-38.314-13.18 5.824-27.433 9.809-42.452 11.648 15.326-9.196 26.973-23.602 32.49-40.92-14.252 8.429-30.038 14.56-46.896 17.931-13.487-14.406-32.644-23.295-53.946-23.295-40.767.0-73.87 33.104-73.87 73.87.0 5.824.613 11.494 1.992 16.858-61.456-3.065-115.862-32.49-152.337-77.241-6.284 10.881-9.962 23.601-9.962 37.088.0 25.594 13.027 48.276 32.95 61.456-12.107-.307-23.448-3.678-33.41-9.196v.92c0 35.862 25.441 65.594 59.311 72.49-6.13 1.686-12.72 2.606-19.464 2.606-4.751.0-9.348-.46-13.946-1.38 9.349 29.426 36.628 50.728 68.965 51.341-25.287 19.771-57.164 31.571-91.8 31.571-5.977.0-11.801-.306-17.625-1.073 32.337 21.15 71.264 33.41 112.95 33.41z"/></svg>
+</a>
+<a target=_blank rel="noopener noreferrer" aria-label="share 计算机体系结构-CPU性能提升简述 on linkedin" href="https://www.linkedin.com/shareArticle?mini=true&url=http%3a%2f%2fyl4869.github.io%2fposts%2fread%2f1%2f&title=%e8%ae%a1%e7%ae%97%e6%9c%ba%e4%bd%93%e7%b3%bb%e7%bb%93%e6%9e%84-CPU%e6%80%a7%e8%83%bd%e6%8f%90%e5%8d%87%e7%ae%80%e8%bf%b0&summary=%e8%ae%a1%e7%ae%97%e6%9c%ba%e4%bd%93%e7%b3%bb%e7%bb%93%e6%9e%84-CPU%e6%80%a7%e8%83%bd%e6%8f%90%e5%8d%87%e7%ae%80%e8%bf%b0&source=http%3a%2f%2fyl4869.github.io%2fposts%2fread%2f1%2f"><svg viewBox="0 0 512 512" height="30" width="30" fill="currentcolor"><path d="M449.446.0C483.971.0 512 28.03 512 62.554v386.892C512 483.97 483.97 512 449.446 512H62.554c-34.524.0-62.554-28.03-62.554-62.554V62.554c0-34.524 28.029-62.554 62.554-62.554h386.892zM160.461 423.278V197.561h-75.04v225.717h75.04zm270.539.0V293.839c0-69.333-37.018-101.586-86.381-101.586-39.804.0-57.634 21.891-67.617 37.266v-31.958h-75.021c.995 21.181.0 225.717.0 225.717h75.02V297.222c0-6.748.486-13.492 2.474-18.315 5.414-13.475 17.767-27.434 38.494-27.434 27.135.0 38.007 20.707 38.007 51.037v120.768H431zM123.448 88.722C97.774 88.722 81 105.601 81 127.724c0 21.658 16.264 39.002 41.455 39.002h.484c26.165.0 42.452-17.344 42.452-39.002-.485-22.092-16.241-38.954-41.943-39.002z"/></svg>
+</a>
+<a target=_blank rel="noopener noreferrer" aria-label="share 计算机体系结构-CPU性能提升简述 on reddit" href="https://reddit.com/submit?url=http%3a%2f%2fyl4869.github.io%2fposts%2fread%2f1%2f&title=%e8%ae%a1%e7%ae%97%e6%9c%ba%e4%bd%93%e7%b3%bb%e7%bb%93%e6%9e%84-CPU%e6%80%a7%e8%83%bd%e6%8f%90%e5%8d%87%e7%ae%80%e8%bf%b0"><svg viewBox="0 0 512 512" height="30" width="30" fill="currentcolor"><path d="M449.446.0C483.971.0 512 28.03 512 62.554v386.892C512 483.97 483.97 512 449.446 512H62.554c-34.524.0-62.554-28.03-62.554-62.554V62.554c0-34.524 28.029-62.554 62.554-62.554h386.892zM446 265.638c0-22.964-18.616-41.58-41.58-41.58-11.211.0-21.361 4.457-28.841 11.666-28.424-20.508-67.586-33.757-111.204-35.278l18.941-89.121 61.884 13.157c.756 15.734 13.642 28.29 29.56 28.29 16.407.0 29.706-13.299 29.706-29.701.0-16.403-13.299-29.702-29.706-29.702-11.666.0-21.657 6.792-26.515 16.578l-69.105-14.69c-1.922-.418-3.939-.042-5.585 1.036-1.658 1.073-2.811 2.761-3.224 4.686l-21.152 99.438c-44.258 1.228-84.046 14.494-112.837 35.232-7.468-7.164-17.589-11.591-28.757-11.591-22.965.0-41.585 18.616-41.585 41.58.0 16.896 10.095 31.41 24.568 37.918-.639 4.135-.99 8.328-.99 12.576.0 63.977 74.469 115.836 166.33 115.836s166.334-51.859 166.334-115.836c0-4.218-.347-8.387-.977-12.493 14.564-6.47 24.735-21.034 24.735-38.001zM326.526 373.831c-20.27 20.241-59.115 21.816-70.534 21.816-11.428.0-50.277-1.575-70.522-21.82-3.007-3.008-3.007-7.882.0-10.889 3.003-2.999 7.882-3.003 10.885.0 12.777 12.781 40.11 17.317 59.637 17.317 19.522.0 46.86-4.536 59.657-17.321 3.016-2.999 7.886-2.995 10.885.008 3.008 3.011 3.003 7.882-.008 10.889zm-5.23-48.781c-16.373.0-29.701-13.324-29.701-29.698.0-16.381 13.328-29.714 29.701-29.714 16.378.0 29.706 13.333 29.706 29.714.0 16.374-13.328 29.698-29.706 29.698zM160.91 295.348c0-16.381 13.328-29.71 29.714-29.71 16.369.0 29.689 13.329 29.689 29.71.0 16.373-13.32 29.693-29.689 29.693-16.386.0-29.714-13.32-29.714-29.693z"/></svg>
+</a>
+<a target=_blank rel="noopener noreferrer" aria-label="share 计算机体系结构-CPU性能提升简述 on facebook" href="https://facebook.com/sharer/sharer.php?u=http%3a%2f%2fyl4869.github.io%2fposts%2fread%2f1%2f"><svg viewBox="0 0 512 512" height="30" width="30" fill="currentcolor"><path d="M449.446.0C483.971.0 512 28.03 512 62.554v386.892C512 483.97 483.97 512 449.446 512H342.978V319.085h66.6l12.672-82.621h-79.272v-53.617c0-22.603 11.073-44.636 46.58-44.636H425.6v-70.34s-32.71-5.582-63.982-5.582c-65.288.0-107.96 39.569-107.96 111.204v62.971h-72.573v82.621h72.573V512h-191.104c-34.524.0-62.554-28.03-62.554-62.554V62.554c0-34.524 28.029-62.554 62.554-62.554h386.892z"/></svg>
+</a>
+<a target=_blank rel="noopener noreferrer" aria-label="share 计算机体系结构-CPU性能提升简述 on whatsapp" href="https://api.whatsapp.com/send?text=%e8%ae%a1%e7%ae%97%e6%9c%ba%e4%bd%93%e7%b3%bb%e7%bb%93%e6%9e%84-CPU%e6%80%a7%e8%83%bd%e6%8f%90%e5%8d%87%e7%ae%80%e8%bf%b0%20-%20http%3a%2f%2fyl4869.github.io%2fposts%2fread%2f1%2f"><svg viewBox="0 0 512 512" height="30" width="30" fill="currentcolor"><path d="M449.446.0C483.971.0 512 28.03 512 62.554v386.892C512 483.97 483.97 512 449.446 512H62.554c-34.524.0-62.554-28.03-62.554-62.554V62.554c0-34.524 28.029-62.554 62.554-62.554h386.892zm-58.673 127.703c-33.842-33.881-78.847-52.548-126.798-52.568-98.799.0-179.21 80.405-179.249 179.234-.013 31.593 8.241 62.428 23.927 89.612l-25.429 92.884 95.021-24.925c26.181 14.28 55.659 21.807 85.658 21.816h.074c98.789.0 179.206-80.413 179.247-179.243.018-47.895-18.61-92.93-52.451-126.81zM263.976 403.485h-.06c-26.734-.01-52.954-7.193-75.828-20.767l-5.441-3.229-56.386 14.792 15.05-54.977-3.542-5.637c-14.913-23.72-22.791-51.136-22.779-79.287.033-82.142 66.867-148.971 149.046-148.971 39.793.014 77.199 15.531 105.329 43.692 28.128 28.16 43.609 65.592 43.594 105.4-.034 82.149-66.866 148.983-148.983 148.984zm81.721-111.581c-4.479-2.242-26.499-13.075-30.604-14.571-4.105-1.495-7.091-2.241-10.077 2.241-2.986 4.483-11.569 14.572-14.182 17.562-2.612 2.988-5.225 3.364-9.703 1.12-4.479-2.241-18.91-6.97-36.017-22.23C231.8 264.15 222.81 249.484 220.198 245s-.279-6.908 1.963-9.14c2.016-2.007 4.48-5.232 6.719-7.847 2.24-2.615 2.986-4.484 4.479-7.472 1.493-2.99.747-5.604-.374-7.846-1.119-2.241-10.077-24.288-13.809-33.256-3.635-8.733-7.327-7.55-10.077-7.688-2.609-.13-5.598-.158-8.583-.158-2.986.0-7.839 1.121-11.944 5.604-4.105 4.484-15.675 15.32-15.675 37.364.0 22.046 16.048 43.342 18.287 46.332 2.24 2.99 31.582 48.227 76.511 67.627 10.685 4.615 19.028 7.371 25.533 9.434 10.728 3.41 20.492 2.929 28.209 1.775 8.605-1.285 26.499-10.833 30.231-21.295 3.732-10.464 3.732-19.431 2.612-21.298-1.119-1.869-4.105-2.99-8.583-5.232z"/></svg>
+</a>
+<a target=_blank rel="noopener noreferrer" aria-label="share 计算机体系结构-CPU性能提升简述 on telegram" href="https://telegram.me/share/url?text=%e8%ae%a1%e7%ae%97%e6%9c%ba%e4%bd%93%e7%b3%bb%e7%bb%93%e6%9e%84-CPU%e6%80%a7%e8%83%bd%e6%8f%90%e5%8d%87%e7%ae%80%e8%bf%b0&url=http%3a%2f%2fyl4869.github.io%2fposts%2fread%2f1%2f"><svg viewBox="2 2 28 28" height="30" width="30" fill="currentcolor"><path d="M26.49 29.86H5.5a3.37 3.37.0 01-2.47-1 3.35 3.35.0 01-1-2.47V5.48A3.36 3.36.0 013 3 3.37 3.37.0 015.5 2h21A3.38 3.38.0 0129 3a3.36 3.36.0 011 2.46V26.37a3.35 3.35.0 01-1 2.47 3.38 3.38.0 01-2.51 1.02zm-5.38-6.71a.79.79.0 00.85-.66L24.73 9.24a.55.55.0 00-.18-.46.62.62.0 00-.41-.17q-.08.0-16.53 6.11a.59.59.0 00-.41.59.57.57.0 00.43.52l4 1.24 1.61 4.83a.62.62.0 00.63.43.56.56.0 00.4-.17L16.54 20l4.09 3A.9.9.0 0021.11 23.15zM13.8 20.71l-1.21-4q8.72-5.55 8.78-5.55c.15.0.23.0.23.16a.18.18.0 010 .06s-2.51 2.3-7.52 6.8z"/></svg>
+</a>
+</div>
+</footer>
+</article>
+</main>
+<footer class=footer>
+<span>&copy; 2022 <a href=http://yl4869.github.io/>FunForever</a></span>
+<span>
+Powered by
+<a href=https://gohugo.io/ rel="noopener noreferrer" target=_blank>Hugo</a> &
+        <a href=https://github.com/adityatelange/hugo-PaperMod/ rel=noopener target=_blank>PaperMod</a>
+</span>
+</footer>
+<a href=#top aria-label="go to top" title="Go to Top (Alt + G)" class=top-link id=top-link accesskey=g><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentcolor"><path d="M12 6H0l6-6z"/></svg>
+</a>
+<script>let menu=document.getElementById('menu');menu&&(menu.scrollLeft=localStorage.getItem("menu-scroll-position"),menu.onscroll=function(){localStorage.setItem("menu-scroll-position",menu.scrollLeft)}),document.querySelectorAll('a[href^="#"]').forEach(a=>{a.addEventListener("click",function(b){b.preventDefault();var a=this.getAttribute("href").substr(1);window.matchMedia('(prefers-reduced-motion: reduce)').matches?document.querySelector(`[id='${decodeURIComponent(a)}']`).scrollIntoView():document.querySelector(`[id='${decodeURIComponent(a)}']`).scrollIntoView({behavior:"smooth"}),a==="top"?history.replaceState(null,null," "):history.pushState(null,null,`#${a}`)})})</script>
+<script>var mybutton=document.getElementById("top-link");window.onscroll=function(){document.body.scrollTop>800||document.documentElement.scrollTop>800?(mybutton.style.visibility="visible",mybutton.style.opacity="1"):(mybutton.style.visibility="hidden",mybutton.style.opacity="0")}</script>
+<script>document.getElementById("theme-toggle").addEventListener("click",()=>{document.body.className.includes("dark")?(document.body.classList.remove('dark'),localStorage.setItem("pref-theme",'light')):(document.body.classList.add('dark'),localStorage.setItem("pref-theme",'dark'))})</script>
+<script>document.querySelectorAll('pre > code').forEach(b=>{const c=b.parentNode.parentNode,a=document.createElement('button');a.classList.add('copy-code'),a.innerHTML='copy';function d(){a.innerHTML='copied!',setTimeout(()=>{a.innerHTML='copy'},2e3)}a.addEventListener('click',e=>{if('clipboard'in navigator){navigator.clipboard.writeText(b.textContent),d();return}const a=document.createRange();a.selectNodeContents(b);const c=window.getSelection();c.removeAllRanges(),c.addRange(a);try{document.execCommand('copy'),d()}catch(a){}c.removeRange(a)}),c.classList.contains("highlight")?c.appendChild(a):c.parentNode.firstChild==c||(b.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName=="TABLE"?b.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(a):b.parentNode.appendChild(a))})</script>
+</body>
+</html>

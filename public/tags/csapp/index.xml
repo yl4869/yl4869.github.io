@@ -13,9 +13,9 @@
       <pubDate>Fri, 17 Dec 2021 11:14:14 +0800</pubDate>
       
       <guid>http://yl4869.github.io/posts/csapp/datalab/</guid>
-      <description>CSAPP:Data Lab 记录 bitXor(x,y)
+      <description>CSAPP:Data Lab 记录   bitXor(x,y)
 使用两种运算实现异或操作（&amp;amp;与～），要求指令数最多为14
-//1 /* * bitXor - x^y using only ~ and &amp;amp; * Example: bitXor(4, 5) = 1 * Legal ops: ~ &amp;amp; * Max ops: 14 * Rating: 1 */ int bitXor(int x, int y) { int nx = ~x; int ny = ~y; int fx = x &amp;amp; ny; int fy = nx &amp;amp; y; return ~( (~fx) &amp;amp; (~fy) ); } 采用的是离散数学中亦或的另一种定义方式,$$P \oplus Q = (P \wedge \neg Q) \vee (\neg P \vee Q)$$.</description>
+//1  /* * bitXor - x^y using only ~ and &amp;amp; * Example: bitXor(4, 5) = 1 * Legal ops: ~ &amp;amp; * Max ops: 14 * Rating: 1 */ int bitXor(int x, int y) { int nx = ~x; int ny = ~y; int fx = x &amp;amp; ny; int fy = nx &amp;amp; y; return ~( (~fx) &amp;amp; (~fy) ); }  采用的是离散数学中亦或的另一种定义方式,$$P \oplus Q = (P \wedge \neg Q) \vee (\neg P \vee Q)$$.</description>
     </item>
     
   </channel>
