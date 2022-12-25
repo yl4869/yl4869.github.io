@@ -11,6 +11,10 @@ draft: false
 http://toolbox.phodal.com/
 > 顾名思义，从文档到工具到外设，在无聊的时候可以随意看一看，说不定就找到了提升自己生产力的工具。
 
+### CPU仿真器
+https://cpulator.01xz.net/
+> 支持Nios II, ARMv7和Mips的处理器仿真。
+
 ### LaTex
 https://www.overleaf.com/ 
 > LaTex在线编辑工具
@@ -25,7 +29,7 @@ https://www.kancloud.cn/dlover/fpga
 > 记录了作者学习FPGA时的各种积累，适合新手学习。
 
 ## 机器学习  
-###机器学习数据寻找  
+### 机器学习数据寻找  
 https://www.zhihu.com/question/342295029/answer/846359794  
 
 ### 画出美观的神经网络
