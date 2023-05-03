@@ -1,7 +1,7 @@
 ---
 TocOpen: true
-title: "如何理解字符串，字符串字面量和字符串切片"
-tags: []
+title: "RUST: 如何理解字符串，字符串字面量和字符串切片"
+tags: ["rust"]
 date: 2023-03-26T22:37:14+08:00
 draft: false
 ---
