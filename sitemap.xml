@@ -8,7 +8,13 @@
     <loc>http://yl4869.github.io/posts/</loc>
     <lastmod>2023-03-26T22:37:14+08:00</lastmod>
   </url><url>
+    <loc>http://yl4869.github.io/tags/rust/</loc>
+    <lastmod>2023-03-26T22:37:14+08:00</lastmod>
+  </url><url>
     <loc>http://yl4869.github.io/posts/rust/string_str/</loc>
+    <lastmod>2023-03-26T22:37:14+08:00</lastmod>
+  </url><url>
+    <loc>http://yl4869.github.io/tags/</loc>
     <lastmod>2023-03-26T22:37:14+08:00</lastmod>
   </url><url>
     <loc>http://yl4869.github.io/posts/trans/numa/part1-uma-to-numa/</loc>
@@ -20,17 +26,11 @@
     <loc>http://yl4869.github.io/tags/linux/</loc>
     <lastmod>2022-12-08T19:29:17+08:00</lastmod>
   </url><url>
-    <loc>http://yl4869.github.io/tags/</loc>
-    <lastmod>2022-12-08T19:29:17+08:00</lastmod>
-  </url><url>
     <loc>http://yl4869.github.io/posts/learn_linux/reserved_space/</loc>
     <lastmod>2022-12-08T19:29:17+08:00</lastmod>
   </url><url>
     <loc>http://yl4869.github.io/posts/ad/pathplan1/</loc>
     <lastmod>2022-11-25T15:46:10+08:00</lastmod>
-  </url><url>
-    <loc>http://yl4869.github.io/tags/rust/</loc>
-    <lastmod>2022-11-14T10:05:15+08:00</lastmod>
   </url><url>
     <loc>http://yl4869.github.io/posts/rust/generics_trait/</loc>
     <lastmod>2022-11-14T10:05:15+08:00</lastmod>
