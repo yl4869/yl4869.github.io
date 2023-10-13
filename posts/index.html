@@ -81,6 +81,24 @@ Posts
 </header>
 <article class=post-entry>
 <header class=entry-header>
+<h2>仲裁器
+</h2>
+</header>
+<div class=entry-content>
+<p>仲裁器是数字设计中常见的模块，应用广泛。仲裁器往往和其他组件使用在一起以组成仲裁电路。如仲裁器+编码器可以实现优先编码器。
+逻辑图 下面是一位仲裁器的逻辑图k
+只有当输入为1且当前仍未找到1时输出为真，如果之前已经找到1，输出信号会通知其他阶段已经找到了1。
+仲裁器可以实现为迭代电路，我们可以先设计1位逻辑电路，然后逐级连接组成多位的仲裁器:
+也可以使用超前进位的方式实现：
+verilog 实现 我们可以使用 casex 语句很方便的实现仲裁器：
+module Arb_4b(r, g); input [3:0] r; output [3:0] g; reg [3:0] g; always @(*) begin casex(r) 4'b0000: g = 4'b0000; 4'bxxx1: g = 4'b0001; 4'bxx10: g = 4'b0010; 4'bx100: g = 4'b0100; 4'b1000: g = 4'b1000; default: g = 4'hx; endcase end endmodule 当我们想要任意宽度的仲裁器时，可以用下面的实现：
+module Arb(r, g); // LSB 优先级最高 parameter n=8; input [n-1:0] r; output [n-1:0] g; wire [n-1:0] c = {(~r[n-2:0] & c[n-2:0]), 1'b1}; assign g = r & c; endmodule module Arb(r, g); // MSB 优先级最高 input [n-1:0] r; output [n-1:0] g; wire [n-1:0] c = {1'b1, (~r[n-1:1] & c[n-1:1])}; assign g = r & c; endmodule 可编程优先级仲裁器 使用位片式标记法可以编写优先级可编程的仲裁器，这里使用独热码负责指示标记，功能的实现为下面的语句：...</p>
+</div>
+<footer class=entry-footer><span title="2023-10-13 14:06:24 +0800 CST">October 13, 2023</span>&nbsp;·&nbsp;yunlang</footer>
+<a class=entry-link aria-label="post link to 仲裁器" href=http://yl4869.github.io/posts/digital_design/arb/></a>
+</article>
+<article class=post-entry>
+<header class=entry-header>
 <h2>RUST: 如何理解字符串，字符串字面量和字符串切片
 </h2>
 </header>
@@ -183,20 +201,6 @@ tune2fs -l /dev/sde1 | egrep "Block size:|Reserved block count" # Reserved block
 </div>
 <footer class=entry-footer><span title="2022-12-08 19:29:17 +0800 CST">December 8, 2022</span>&nbsp;·&nbsp;yunlang</footer>
 <a class=entry-link aria-label="post link to 新硬盘挂载后发现 df 查询大小和实际大小不一致--Linux的保留空间" href=http://yl4869.github.io/posts/learn_linux/reserved_space/></a>
-</article>
-<article class=post-entry>
-<header class=entry-header>
-<h2>路径规划算法：DFS，BFS，Dijkstra, GBFS 和 A*
-</h2>
-</header>
-<div class=entry-content>
-<p>介绍 图搜索算法中最常见的一个应用就是路径规划，常见的针对无权图的搜索有DFS和BFS，引入权重后，Dijkstra算法解决了单源最短路径问题，而启发式搜索的存在（GBFS，A*）则能够通过启发函数来提高搜索效率。
-DFS 深度优先搜索(Depth First Search)通过维护栈这一数据结构，能够实现对全部路径的搜索，但他会沿着一条路走到最后，在没有结果时才会回头选择另一条路，因此无法保证找到的路径是最优路径。
-def dfs(start_point, goal_point): path = [] seen = set() stack = [] seen.add(start_point) stack.append(goal_point) while len(stack) > 0: current = stack.pop() path.append(current) if current == goal_point: break if not graph.neighbors(current): path.pop() continue for next in graph.neighbors(current): if next not in seen: stack.append(next) seen.add(next) return path BFS 广度优先搜索（Breadth First Search）在搜索无权图最短路径时很有用，他会优先探索当前位置的所有方向而不是向着一个方向探索到最后，这也是广度的由来。实现BFS通常依靠队列。同时，我们通过字典来保存我们走过的路径，并通过从终点开始的反向遍历得到路径。
-def bfs(start_point, goal_point): frontier = Queue() frontier.put(start_point) came_from = dict() came_from[start_point] = None seen = set() seen....</p>
-</div>
-<footer class=entry-footer><span title="2022-11-25 15:46:10 +0800 CST">November 25, 2022</span>&nbsp;·&nbsp;yunlang</footer>
-<a class=entry-link aria-label="post link to 路径规划算法：DFS，BFS，Dijkstra, GBFS 和 A*" href=http://yl4869.github.io/posts/ad/pathplan1/></a>
 </article>
 <footer class=page-footer>
 <nav class=pagination>
