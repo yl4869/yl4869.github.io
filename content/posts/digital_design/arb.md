@@ -16,11 +16,11 @@ draft: false
 
 仲裁器可以实现为迭代电路，我们可以先设计1位逻辑电路，然后逐级连接组成多位的仲裁器:
 
-![多位仲裁器迭代电路](/image/digital_design/one_arb.png) 
+![多位仲裁器迭代电路](/image/digital_design/more_bit_arb.png)
 
 也可以使用超前进位的方式实现：
 
-![超前进位的仲裁器实现](/image/digital_design/one_arb.png) 
+![超前进位的仲裁器实现](/image/digital_design/Lookahead_arb.png)
 
 ## verilog 实现
 我们可以使用 `casex` 语句很方便的实现仲裁器：
