@@ -130,10 +130,10 @@ module Arb(r, g); // LSB 优先级最高  parameter n=8; input [n-1:0] r; output
 </p>
 <p>只有当输入为1且当前仍未找到1时输出为真，如果之前已经找到1，输出信号会通知其他阶段已经找到了1。</p>
 <p>仲裁器可以实现为迭代电路，我们可以先设计1位逻辑电路，然后逐级连接组成多位的仲裁器:</p>
-<p><img loading=lazy src=/image/digital_design/one_arb.png alt=多位仲裁器迭代电路>
+<p><img loading=lazy src=/image/digital_design/more_bit_arb.png alt=多位仲裁器迭代电路>
 </p>
 <p>也可以使用超前进位的方式实现：</p>
-<p><img loading=lazy src=/image/digital_design/one_arb.png alt=超前进位的仲裁器实现>
+<p><img loading=lazy src=/image/digital_design/Lookahead_arb.png alt=超前进位的仲裁器实现>
 </p>
 <h2 id=verilog-实现>verilog 实现<a hidden class=anchor aria-hidden=true href=#verilog-实现>#</a></h2>
 <p>我们可以使用 <code>casex</code> 语句很方便的实现仲裁器：</p>
