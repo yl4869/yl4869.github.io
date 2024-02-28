@@ -9,7 +9,14 @@ searchHidden: true
     logo="https://cdn.jsdelivr.net/gh/amtoaer/blog.allwens.work/source/avatar.webp" 
     word="今宵酒醒何处？杨柳岸，晓风残月。" >}}
 
+{{<friend name="Sehnsucht"
+    url="https://blog.sehnsucht.top/" 
+    logo="https://s2.loli.net/2022/11/21/I9QUtsXcZK6wgH4.png" 
+    word="transient" >}}
+
 ## 友链要求
+
+
 - 网站为个人博客
 - 网站在持续运营
 - 友链能被谷歌等搜索引擎收录

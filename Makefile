@@ -20,7 +20,7 @@ deploy: public
 	cd /tmp/blog && \
 	git add -A && \
 	git commit -m "$(COMMIT)" && \
-	git push origin deploy
+	git push -f origin deploy
 	cd -
 
 build:
