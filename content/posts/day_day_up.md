@@ -28,6 +28,10 @@ https://godbolt.org/
 https://www.kancloud.cn/dlover/fpga
 > 记录了作者学习FPGA时的各种积累，适合新手学习。
 
+### 使用json绘制波形
+https://wavedrom.com/editor.html
+> 可以通过编写json绘制好看的波形图
+
 ## 机器学习  
 ### 机器学习数据寻找  
 https://www.zhihu.com/question/342295029/answer/846359794  
