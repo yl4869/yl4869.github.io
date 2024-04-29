@@ -6,7 +6,46 @@
     <description>Recent content in Posts on FunForever</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Mon, 13 Mar 2023 21:15:02 +0800</lastBuildDate><atom:link href="http://yl4869.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 28 Feb 2024 23:12:49 +0800</lastBuildDate><atom:link href="http://yl4869.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Linux小tip-rsync</title>
+      <link>http://yl4869.github.io/posts/learn_linux/tips/tip2_rsync/</link>
+      <pubDate>Wed, 28 Feb 2024 23:12:49 +0800</pubDate>
+      
+      <guid>http://yl4869.github.io/posts/learn_linux/tips/tip2_rsync/</guid>
+      <description>简介 rsync 是一个用于文件同步和传输的命令行工具。它可以在本地系统之间或者通过SSH等安全通道在本地和远程系统之间同步文件和目录。
+你可能听过 scp，scp 主要通过 SSH 进行加密传输，只能用于本地和远程系统之间的文件拷贝。而 rsync 提供了更多的功能，如增量传输、删除目标端不存在的文件、排除特定文件等。
+常见选项 -a, --archive: 归档模式，保留文件的所有元数据，包括权限、所有者、组、时间等。 -v, --verbose: 输出详细信息，显示正在执行的操作。 -r, --recursive: 递归地同步子目录。 -z, --compress: 在传输时压缩数据，可以节省带宽。 -u, --update: 仅传输源目录中更新的文件。 -n, --dry-run: 模拟执行同步操作，显示将要发生的改变但不实际指令同步。 -e, --rsh=COMMAND: 选择在传输时使用的远程 shell 程序，通常是 rsh 或 ssh。 --delete: 删除目标目录中源目录没有的文件。 --exclude=PATTERN: 排除匹配指定模式的文件或目录。 示例 # 本地同步，如果是目录需要 -r 选项 rsync -av /path/to/source /path/to/destination # 本地到远程 rsync -av /path/to/source user@remote_host:/path/to/destination # 远程到本地 rsync -av user@remote_host:/path/to/source/ /path/to/destination/ # 同步并删除目标目录中不存在的文件 rsync -av --delete /path/to/source/ /path/to/destination/ # 排除特定文件或目录的同步 rsync -av --exclude=&amp;#39;*.</description>
+    </item>
+    
+    <item>
+      <title>仲裁器</title>
+      <link>http://yl4869.github.io/posts/digital_design/arb/</link>
+      <pubDate>Fri, 13 Oct 2023 14:06:24 +0800</pubDate>
+      
+      <guid>http://yl4869.github.io/posts/digital_design/arb/</guid>
+      <description>仲裁器是数字设计中常见的模块，应用广泛。仲裁器往往和其他组件使用在一起以组成仲裁电路。如仲裁器+编码器可以实现优先编码器。
+逻辑图 下面是一位仲裁器的逻辑图k
+只有当输入为1且当前仍未找到1时输出为真，如果之前已经找到1，输出信号会通知其他阶段已经找到了1。
+仲裁器可以实现为迭代电路，我们可以先设计1位逻辑电路，然后逐级连接组成多位的仲裁器:
+也可以使用超前进位的方式实现：
+verilog 实现 我们可以使用 casex 语句很方便的实现仲裁器：
+module Arb_4b(r, g); input [3:0] r; output [3:0] g; reg [3:0] g; always @(*) begin casex(r) 4&amp;#39;b0000: g = 4&amp;#39;b0000; 4&amp;#39;bxxx1: g = 4&amp;#39;b0001; 4&amp;#39;bxx10: g = 4&amp;#39;b0010; 4&amp;#39;bx100: g = 4&amp;#39;b0100; 4&amp;#39;b1000: g = 4&amp;#39;b1000; default: g = 4&amp;#39;hx; endcase end endmodule 当我们想要任意宽度的仲裁器时，可以用下面的实现：
+module Arb(r, g); // LSB 优先级最高 parameter n=8; input [n-1:0] r; output [n-1:0] g; wire [n-1:0] c = {(~r[n-2:0] &amp;amp; c[n-2:0]), 1&amp;#39;b1}; assign g = r &amp;amp; c; endmodule module Arb(r, g); // MSB 优先级最高 input [n-1:0] r; output [n-1:0] g; wire [n-1:0] c = {1&amp;#39;b1, (~r[n-1:1] &amp;amp; c[n-1:1])}; assign g = r &amp;amp; c; endmodule 可编程优先级仲裁器 使用位片式标记法可以编写优先级可编程的仲裁器，这里使用独热码负责指示标记，功能的实现为下面的语句：</description>
+    </item>
+    
+    <item>
+      <title>RUST: 如何理解字符串，字符串字面量和字符串切片</title>
+      <link>http://yl4869.github.io/posts/rust/string_str/</link>
+      <pubDate>Sun, 26 Mar 2023 22:37:14 +0800</pubDate>
+      
+      <guid>http://yl4869.github.io/posts/rust/string_str/</guid>
+      <description>如何理解String，str与&amp;amp;str 字符串，字符串字面量和字符串切片是初学 rust 最困惑的一点，一部分是因为它的各种用法繁杂，经常使用；另一部分也是因为它们所提供的方法繁多，并且有着令人疑惑的相互转换。虽然常读常新，但还是想写一篇博客，分享之外也可以让自己在困惑时快速找到参考而不用翻阅大量网页。
+从内存开始 通过了解字符串在内存中的表示，我们可以最直观的了解到他们的不同之处，考虑下面的代码和他们创建的布局。
+let s1 = String::from(&amp;#34;Hello&amp;#34;); let s2 = &amp;amp;s1[1..]; let s3 = &amp;#34;Hello&amp;#34;; 他们的内存布局如下
+my_name:s1(String) my_name: s2(&amp;amp;str) my_name:s3(&amp;amp;str) [----------------] [–––––––––––] [--------------] +---+---+---+ +–––+–––+ +---+---+ stack frame | • | 6 | 5 | │ • │ 4 │ | • | 4 | +-|-+---+---+ │–+–+–--+ +-|-+---+ | | | | +-------------+ | | | | +-V-+-V-+---+---+---+---+ | heap frame | H | e | l | l | o | | | +---+---+---+---+---+---+ | | | | | preallocated +–-–+–V–+–––+–––+–––+–––+ read-only │ H │ e │ l │ l │ o │ │ memory +–––+–––+–––+–––+–––+–––+ 我们可以发现下面几条事实:</description>
+    </item>
+    
     <item>
       <title>Part1 Uma to Numa</title>
       <link>http://yl4869.github.io/posts/trans/numa/part1-uma-to-numa/</link>
@@ -384,6 +423,8 @@ godbolt https://godbolt.org/
 高级语言到汇编的在线转换工具
 FPGA FPGA使用笔记 https://www.kancloud.cn/dlover/fpga
 记录了作者学习FPGA时的各种积累，适合新手学习。
+使用json绘制波形 https://wavedrom.com/editor.html
+可以通过编写json绘制好看的波形图
 机器学习 机器学习数据寻找 https://www.zhihu.com/question/342295029/answer/846359794
 画出美观的神经网络 http://alexlenail.me/NN-SVG/LeNet.html
 前端 前端背景 https://www.pexels.com/zh-cn/

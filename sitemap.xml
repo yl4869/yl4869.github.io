@@ -3,31 +3,43 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>http://yl4869.github.io/</loc>
-    <lastmod>2023-03-13T21:15:02+08:00</lastmod>
+    <lastmod>2024-02-28T23:12:49+08:00</lastmod>
+  </url><url>
+    <loc>http://yl4869.github.io/tags/linux/</loc>
+    <lastmod>2024-02-28T23:12:49+08:00</lastmod>
+  </url><url>
+    <loc>http://yl4869.github.io/posts/learn_linux/tips/tip2_rsync/</loc>
+    <lastmod>2024-02-28T23:12:49+08:00</lastmod>
+  </url><url>
+    <loc>http://yl4869.github.io/posts/</loc>
+    <lastmod>2024-02-28T23:12:49+08:00</lastmod>
+  </url><url>
+    <loc>http://yl4869.github.io/tags/</loc>
+    <lastmod>2024-02-28T23:12:49+08:00</lastmod>
+  </url><url>
+    <loc>http://yl4869.github.io/tags/digital_design/</loc>
+    <lastmod>2023-10-13T14:06:24+08:00</lastmod>
+  </url><url>
+    <loc>http://yl4869.github.io/posts/digital_design/arb/</loc>
+    <lastmod>2023-10-13T14:06:24+08:00</lastmod>
+  </url><url>
+    <loc>http://yl4869.github.io/tags/rust/</loc>
+    <lastmod>2023-03-26T22:37:14+08:00</lastmod>
+  </url><url>
+    <loc>http://yl4869.github.io/posts/rust/string_str/</loc>
+    <lastmod>2023-03-26T22:37:14+08:00</lastmod>
   </url><url>
     <loc>http://yl4869.github.io/posts/trans/numa/part1-uma-to-numa/</loc>
     <lastmod>2023-03-13T21:15:02+08:00</lastmod>
   </url><url>
-    <loc>http://yl4869.github.io/posts/</loc>
-    <lastmod>2023-03-13T21:15:02+08:00</lastmod>
-  </url><url>
     <loc>http://yl4869.github.io/posts/read/1/</loc>
     <lastmod>2022-12-19T21:03:52+08:00</lastmod>
-  </url><url>
-    <loc>http://yl4869.github.io/tags/linux/</loc>
-    <lastmod>2022-12-08T19:29:17+08:00</lastmod>
-  </url><url>
-    <loc>http://yl4869.github.io/tags/</loc>
-    <lastmod>2022-12-08T19:29:17+08:00</lastmod>
   </url><url>
     <loc>http://yl4869.github.io/posts/learn_linux/reserved_space/</loc>
     <lastmod>2022-12-08T19:29:17+08:00</lastmod>
   </url><url>
     <loc>http://yl4869.github.io/posts/ad/pathplan1/</loc>
     <lastmod>2022-11-25T15:46:10+08:00</lastmod>
-  </url><url>
-    <loc>http://yl4869.github.io/tags/rust/</loc>
-    <lastmod>2022-11-14T10:05:15+08:00</lastmod>
   </url><url>
     <loc>http://yl4869.github.io/posts/rust/generics_trait/</loc>
     <lastmod>2022-11-14T10:05:15+08:00</lastmod>
@@ -92,13 +104,14 @@
     <loc>http://yl4869.github.io/posts/csapp/datalab/</loc>
     <lastmod>2021-12-17T11:14:14+08:00</lastmod>
   </url><url>
+    <loc>http://yl4869.github.io/tags/c/c&#43;&#43;/</loc>
+    <lastmod>2021-12-13T23:36:06+08:00</lastmod>
+  </url><url>
     <loc>http://yl4869.github.io/posts/learn_c_cpp/declarations/</loc>
     <lastmod>2021-12-13T23:36:06+08:00</lastmod>
   </url><url>
     <loc>http://yl4869.github.io/posts/learn_c_cpp/type_coversions_cast/</loc>
     <lastmod>2021-12-08T19:36:06+08:00</lastmod>
-  </url><url>
-    <loc>http://yl4869.github.io/tags/c/c&#43;&#43;/</loc>
   </url><url>
     <loc>http://yl4869.github.io/categories/</loc>
   </url><url>

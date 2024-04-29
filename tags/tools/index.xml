@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>tools on FunForever</title>
+    <title>Tools on FunForever</title>
     <link>http://yl4869.github.io/tags/tools/</link>
-    <description>Recent content in tools on FunForever</description>
+    <description>Recent content in Tools on FunForever</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <lastBuildDate>Sat, 22 Jan 2022 23:33:15 +0800</lastBuildDate><atom:link href="http://yl4869.github.io/tags/tools/index.xml" rel="self" type="application/rss+xml" />
@@ -24,6 +24,8 @@ godbolt https://godbolt.org/
 高级语言到汇编的在线转换工具
 FPGA FPGA使用笔记 https://www.kancloud.cn/dlover/fpga
 记录了作者学习FPGA时的各种积累，适合新手学习。
+使用json绘制波形 https://wavedrom.com/editor.html
+可以通过编写json绘制好看的波形图
 机器学习 机器学习数据寻找 https://www.zhihu.com/question/342295029/answer/846359794
 画出美观的神经网络 http://alexlenail.me/NN-SVG/LeNet.html
 前端 前端背景 https://www.pexels.com/zh-cn/
