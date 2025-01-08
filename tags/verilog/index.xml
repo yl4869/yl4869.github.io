@@ -4,22 +4,51 @@
     <title>Verilog on FunForever</title>
     <link>http://yl4869.github.io/tags/verilog/</link>
     <description>Recent content in Verilog on FunForever</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <generator>Hugo -- 0.140.2</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Fri, 11 Nov 2022 19:10:13 +0800</lastBuildDate><atom:link href="http://yl4869.github.io/tags/verilog/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 11 Nov 2022 19:10:13 +0800</lastBuildDate>
+    <atom:link href="http://yl4869.github.io/tags/verilog/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Verilog 实现双边沿触发器Dual Edge_triggered_flip Flop</title>
       <link>http://yl4869.github.io/posts/verilog/dual-edge_triggered_flip-flop/</link>
       <pubDate>Fri, 11 Nov 2022 19:10:13 +0800</pubDate>
-      
       <guid>http://yl4869.github.io/posts/verilog/dual-edge_triggered_flip-flop/</guid>
-      <description>Verilog 实现双边沿触发器Dual Edge_triggered_flip Flop 在做HDLbits时，有一道很有趣的双边沿触发器问题 ，这里记录一下相关内容和解答方式。
-问题描述 实现一个双边沿触发器，即在时钟的上升沿和下降沿都被触发。
-module top_module ( input clk, input d, output q ); 问题 无法直接通过always @(posedge clk or negedge clk)直接创建双边沿触发器，FPGA 中只能存在单边沿触发器。
-但是你可以创建两个触发器，分别是上升沿和下降沿。
-解决方案（1） 虽然我们无法直接创建双边沿触发器，但是可以通过使用两个触发器和一个多路选择器实现相同的功能。
-module top_module ( input clk, input d, output q ); reg q1; reg q2; always @(posedge clk) begin q1 &amp;lt;= d; end always @(negedge clk) begin q2 &amp;lt;= d; end assign q = clk ? q1 : q2; endmodule 注意，你可能想要两个触发器内都填写q &amp;lt;= d，这在思维上是合理的，但是在实现中会引入多驱问题。</description>
+      <description>&lt;h1 id=&#34;verilog-实现双边沿触发器dual-edge_triggered_flip-flop&#34;&gt;Verilog 实现双边沿触发器Dual Edge_triggered_flip Flop&lt;/h1&gt;
+&lt;p&gt;在做HDLbits时，有一道很有趣的&lt;a href=&#34;https://hdlbits.01xz.net/wiki/Dualedge&#34;&gt;双边沿触发器问题&lt;/a&gt; ，这里记录一下相关内容和解答方式。&lt;/p&gt;
+&lt;h2 id=&#34;问题描述&#34;&gt;问题描述&lt;/h2&gt;
+&lt;p&gt;实现一个双边沿触发器，即在时钟的上升沿和下降沿都被触发。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-verilog&#34; data-lang=&#34;verilog&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;module&lt;/span&gt; top_module (
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;input&lt;/span&gt; clk,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;input&lt;/span&gt; d,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;output&lt;/span&gt; q
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;);
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;问题&#34;&gt;问题&lt;/h2&gt;
+&lt;p&gt;无法直接通过&lt;code&gt;always @(posedge clk or negedge clk)&lt;/code&gt;直接创建双边沿触发器，FPGA 中只能存在单边沿触发器。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;但是你可以创建两个触发器，分别是上升沿和下降沿。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&#34;解决方案1&#34;&gt;解决方案（1）&lt;/h2&gt;
+&lt;p&gt;虽然我们无法直接创建双边沿触发器，但是可以通过使用两个触发器和一个多路选择器实现相同的功能。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-verilog&#34; data-lang=&#34;verilog&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;module&lt;/span&gt; top_module (
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;input&lt;/span&gt; clk,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;input&lt;/span&gt; d,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;output&lt;/span&gt; q
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;);
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;reg&lt;/span&gt; q1;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;reg&lt;/span&gt; q2;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;always&lt;/span&gt; @(&lt;span style=&#34;color:#66d9ef&#34;&gt;posedge&lt;/span&gt; clk) &lt;span style=&#34;color:#66d9ef&#34;&gt;begin&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        q1 &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;=&lt;/span&gt; d;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;always&lt;/span&gt; @(&lt;span style=&#34;color:#66d9ef&#34;&gt;negedge&lt;/span&gt; clk) &lt;span style=&#34;color:#66d9ef&#34;&gt;begin&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        q2 &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;=&lt;/span&gt; d;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;assign&lt;/span&gt; q &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; clk &lt;span style=&#34;color:#f92672&#34;&gt;?&lt;/span&gt; q1 &lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt; q2;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;endmodule&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;blockquote&gt;
+&lt;p&gt;注意，你可能想要两个触发器内都填写&lt;code&gt;q &amp;lt;= d&lt;/code&gt;，这在思维上是合理的，但是在实现中会引入多驱问题。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;但这又引入了另一个问题：毛刺（&lt;a href=&#34;https://zh.wikipedia.org/wiki/%E5%B0%8F%E6%95%85%E9%9A%9C&#34;&gt;glitch&lt;/a&gt;）的出现，因为触发器的输出会存在一个延迟。&lt;/p&gt;
+&lt;p&gt;&lt;img alt=&#34;glitch 的产生&#34; loading=&#34;lazy&#34; src=&#34;http://yl4869.github.io/image/verilog/1.png&#34;&gt;&lt;/p&gt;</description>
     </item>
-    
   </channel>
 </rss>

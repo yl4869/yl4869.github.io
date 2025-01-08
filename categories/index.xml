@@ -4,7 +4,8 @@
     <title>Categories on FunForever</title>
     <link>http://yl4869.github.io/categories/</link>
     <description>Recent content in Categories on FunForever</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>zh-cn</language><atom:link href="http://yl4869.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
+    <generator>Hugo -- 0.140.2</generator>
+    <language>zh-cn</language>
+    <atom:link href="http://yl4869.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
   </channel>
 </rss>

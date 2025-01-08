@@ -4,19 +4,37 @@
     <title>CSAPP on FunForever</title>
     <link>http://yl4869.github.io/tags/csapp/</link>
     <description>Recent content in CSAPP on FunForever</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <generator>Hugo -- 0.140.2</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Fri, 17 Dec 2021 11:14:14 +0800</lastBuildDate><atom:link href="http://yl4869.github.io/tags/csapp/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 17 Dec 2021 11:14:14 +0800</lastBuildDate>
+    <atom:link href="http://yl4869.github.io/tags/csapp/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Datalab实验记录</title>
       <link>http://yl4869.github.io/posts/csapp/datalab/</link>
       <pubDate>Fri, 17 Dec 2021 11:14:14 +0800</pubDate>
-      
       <guid>http://yl4869.github.io/posts/csapp/datalab/</guid>
-      <description>CSAPP:Data Lab 记录 bitXor(x,y)
-使用两种运算实现异或操作（&amp;amp;与～），要求指令数最多为14
-//1 /* * bitXor - x^y using only ~ and &amp;amp; * Example: bitXor(4, 5) = 1 * Legal ops: ~ &amp;amp; * Max ops: 14 * Rating: 1 */ int bitXor(int x, int y) { int nx = ~x; int ny = ~y; int fx = x &amp;amp; ny; int fy = nx &amp;amp; y; return ~( (~fx) &amp;amp; (~fy) ); } 采用的是离散数学中亦或的另一种定义方式,$$P \oplus Q = (P \wedge \neg Q) \vee (\neg P \vee Q)$$.</description>
+      <description>&lt;h1 id=&#34;csappdata-lab-记录&#34;&gt;CSAPP:Data Lab 记录&lt;/h1&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;bitXor(x,y)&lt;/p&gt;
+&lt;p&gt;使用两种运算实现异或操作（&amp;amp;与～），要求指令数最多为14&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt; &lt;span style=&#34;color:#75715e&#34;&gt;//1
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt; &lt;span style=&#34;color:#75715e&#34;&gt;/* 
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;  * bitXor - x^y using only ~ and &amp;amp; 
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;  *   Example: bitXor(4, 5) = 1
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;  *   Legal ops: ~ &amp;amp;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;  *   Max ops: 14
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;  *   Rating: 1
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;  */&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;bitXor&lt;/span&gt;(&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; x, &lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; y) {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;     &lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; nx &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;~&lt;/span&gt;x;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;     &lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; ny &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;~&lt;/span&gt;y;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;     &lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; fx &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; x &lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&lt;/span&gt; ny;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;     &lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; fy &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; nx &lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&lt;/span&gt; y;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;     &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;~&lt;/span&gt;( (&lt;span style=&#34;color:#f92672&#34;&gt;~&lt;/span&gt;fx) &lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&lt;/span&gt; (&lt;span style=&#34;color:#f92672&#34;&gt;~&lt;/span&gt;fy) );
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt; }
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;blockquote&gt;
+&lt;p&gt;采用的是离散数学中亦或的另一种定义方式,$$P \oplus Q = (P \wedge \neg Q) \vee (\neg P \vee Q)$$.由于本题中不能直接实现或运算，所以通过非和与实现&lt;/p&gt;</description>
     </item>
-    
   </channel>
 </rss>

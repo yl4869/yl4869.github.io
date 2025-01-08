@@ -4,125 +4,16 @@
     <title>Tags on FunForever</title>
     <link>http://yl4869.github.io/tags/</link>
     <description>Recent content in Tags on FunForever</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <generator>Hugo -- 0.140.2</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sun, 19 May 2024 22:27:48 +0800</lastBuildDate><atom:link href="http://yl4869.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 04 Nov 2024 16:00:18 +0800</lastBuildDate>
+    <atom:link href="http://yl4869.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Linux</title>
-      <link>http://yl4869.github.io/tags/linux/</link>
-      <pubDate>Sun, 19 May 2024 22:27:48 +0800</pubDate>
-      
-      <guid>http://yl4869.github.io/tags/linux/</guid>
+      <title>杂记</title>
+      <link>http://yl4869.github.io/tags/%E6%9D%82%E8%AE%B0/</link>
+      <pubDate>Mon, 04 Nov 2024 16:00:18 +0800</pubDate>
+      <guid>http://yl4869.github.io/tags/%E6%9D%82%E8%AE%B0/</guid>
       <description></description>
     </item>
-    
-    <item>
-      <title>RTOS</title>
-      <link>http://yl4869.github.io/tags/rtos/</link>
-      <pubDate>Sun, 19 May 2024 22:27:48 +0800</pubDate>
-      
-      <guid>http://yl4869.github.io/tags/rtos/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>数据结构</title>
-      <link>http://yl4869.github.io/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/</link>
-      <pubDate>Sun, 19 May 2024 22:27:48 +0800</pubDate>
-      
-      <guid>http://yl4869.github.io/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>环形缓冲区</title>
-      <link>http://yl4869.github.io/tags/%E7%8E%AF%E5%BD%A2%E7%BC%93%E5%86%B2%E5%8C%BA/</link>
-      <pubDate>Sun, 19 May 2024 22:27:48 +0800</pubDate>
-      
-      <guid>http://yl4869.github.io/tags/%E7%8E%AF%E5%BD%A2%E7%BC%93%E5%86%B2%E5%8C%BA/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Digital_design</title>
-      <link>http://yl4869.github.io/tags/digital_design/</link>
-      <pubDate>Fri, 13 Oct 2023 14:06:24 +0800</pubDate>
-      
-      <guid>http://yl4869.github.io/tags/digital_design/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Rust</title>
-      <link>http://yl4869.github.io/tags/rust/</link>
-      <pubDate>Sun, 26 Mar 2023 22:37:14 +0800</pubDate>
-      
-      <guid>http://yl4869.github.io/tags/rust/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Verilog</title>
-      <link>http://yl4869.github.io/tags/verilog/</link>
-      <pubDate>Fri, 11 Nov 2022 19:10:13 +0800</pubDate>
-      
-      <guid>http://yl4869.github.io/tags/verilog/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Database System</title>
-      <link>http://yl4869.github.io/tags/database-system/</link>
-      <pubDate>Fri, 02 Sep 2022 23:45:14 +0800</pubDate>
-      
-      <guid>http://yl4869.github.io/tags/database-system/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>AD</title>
-      <link>http://yl4869.github.io/tags/ad/</link>
-      <pubDate>Mon, 11 Apr 2022 19:11:10 +0800</pubDate>
-      
-      <guid>http://yl4869.github.io/tags/ad/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Games</title>
-      <link>http://yl4869.github.io/tags/games/</link>
-      <pubDate>Sun, 23 Jan 2022 23:42:33 +0800</pubDate>
-      
-      <guid>http://yl4869.github.io/tags/games/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Tools</title>
-      <link>http://yl4869.github.io/tags/tools/</link>
-      <pubDate>Sat, 22 Jan 2022 23:33:15 +0800</pubDate>
-      
-      <guid>http://yl4869.github.io/tags/tools/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>CSAPP</title>
-      <link>http://yl4869.github.io/tags/csapp/</link>
-      <pubDate>Fri, 17 Dec 2021 11:14:14 +0800</pubDate>
-      
-      <guid>http://yl4869.github.io/tags/csapp/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>C/C&#43;&#43;</title>
-      <link>http://yl4869.github.io/tags/c/c&#43;&#43;/</link>
-      <pubDate>Mon, 13 Dec 2021 23:36:06 +0800</pubDate>
-      
-      <guid>http://yl4869.github.io/tags/c/c&#43;&#43;/</guid>
-      <description></description>
-    </item>
-    
   </channel>
 </rss>

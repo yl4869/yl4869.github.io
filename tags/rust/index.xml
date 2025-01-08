@@ -4,62 +4,146 @@
     <title>Rust on FunForever</title>
     <link>http://yl4869.github.io/tags/rust/</link>
     <description>Recent content in Rust on FunForever</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <generator>Hugo -- 0.140.2</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sun, 26 Mar 2023 22:37:14 +0800</lastBuildDate><atom:link href="http://yl4869.github.io/tags/rust/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 26 Mar 2023 22:37:14 +0800</lastBuildDate>
+    <atom:link href="http://yl4869.github.io/tags/rust/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>RUST: 如何理解字符串，字符串字面量和字符串切片</title>
       <link>http://yl4869.github.io/posts/rust/string_str/</link>
       <pubDate>Sun, 26 Mar 2023 22:37:14 +0800</pubDate>
-      
       <guid>http://yl4869.github.io/posts/rust/string_str/</guid>
-      <description>如何理解String，str与&amp;amp;str 字符串，字符串字面量和字符串切片是初学 rust 最困惑的一点，一部分是因为它的各种用法繁杂，经常使用；另一部分也是因为它们所提供的方法繁多，并且有着令人疑惑的相互转换。虽然常读常新，但还是想写一篇博客，分享之外也可以让自己在困惑时快速找到参考而不用翻阅大量网页。
-从内存开始 通过了解字符串在内存中的表示，我们可以最直观的了解到他们的不同之处，考虑下面的代码和他们创建的布局。
-let s1 = String::from(&amp;#34;Hello&amp;#34;); let s2 = &amp;amp;s1[1..]; let s3 = &amp;#34;Hello&amp;#34;; 他们的内存布局如下
-my_name:s1(String) my_name: s2(&amp;amp;str) my_name:s3(&amp;amp;str) [----------------] [–––––––––––] [--------------] +---+---+---+ +–––+–––+ +---+---+ stack frame | • | 6 | 5 | │ • │ 4 │ | • | 4 | +-|-+---+---+ │–+–+–--+ +-|-+---+ | | | | +-------------+ | | | | +-V-+-V-+---+---+---+---+ | heap frame | H | e | l | l | o | | | +---+---+---+---+---+---+ | | | | | preallocated +–-–+–V–+–––+–––+–––+–––+ read-only │ H │ e │ l │ l │ o │ │ memory +–––+–––+–––+–––+–––+–––+ 我们可以发现下面几条事实:</description>
+      <description>&lt;h1 id=&#34;如何理解stringstr与str&#34;&gt;如何理解String，str与&amp;amp;str&lt;/h1&gt;
+&lt;p&gt;字符串，字符串字面量和字符串切片是初学 rust 最困惑的一点，一部分是因为它的各种用法繁杂，经常使用；另一部分也是因为它们所提供的方法繁多，并且有着令人疑惑的相互转换。虽然常读常新，但还是想写一篇博客，分享之外也可以让自己在困惑时快速找到参考而不用翻阅大量网页。&lt;/p&gt;
+&lt;h2 id=&#34;从内存开始&#34;&gt;从内存开始&lt;/h2&gt;
+&lt;p&gt;通过了解字符串在内存中的表示，我们可以最直观的了解到他们的不同之处，考虑下面的代码和他们创建的布局。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-rust&#34; data-lang=&#34;rust&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;let&lt;/span&gt; s1 &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; String::from(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Hello&amp;#34;&lt;/span&gt;);
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;let&lt;/span&gt; s2 &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&lt;/span&gt;s1[&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;..&lt;/span&gt;];
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;let&lt;/span&gt; s3 &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Hello&amp;#34;&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;他们的内存布局如下&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;                  my_name:s1(String)  my_name: s2(&amp;amp;str)       my_name:s3(&amp;amp;str)
+                  [----------------]  [–––––––––––]           [--------------]
+                  +---+---+---+       +–––+–––+                +---+---+
+stack frame       | • | 6 | 5 |       │ • │ 4 │                | • | 4 |
+                  +-|-+---+---+       │–+–+–--+                +-|-+---+
+                    |                 |                          |
+                    |   +-------------+                          |
+                    |   |                                        |
+                  +-V-+-V-+---+---+---+---+                      |
+heap frame        | H | e | l | l | o |   |                      |
+                  +---+---+---+---+---+---+                      |
+                                                                 |
+                                                                 |
+                                                                 |
+                                                                 |
+                                             preallocated  +–-–+–V–+–––+–––+–––+–––+
+                                             read-only     │ H │ e │ l │ l │ o │   │ 
+                                             memory        +–––+–––+–––+–––+–––+–––+
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;我们可以发现下面几条事实:&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>Rust: 泛型，特征与特征对象</title>
       <link>http://yl4869.github.io/posts/rust/generics_trait/</link>
       <pubDate>Mon, 14 Nov 2022 10:05:15 +0800</pubDate>
-      
       <guid>http://yl4869.github.io/posts/rust/generics_trait/</guid>
-      <description>Rust: 泛型，特征与特征对象 最近在学习 Rust 的一些概念思想，记录一下自己对 Rust 中泛型，特征与特征对象的理解。
-泛型 泛型与 CPP 中的模版类似，可以减少代码的重复。泛型会在编译时实现单态化（monomorphization），会将通用代码转换为特定代码，因此不会出现运行时开销。
-可以理解为编译器帮你把写的泛型代码重新转换为写了具体类型的代码。
-泛型可以用在结构体，枚举，函数乃至方法中，其中枚举和方法可以多讲一下。
-泛型在枚举中的实现 泛型在枚举中的实现本身没有要讲的，不过标准库实现的Option&amp;lt;T&amp;gt;和Result&amp;lt;T, E&amp;gt;很想讲一下。
-Option 标准库中的泛型定义
-pub enum Option&amp;lt;T&amp;gt; { None, Some(T), } 简约而又简单，rust 中并不存在空指针，通过 None 进行替代，Option常使用在返回值中。当返回值可能为一个结果，也有可能失败或缺值时，可以通过模式匹配进行处理。这里的 T 就是泛型说明
-Result&amp;lt;T, E&amp;gt; 标准库中的泛型定义
-pub enum Result&amp;lt;T, E&amp;gt; { Ok(T), Err(E), } 除了Option可以在结果失败时传递 None，但有时我们想要知道具体的失败信息，Result 实现了这一点。Result&amp;lt;T, E&amp;gt; 拥有两个泛型 T 和 E，在不同的场景下你可以将他们作为不同的类型。
-泛型在方法中 泛型在方法中需要在impl后面声明&amp;lt;T&amp;gt;，这里是为了告诉 Rust 类型后面的 T 是一个泛型而不是具体类型，注意这里impl后面提供的泛型声明只与后面具体类型要实现的泛型有关。
-与之相应的，你也可以为一个泛型实现他具体类型的方法。
-// 对一个泛型实现具体方法，其中方法中又提供了更多的泛型声明 struct Mix&amp;lt;T, U&amp;gt; { x: T, y: U, } impl&amp;lt;T, U&amp;gt; Mix&amp;lt;T, U&amp;gt; { fn mixup&amp;lt;V, W&amp;gt;(self, other: Mix&amp;lt;V, W&amp;gt;) -&amp;gt; Mix&amp;lt;T, W&amp;gt; { //这里提供了另外两个泛型: V和W, 代表other的类型参数 Mix { x: self.</description>
+      <description>&lt;h1 id=&#34;rust-泛型特征与特征对象&#34;&gt;Rust: 泛型，特征与特征对象&lt;/h1&gt;
+&lt;p&gt;最近在学习 Rust 的一些概念思想，记录一下自己对 Rust 中泛型，特征与特征对象的理解。&lt;/p&gt;
+&lt;h2 id=&#34;泛型&#34;&gt;泛型&lt;/h2&gt;
+&lt;p&gt;泛型与 CPP 中的模版类似，可以减少代码的重复。泛型会在编译时实现&lt;strong&gt;单态化&lt;/strong&gt;（monomorphization），会将通用代码转换为特定代码，因此不会出现运行时开销。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;可以理解为编译器帮你把写的泛型代码重新转换为写了具体类型的代码。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;泛型可以用在结构体，枚举，函数乃至方法中，其中枚举和方法可以多讲一下。&lt;/p&gt;
+&lt;h3 id=&#34;泛型在枚举中的实现&#34;&gt;泛型在枚举中的实现&lt;/h3&gt;
+&lt;p&gt;泛型在枚举中的实现本身没有要讲的，不过标准库实现的&lt;code&gt;Option&amp;lt;T&amp;gt;&lt;/code&gt;和&lt;code&gt;Result&amp;lt;T, E&amp;gt;&lt;/code&gt;很想讲一下。&lt;/p&gt;
+&lt;h4 id=&#34;optiont&#34;&gt;Option&lt;!-- raw HTML omitted --&gt;&lt;/h4&gt;
+&lt;p&gt;标准库中的泛型定义&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-rust&#34; data-lang=&#34;rust&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;pub&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;enum&lt;/span&gt; Option&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt;T&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    None,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Some(T),
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;简约而又简单，rust 中并不存在空指针，通过 None 进行替代，&lt;code&gt;Option&lt;/code&gt;常使用在返回值中。当返回值可能为一个结果，也有可能失败或缺值时，可以通过模式匹配进行处理。&lt;strong&gt;这里的 T 就是泛型说明&lt;/strong&gt;&lt;/p&gt;
+&lt;h4 id=&#34;resultt-e&#34;&gt;Result&amp;lt;T, E&amp;gt;&lt;/h4&gt;
+&lt;p&gt;标准库中的泛型定义&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-rust&#34; data-lang=&#34;rust&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;pub&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;enum&lt;/span&gt; Result&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt;T, E&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Ok(T),
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Err(E),
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;除了&lt;code&gt;Option&lt;/code&gt;可以在结果失败时传递 None，但有时我们想要知道具体的失败信息，&lt;code&gt;Result&lt;/code&gt; 实现了这一点。&lt;code&gt;Result&amp;lt;T, E&amp;gt;&lt;/code&gt;  拥有两个泛型 T 和 E，在不同的场景下你可以将他们作为不同的类型。&lt;/p&gt;
+&lt;h4 id=&#34;泛型在方法中&#34;&gt;泛型在方法中&lt;/h4&gt;
+&lt;p&gt;泛型在方法中需要在&lt;code&gt;impl&lt;/code&gt;后面声明&lt;code&gt;&amp;lt;T&amp;gt;&lt;/code&gt;，这里是为了告诉 Rust &lt;strong&gt;类型后面的 T 是一个泛型而不是具体类型&lt;/strong&gt;，注意这里&lt;code&gt;impl&lt;/code&gt;后面提供的泛型声明只与后面具体类型要实现的泛型有关。&lt;/p&gt;
+&lt;p&gt;与之相应的，你也可以为一个泛型实现他&lt;strong&gt;具体类型&lt;/strong&gt;的方法。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-rust&#34; data-lang=&#34;rust&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;// 对一个泛型实现具体方法，其中方法中又提供了更多的泛型声明
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;struct&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Mix&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt;T, U&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    x: &lt;span style=&#34;color:#a6e22e&#34;&gt;T&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    y: &lt;span style=&#34;color:#a6e22e&#34;&gt;U&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;impl&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt;T, U&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt; Mix&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt;T, U&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;fn&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;mixup&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt;V, W&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt;(self, other: &lt;span style=&#34;color:#a6e22e&#34;&gt;Mix&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt;V, W&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt;) -&amp;gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Mix&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt;T, W&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#75715e&#34;&gt;//这里提供了另外两个泛型: V和W, 代表other的类型参数
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;        Mix {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            x: &lt;span style=&#34;color:#a6e22e&#34;&gt;self&lt;/span&gt;.x,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            y: &lt;span style=&#34;color:#a6e22e&#34;&gt;other&lt;/span&gt;.y,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        }
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    }
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;fn&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;main&lt;/span&gt;() {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;let&lt;/span&gt; x &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; Mix { x: &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;, y: &lt;span style=&#34;color:#ae81ff&#34;&gt;2.0&lt;/span&gt; };
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;let&lt;/span&gt; y &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; Mix {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        x: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;hello&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        y: &lt;span style=&#34;color:#a6e22e&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;🐺&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;&amp;#39;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    };
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;let&lt;/span&gt; z &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; x.mixup(y);
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    assert_eq!(z.x, &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;);
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    assert_eq!(z.y, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;🐺&amp;#39;&lt;/span&gt;);
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;同时我们还可以实现对&lt;strong&gt;泛型的具体类型&lt;/strong&gt;方法&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>Rust介绍</title>
       <link>http://yl4869.github.io/posts/rust/rust_1/</link>
       <pubDate>Fri, 18 Mar 2022 15:24:02 +0800</pubDate>
-      
       <guid>http://yl4869.github.io/posts/rust/rust_1/</guid>
-      <description>Rust介绍 官网对rust的介绍为一门赋予每个人构建可靠且高效软件能力的语言。
-Rust是一门系统编程语言。简单来说，系统编程语言是一种资源受限的编程，你需要对每个字节和每个CPU时钟周期精打细算，做到高效的完成任务。
-常见的系统编程应用场景:
-操作系统 各种设备驱动 文件系统 数据库 嵌入式设备 内存管理程序 高级编程语言 虚拟化及软件程序 游戏 等等&amp;hellip; 为什么选择Rust 系统编程语言已经有C/CPP了，为什么我还要选择Rust? C语言诞生于1972年，C++诞生于1979年，这至今41+年的时光中一直没有编程语言去挑战他们的地位。
-由于时代原因，C和C++是两门过于相信程序员的编程语言，不会去检查程序员出错的代码。
-Rust的第一个正式版本发布于2015年，融合了现代编程语言的优秀设计，解决了传统系统编程语言的痛点问题。产生了高性能，可靠性，生产力三个优秀特点。
-最值得一提的是可靠性，Rust的设计使得你可以在编译器解决各种错误，而不是运行时。同时他的这种设计也让多核时代的多线程编写变得更加简单。
-又有谁没被segmentation fault折磨过呢？
-享受编程 一旦你学会了rust，你就会享受到面向编译编译器开发带来的好处（虽然我个人现在还在痛苦当中）。感受前期多用脑子，开发不用脑子的特点了。
-官方文档丰富 官方（社区）为Rust提供了许多优良的文档，比如the book，他们本身的优秀使得你可以从官网快速开始学习Rust。
-Rust的缺陷之处 学习曲线陡峭 Rust与C-like语言较大的差异使得上手Rust变得困难。为了严格防止未定义行为，Rust又引入了所有权，生命周期等概念。这使得学习Rust的难度进一步提高。
-编译时间长 为了保证可靠性，Rust需要在编译时进行大量的检查（编译器教你做事），这使得一个大的项目要花费更多的时间在编译上。更为遗憾的是这个缺点可能需要很久（甚至不可能）改善。
-不过现在已经有多线程编译的出现以减少编译时间。
-就算你不致力于使用Rust，也可以看一看Rust Rust吸收了许多编程语言的优良设计，并解决了许多过去编程的痛点问题。就算你不使用Rust，去学一学Rust的哲学也可以帮助你成为更好的程序员。</description>
+      <description>&lt;h1 id=&#34;rust介绍&#34;&gt;Rust介绍&lt;/h1&gt;
+&lt;p&gt;官网对rust的介绍为&lt;strong&gt;一门赋予每个人构建可靠且高效软件能力的语言&lt;/strong&gt;。&lt;br&gt;
+Rust是一门系统编程语言。简单来说，系统编程语言是一种资源受限的编程，你需要对每个字节和每个CPU时钟周期精打细算，做到高效的完成任务。&lt;br&gt;
+常见的系统编程应用场景:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;操作系统&lt;/li&gt;
+&lt;li&gt;各种设备驱动&lt;/li&gt;
+&lt;li&gt;文件系统&lt;/li&gt;
+&lt;li&gt;数据库&lt;/li&gt;
+&lt;li&gt;嵌入式设备&lt;/li&gt;
+&lt;li&gt;内存管理程序&lt;/li&gt;
+&lt;li&gt;高级编程语言&lt;/li&gt;
+&lt;li&gt;虚拟化及软件程序&lt;/li&gt;
+&lt;li&gt;游戏&lt;/li&gt;
+&lt;li&gt;等等&amp;hellip;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&#34;为什么选择rust&#34;&gt;为什么选择Rust&lt;/h1&gt;
+&lt;h2 id=&#34;系统编程语言已经有ccpp了为什么我还要选择rust&#34;&gt;系统编程语言已经有C/CPP了，为什么我还要选择Rust?&lt;/h2&gt;
+&lt;p&gt;C语言诞生于1972年，C++诞生于1979年，这至今41+年的时光中一直没有编程语言去挑战他们的地位。&lt;/p&gt;
+&lt;p&gt;由于时代原因，C和C++是两门&lt;strong&gt;过于相信程序员&lt;/strong&gt;的编程语言，不会去检查程序员出错的代码。&lt;/p&gt;
+&lt;p&gt;Rust的第一个正式版本发布于2015年，融合了现代编程语言的优秀设计，解决了传统系统编程语言的痛点问题。产生了&lt;strong&gt;高性能&lt;/strong&gt;，&lt;strong&gt;可靠性&lt;/strong&gt;，&lt;strong&gt;生产力&lt;/strong&gt;三个优秀特点。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;最值得一提的是可靠性，Rust的设计使得你可以在编译器解决各种错误，而不是运行时。同时他的这种设计也让多核时代的多线程编写变得更加简单。&lt;br&gt;
+又有谁没被segmentation fault折磨过呢？&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&#34;享受编程&#34;&gt;享受编程&lt;/h2&gt;
+&lt;p&gt;一旦你学会了rust，你就会享受到&lt;em&gt;面向编译编译器开发&lt;/em&gt;带来的好处（虽然我个人现在还在痛苦当中）。感受前期多用脑子，开发不用脑子的特点了。&lt;/p&gt;
+&lt;h2 id=&#34;官方文档丰富&#34;&gt;官方文档丰富&lt;/h2&gt;
+&lt;p&gt;官方（社区）为Rust提供了许多优良的文档，比如the book，他们本身的优秀使得你可以从官网快速开始学习Rust。&lt;/p&gt;
+&lt;h1 id=&#34;rust的缺陷之处&#34;&gt;Rust的缺陷之处&lt;/h1&gt;
+&lt;h2 id=&#34;学习曲线陡峭&#34;&gt;学习曲线陡峭&lt;/h2&gt;
+&lt;p&gt;Rust与C-like语言较大的差异使得上手Rust变得困难。为了严格防止未定义行为，Rust又引入了所有权，生命周期等概念。这使得学习Rust的难度进一步提高。&lt;/p&gt;
+&lt;h2 id=&#34;编译时间长&#34;&gt;编译时间长&lt;/h2&gt;
+&lt;p&gt;为了保证可靠性，Rust需要在编译时进行大量的检查（编译器教你做事），这使得一个大的项目要花费更多的时间在编译上。更为遗憾的是这个缺点可能需要很久（甚至不可能）改善。&lt;/p&gt;
+&lt;p&gt;不过现在已经有多线程编译的出现以减少编译时间。&lt;/p&gt;
+&lt;h1 id=&#34;就算你不致力于使用rust也可以看一看rust&#34;&gt;就算你不致力于使用Rust，也可以看一看Rust&lt;/h1&gt;
+&lt;p&gt;Rust吸收了许多编程语言的优良设计，并解决了许多过去编程的痛点问题。就算你不使用Rust，去学一学Rust的哲学也可以帮助你成为更好的程序员。&lt;/p&gt;</description>
     </item>
-    
   </channel>
 </rss>

@@ -4,103 +4,221 @@
     <title>Linux on FunForever</title>
     <link>http://yl4869.github.io/tags/linux/</link>
     <description>Recent content in Linux on FunForever</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <generator>Hugo -- 0.140.2</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sun, 19 May 2024 22:27:48 +0800</lastBuildDate><atom:link href="http://yl4869.github.io/tags/linux/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 19 May 2024 22:27:48 +0800</lastBuildDate>
+    <atom:link href="http://yl4869.github.io/tags/linux/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>环形缓冲区</title>
       <link>http://yl4869.github.io/posts/circular_buffer/</link>
       <pubDate>Sun, 19 May 2024 22:27:48 +0800</pubDate>
-      
       <guid>http://yl4869.github.io/posts/circular_buffer/</guid>
-      <description>环形缓冲区 参考文章：知乎专栏</description>
+      <description>&lt;h1 id=&#34;环形缓冲区&#34;&gt;环形缓冲区&lt;/h1&gt;
+&lt;p&gt;参考文章：&lt;a href=&#34;https://zhuanlan.zhihu.com/p/534098236&#34;&gt;知乎专栏&lt;/a&gt;&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>Linux小tip-rsync</title>
       <link>http://yl4869.github.io/posts/learn_linux/tips/tip2_rsync/</link>
       <pubDate>Wed, 28 Feb 2024 23:12:49 +0800</pubDate>
-      
       <guid>http://yl4869.github.io/posts/learn_linux/tips/tip2_rsync/</guid>
-      <description>简介 rsync 是一个用于文件同步和传输的命令行工具。它可以在本地系统之间或者通过SSH等安全通道在本地和远程系统之间同步文件和目录。
-你可能听过 scp，scp 主要通过 SSH 进行加密传输，只能用于本地和远程系统之间的文件拷贝。而 rsync 提供了更多的功能，如增量传输、删除目标端不存在的文件、排除特定文件等。
-常见选项 -a, --archive: 归档模式，保留文件的所有元数据，包括权限、所有者、组、时间等。 -v, --verbose: 输出详细信息，显示正在执行的操作。 -r, --recursive: 递归地同步子目录。 -z, --compress: 在传输时压缩数据，可以节省带宽。 -u, --update: 仅传输源目录中更新的文件。 -n, --dry-run: 模拟执行同步操作，显示将要发生的改变但不实际指令同步。 -e, --rsh=COMMAND: 选择在传输时使用的远程 shell 程序，通常是 rsh 或 ssh。 --delete: 删除目标目录中源目录没有的文件。 --exclude=PATTERN: 排除匹配指定模式的文件或目录。 示例 # 本地同步，如果是目录需要 -r 选项 rsync -av /path/to/source /path/to/destination # 本地到远程 rsync -av /path/to/source user@remote_host:/path/to/destination # 远程到本地 rsync -av user@remote_host:/path/to/source/ /path/to/destination/ # 同步并删除目标目录中不存在的文件 rsync -av --delete /path/to/source/ /path/to/destination/ # 排除特定文件或目录的同步 rsync -av --exclude=&amp;#39;*.</description>
+      <description>&lt;h1 id=&#34;简介&#34;&gt;简介&lt;/h1&gt;
+&lt;p&gt;rsync 是一个用于文件同步和传输的命令行工具。它可以在本地系统之间或者通过SSH等安全通道在本地和远程系统之间同步文件和目录。&lt;/p&gt;
+&lt;p&gt;你可能听过 scp，scp 主要通过 SSH 进行加密传输，只能用于本地和远程系统之间的文件拷贝。而 rsync 提供了更多的功能，如&lt;strong&gt;增量传输&lt;/strong&gt;、删除目标端不存在的文件、排除特定文件等。&lt;/p&gt;
+&lt;h1 id=&#34;常见选项&#34;&gt;常见选项&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;-a, --archive&lt;/code&gt;: 归档模式，保留文件的所有元数据，包括权限、所有者、组、时间等。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-v, --verbose&lt;/code&gt;: 输出详细信息，显示正在执行的操作。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-r, --recursive&lt;/code&gt;: 递归地同步子目录。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-z, --compress&lt;/code&gt;: 在传输时压缩数据，可以节省带宽。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-u, --update&lt;/code&gt;: 仅传输源目录中更新的文件。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-n, --dry-run&lt;/code&gt;: 模拟执行同步操作，显示将要发生的改变但不实际指令同步。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-e, --rsh=COMMAND&lt;/code&gt;: 选择在传输时使用的远程 shell 程序，通常是 rsh 或 ssh。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;--delete&lt;/code&gt;: 删除目标目录中源目录没有的文件。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;--exclude=PATTERN&lt;/code&gt;: 排除匹配指定模式的文件或目录。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&#34;示例&#34;&gt;示例&lt;/h1&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# 本地同步，如果是目录需要 -r 选项&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;rsync -av /path/to/source /path/to/destination
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# 本地到远程&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;rsync -av /path/to/source user@remote_host:/path/to/destination
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# 远程到本地&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;rsync -av user@remote_host:/path/to/source/ /path/to/destination/
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# 同步并删除目标目录中不存在的文件&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;rsync -av --delete /path/to/source/ /path/to/destination/
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# 排除特定文件或目录的同步&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;rsync -av --exclude&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;*.log&amp;#39;&lt;/span&gt; /path/to/source/ /path/to/destination/
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# 模拟同步操作，显示将要发生的改变但不实际执行同步&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;rsync -av --dry-run /path/to/source/ /path/to/destination/
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
     </item>
-    
     <item>
       <title>新硬盘挂载后发现 df 查询大小和实际大小不一致--Linux的保留空间</title>
       <link>http://yl4869.github.io/posts/learn_linux/reserved_space/</link>
       <pubDate>Thu, 08 Dec 2022 19:29:17 +0800</pubDate>
-      
       <guid>http://yl4869.github.io/posts/learn_linux/reserved_space/</guid>
-      <description>前言 在 Linux 上安装一块新硬盘后，发现硬盘大小和挂载后查询到的大小不一致，大概差了 5% 左右，一种可能就是硬盘分区是留下的保留空间造成的。
-细节 mkfs.ext4 的man page提供了一部分的解释。
-Specify the percentage of the filesystem blocks reserved for the super-user. This avoids fragmentation, and allows root-owned daemons, such as syslogd(8), to continue to function correctly after non-privileged processes are prevented from writing to the filesystem. The default percentage is 5%.
-简单来说，ext文件系统为了保证在硬盘百分百利用下还能够写入 root 用户的关键日志等信息，默认预留了5%的磁盘空间。
-但我们可以发现，这部分空间很多时候是不需要预留的，尤其是在大的磁盘分区下（例如NAS），可能会导致大量空间的浪费。
-解决 针对这个问题，也已经有了解决方案。可以通过tune2fs命令查看保留空间大小和设置保留空间。
-tune2fs -l /dev/sde1 | egrep &amp;#34;Block size:|Reserved block count&amp;#34; # Reserved block count: 36628312 # Block size: 4096 # set the reserved space 1% tune2fs -m 1 /dev/sde1 Reference Decrease Reserve Space</description>
+      <description>&lt;h1 id=&#34;前言&#34;&gt;前言&lt;/h1&gt;
+&lt;p&gt;在 Linux 上安装一块新硬盘后，发现硬盘大小和挂载后查询到的大小不一致，大概差了 5% 左右，一种可能就是硬盘分区是留下的保留空间造成的。&lt;/p&gt;
+&lt;h2 id=&#34;细节&#34;&gt;细节&lt;/h2&gt;
+&lt;p&gt;mkfs.ext4 的&lt;code&gt;man page&lt;/code&gt;提供了一部分的解释。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Specify the percentage of the filesystem blocks reserved for the super-user. This avoids fragmentation, and allows root-owned daemons, such as syslogd(8), to continue to function correctly after non-privileged processes are prevented from writing to the filesystem. The default percentage is 5%.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;简单来说，ext文件系统为了保证在硬盘百分百利用下还能够写入 root 用户的关键日志等信息，默认预留了5%的磁盘空间。&lt;/p&gt;
+&lt;p&gt;但我们可以发现，这部分空间很多时候是不需要预留的，尤其是在大的磁盘分区下（例如NAS），可能会导致大量空间的浪费。&lt;/p&gt;
+&lt;h2 id=&#34;解决&#34;&gt;解决&lt;/h2&gt;
+&lt;p&gt;针对这个问题，也已经有了解决方案。可以通过&lt;code&gt;tune2fs&lt;/code&gt;命令查看保留空间大小和设置保留空间。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;tune2fs -l /dev/sde1 | egrep &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Block size:|Reserved block count&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Reserved block count:  36628312&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Block size:            4096&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# set the reserved space 1%&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;tune2fs -m &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt; /dev/sde1
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;reference&#34;&gt;Reference&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://docs.cloudera.com/cloudera-manager/7.4.2/managing-clusters/topics/cm-decrease-reserved-space.html&#34;&gt;Decrease Reserve Space&lt;/a&gt;&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>Linux小tip------tar与gz</title>
       <link>http://yl4869.github.io/posts/learn_linux/tips/tip1/</link>
       <pubDate>Mon, 14 Feb 2022 21:15:57 +0800</pubDate>
-      
       <guid>http://yl4869.github.io/posts/learn_linux/tips/tip1/</guid>
-      <description>简介 你可能经常看到.tar与.tar.gz文件，但你可能很少思考过他们的用法。下面将介绍他们的区别
-tar tar是打包命令，可以把一大堆的文件和目录打包成一个文件，方便文件的备份和文件在网络中的传输。
-弄清打包和压缩的概念，打包并不会减小文件的大小。
-当我们想要将多个文件压缩成一个压缩包时，我们需要先对这些文件进行打包，然后再用压缩程序进行压缩。
-gz(误) gz并不是一个正确的说法，事实上你可以单独使用gzip等压缩程序对文件进行压缩，常见的.tar.gz是直接用tar打包并通过应用程序进行压缩的一种方式。
-永远记得一个事实：linux当中后缀名不是必须的，更多是为了便于区别。
-从例子学习使用 tar进行文件打包 1.打包文件
-tar -cf file.tar file1 file2 将file1和file2进行打包。-c表示进行打包，-f指定打包文档(file.tar)
-2.解包文件
-tar -xf file.tar -x表示解包，-f指定解包文档(file.tar)
-压缩文件进行文件压缩 这里只介绍利用gzip压缩软件，事实上还有其他的压缩软件可以使用 1.压缩文件
-gzip file.tar 2.解压文件
-gunzip file.tar.gz 直接利用tar进行打包与解压 1.压缩文件
-tar -czvf file.tar.gz file1 file2 -c,-f已经介绍过。-z表示使用的压缩是gzip压缩，-v表示显示所有过程
-2.解压文件
-tar -xzvf file.tar.gz 现在你应该理解了压缩与解压阶段各种参数的意义。
-注意：-f后面必须接文档名，所以作为最后一个参数</description>
+      <description>&lt;h1 id=&#34;简介&#34;&gt;简介&lt;/h1&gt;
+&lt;p&gt;你可能经常看到.tar与.tar.gz文件，但你可能很少思考过他们的用法。下面将介绍他们的区别&lt;/p&gt;
+&lt;h2 id=&#34;tar&#34;&gt;tar&lt;/h2&gt;
+&lt;p&gt;tar是打包命令，可以把一大堆的文件和目录打包成一个文件，方便文件的备份和文件在网络中的传输。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;弄清打包和压缩的概念，打包并不会减小文件的大小。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;当我们想要将多个文件压缩成一个压缩包时，我们需要先对这些文件进行打包，然后再用压缩程序进行压缩。&lt;/p&gt;
+&lt;h2 id=&#34;gz误&#34;&gt;gz(误)&lt;/h2&gt;
+&lt;p&gt;gz并不是一个正确的说法，事实上你可以单独使用gzip等压缩程序对文件进行压缩，常见的.tar.gz是直接用tar打包并通过应用程序进行压缩的一种方式。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;永远记得一个事实：linux当中后缀名不是必须的，更多是为了便于区别。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&#34;从例子学习使用&#34;&gt;从例子学习使用&lt;/h2&gt;
+&lt;h3 id=&#34;tar进行文件打包&#34;&gt;tar进行文件打包&lt;/h3&gt;
+&lt;p&gt;1.打包文件&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;tar -cf file.tar file1 file2
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;将file1和file2进行打包。-c表示进行打包，-f指定打包文档(file.tar)&lt;/p&gt;
+&lt;p&gt;2.解包文件&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;tar -xf file.tar
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;-x表示解包，-f指定解包文档(file.tar)&lt;/p&gt;
+&lt;h3 id=&#34;压缩文件进行文件压缩&#34;&gt;压缩文件进行文件压缩&lt;/h3&gt;
+&lt;p&gt;这里只介绍利用gzip压缩软件，事实上还有其他的压缩软件可以使用
+1.压缩文件&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;gzip file.tar
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;2.解压文件&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;gunzip file.tar.gz
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;直接利用tar进行打包与解压&#34;&gt;直接利用tar进行打包与解压&lt;/h3&gt;
+&lt;p&gt;1.压缩文件&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;tar -czvf file.tar.gz file1 file2
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;-c,-f已经介绍过。-z表示使用的压缩是gzip压缩，-v表示显示所有过程&lt;/p&gt;
+&lt;p&gt;2.解压文件&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;tar -xzvf file.tar.gz
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;现在你应该理解了压缩与解压阶段各种参数的意义。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;注意：-f后面必须接文档名，所以作为最后一个参数&lt;/p&gt;
+&lt;/blockquote&gt;</description>
     </item>
-    
     <item>
       <title>在linux上游玩星际争霸2</title>
       <link>http://yl4869.github.io/posts/learn_linux/starcraftii/</link>
       <pubDate>Sun, 23 Jan 2022 23:42:33 +0800</pubDate>
-      
       <guid>http://yl4869.github.io/posts/learn_linux/starcraftii/</guid>
-      <description>简介 限制想要将工作从windows迁移到linux上的一个方面就是游戏。Steam已经通过proton给到了游戏玩家更多的选择。暴雪尚未出现linux版本，但好在还有wine的存在。通过lutris，现在你可以更轻松地在linux上享受游戏。
-我会尽量给出官方文档，以便于不同时间的不同用户进行操作时可以减少错误。
-操作系统：manjaro
-显卡：Nvidia no-free驱动
-步骤 1.安装合适的Gpu驱动 https://github.com/lutris/docs/blob/master/InstallingDrivers.md
-lutris为我们创建了一个良好的文档说明。你可以选择与你电脑相符的介绍并继续操作。对我的系统manjaro而言，我已经在安装时选择了no-free驱动，因此已经有了一套正确的驱动支持。
-安装wine https://github.com/lutris/docs/blob/master/WineDependencies.md
-同样，选择你的发行版并按步骤进行操作,这里以我的系统manjaro为例。
-修改/etc/pacman.conf,添加[multilib]启动multilib仓库，在文件中添加以下内容：
-/etc/pacman.conf -------------------------------------------------------------------------------------- [multilib] Include = /etc/pacman.d/mirrorlist 更新pacman仓库
-sudo pacman -Syu 安装wine，要安装的包有点多，但其实很多你已经安装过了，全部的依赖安装可以避免之后出现奇奇怪怪的问题。
-sudo pacman -S --needed wine-staging giflib lib32-giflib libpng lib32-libpng libldap lib32-libldap gnutls lib32-gnutls \ mpg123 lib32-mpg123 openal lib32-openal v4l-utils lib32-v4l-utils libpulse lib32-libpulse libgpg-error \ lib32-libgpg-error alsa-plugins lib32-alsa-plugins alsa-lib lib32-alsa-lib libjpeg-turbo lib32-libjpeg-turbo \ sqlite lib32-sqlite libxcomposite lib32-libxcomposite libxinerama lib32-libgcrypt libgcrypt lib32-libxinerama \ ncurses lib32-ncurses opencl-icd-loader lib32-opencl-icd-loader libxslt lib32-libxslt libva lib32-libva gtk3 \ lib32-gtk3 gst-plugins-base-libs lib32-gst-plugins-base-libs vulkan-icd-loader lib32-vulkan-icd-loader 以上，wine安装完成。</description>
+      <description>&lt;h1 id=&#34;简介&#34;&gt;简介&lt;/h1&gt;
+&lt;p&gt;限制想要将工作从windows迁移到linux上的一个方面就是游戏。Steam已经通过proton给到了游戏玩家更多的选择。暴雪尚未出现linux版本，但好在还有wine的存在。通过lutris，现在你可以更轻松地在linux上享受游戏。&lt;br&gt;
+我会尽量给出官方文档，以便于不同时间的不同用户进行操作时可以减少错误。&lt;br&gt;
+操作系统：manjaro&lt;br&gt;
+显卡：Nvidia no-free驱动&lt;/p&gt;
+&lt;h1 id=&#34;步骤&#34;&gt;步骤&lt;/h1&gt;
+&lt;h2 id=&#34;1安装合适的gpu驱动&#34;&gt;1.安装合适的Gpu驱动&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://github.com/lutris/docs/blob/master/InstallingDrivers.md&#34;&gt;https://github.com/lutris/docs/blob/master/InstallingDrivers.md&lt;/a&gt;&lt;br&gt;
+lutris为我们创建了一个良好的文档说明。你可以选择与你电脑相符的介绍并继续操作。对我的系统manjaro而言，我已经在安装时选择了no-free驱动，因此已经有了一套正确的驱动支持。&lt;/p&gt;
+&lt;h2 id=&#34;安装wine&#34;&gt;安装wine&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://github.com/lutris/docs/blob/master/WineDependencies.md&#34;&gt;https://github.com/lutris/docs/blob/master/WineDependencies.md&lt;/a&gt;&lt;br&gt;
+同样，选择你的发行版并按步骤进行操作,这里以我的系统manjaro为例。&lt;br&gt;
+修改&lt;code&gt;/etc/pacman.conf&lt;/code&gt;,添加&lt;code&gt;[multilib]&lt;/code&gt;启动multilib仓库，在文件中添加以下内容：&lt;/p&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;http://yl4869.github.io/image/starcraftii/1.png&#34;&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-plain&#34; data-lang=&#34;plain&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;/etc/pacman.conf
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;--------------------------------------------------------------------------------------
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;[multilib]
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Include = /etc/pacman.d/mirrorlist
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;更新pacman仓库&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo pacman -Syu
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;安装wine，要安装的包有点多，但其实很多你已经安装过了，全部的依赖安装可以避免之后出现奇奇怪怪的问题。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo pacman -S --needed wine-staging giflib lib32-giflib libpng lib32-libpng libldap lib32-libldap gnutls lib32-gnutls &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;mpg123 lib32-mpg123 openal lib32-openal v4l-utils lib32-v4l-utils libpulse lib32-libpulse libgpg-error &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;lib32-libgpg-error alsa-plugins lib32-alsa-plugins alsa-lib lib32-alsa-lib libjpeg-turbo lib32-libjpeg-turbo &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;sqlite lib32-sqlite libxcomposite lib32-libxcomposite libxinerama lib32-libgcrypt libgcrypt lib32-libxinerama &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;ncurses lib32-ncurses opencl-icd-loader lib32-opencl-icd-loader libxslt lib32-libxslt libva lib32-libva gtk3 &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;lib32-gtk3 gst-plugins-base-libs lib32-gst-plugins-base-libs vulkan-icd-loader lib32-vulkan-icd-loader
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;以上，wine安装完成。&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>数据流重定向</title>
       <link>http://yl4869.github.io/posts/learn_linux/standard_input_output/</link>
       <pubDate>Sun, 23 Jan 2022 21:38:23 +0800</pubDate>
-      
       <guid>http://yl4869.github.io/posts/learn_linux/standard_input_output/</guid>
-      <description>简介 数据流重定向是将某个指令执行后要输出在屏幕上的数据，传输到其他的地方。一是可以简化我们的屏幕输出， 去获取我们有用的数据。同时我们还可以将我们想要的数据存储下来。
-你可以通过echo &amp;quot;123&amp;quot;和echo &amp;quot;123&amp;quot; &amp;gt; filename 去简单尝试一下这种方式的特点，第二种可以通过 查看新增的file文件观看内容。
-标准输入输出与标准错误输出 基本使用 &amp;gt; 是我们实现这种数据流重导向所用的特殊字符，数据流重导向包括标准输入，标准输出和标准错误输出， 他们的规则如下所示：
-名称 代码 符号 标准输入(stdin) 0 &amp;lt;或&amp;laquo; 标准输出(stdout) 1 &amp;gt;或&amp;raquo; 标准错误输出(stderr) 2 2&amp;gt;或2&amp;raquo; &amp;gt; 和 &amp;raquo; 的区别是 &amp;gt; 以覆盖的方法输出内容， &amp;raquo; 则是以累加的方式输出内容。你可以自 己试一试。 标准输入的用法类似，可以尝试一下cat &amp;gt; file 尝试键盘输出，使用[ctrl]+d退出，然后看一下得到的 文件。
-/dev/null 垃圾桶 在linux一切皆文件的哲学中 /dev/null是一个特殊的&amp;quot;装置&amp;quot; 你可以将任何你想忽略的内容导向到它，而这些 内容将彻底被丢弃。
-特殊写法 如果我们想要将正确与错误数据写入同一个文件时，可能会发生数据交叉写入该文件内的情况，造成次序的错乱， 这个时候你可以使用 2&amp;gt;&amp;amp;1 和 &amp;amp;&amp;gt; 的语法。
-find /home -name .bashrc &amp;gt; list 2&amp;gt; list &amp;lt;=错误 find /home -name .bashrc &amp;gt; list 2&amp;amp;&amp;gt;1 &amp;lt;=正确 find /home -name .</description>
+      <description>&lt;h1 id=&#34;简介&#34;&gt;简介&lt;/h1&gt;
+&lt;p&gt;数据流重定向是将某个指令执行后要输出在屏幕上的数据，传输到其他的地方。一是可以简化我们的屏幕输出，
+去获取我们有用的数据。同时我们还可以将我们想要的数据存储下来。&lt;/p&gt;
+&lt;p&gt;你可以通过&lt;code&gt;echo &amp;quot;123&amp;quot;&lt;/code&gt;和&lt;code&gt;echo &amp;quot;123&amp;quot; &amp;gt; filename &lt;/code&gt;去简单尝试一下这种方式的特点，第二种可以通过
+查看新增的file文件观看内容。&lt;/p&gt;
+&lt;h1 id=&#34;标准输入输出与标准错误输出&#34;&gt;标准输入输出与标准错误输出&lt;/h1&gt;
+&lt;h2 id=&#34;基本使用&#34;&gt;基本使用&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;&amp;gt;&lt;/strong&gt; 是我们实现这种数据流重导向所用的特殊字符，数据流重导向包括标准输入，标准输出和标准错误输出，
+他们的规则如下所示：&lt;/p&gt;
+&lt;table&gt;
+  &lt;thead&gt;
+      &lt;tr&gt;
+          &lt;th&gt;名称&lt;/th&gt;
+          &lt;th&gt;代码&lt;/th&gt;
+          &lt;th&gt;符号&lt;/th&gt;
+      &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+      &lt;tr&gt;
+          &lt;td&gt;标准输入(stdin)&lt;/td&gt;
+          &lt;td&gt;0&lt;/td&gt;
+          &lt;td&gt;&amp;lt;或&amp;laquo;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;标准输出(stdout)&lt;/td&gt;
+          &lt;td&gt;1&lt;/td&gt;
+          &lt;td&gt;&amp;gt;或&amp;raquo;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;标准错误输出(stderr)&lt;/td&gt;
+          &lt;td&gt;2&lt;/td&gt;
+          &lt;td&gt;2&amp;gt;或2&amp;raquo;&lt;/td&gt;
+      &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;&amp;gt;&lt;/strong&gt; 和 &lt;strong&gt;&amp;raquo;&lt;/strong&gt; 的区别是 &lt;strong&gt;&amp;gt;&lt;/strong&gt; 以覆盖的方法输出内容， &lt;strong&gt;&amp;raquo;&lt;/strong&gt; 则是以累加的方式输出内容。你可以自
+己试一试。
+标准输入的用法类似，可以尝试一下&lt;code&gt;cat &amp;gt; file&lt;/code&gt; 尝试键盘输出，使用[ctrl]+d退出，然后看一下得到的
+文件。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&#34;devnull-垃圾桶&#34;&gt;/dev/null 垃圾桶&lt;/h2&gt;
+&lt;p&gt;在linux一切皆文件的哲学中 &lt;strong&gt;/dev/null&lt;/strong&gt;是一个特殊的&amp;quot;装置&amp;quot; 你可以将任何你想忽略的内容导向到它，而这些
+内容将彻底被丢弃。&lt;/p&gt;
+&lt;h2 id=&#34;特殊写法&#34;&gt;特殊写法&lt;/h2&gt;
+&lt;p&gt;如果我们想要将正确与错误数据写入同一个文件时，可能会发生数据交叉写入该文件内的情况，造成次序的错乱，
+这个时候你可以使用 &lt;strong&gt;2&amp;gt;&amp;amp;1&lt;/strong&gt; 和 &lt;strong&gt;&amp;amp;&amp;gt;&lt;/strong&gt; 的语法。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;find /home -name .bashrc &amp;gt; list 2&amp;gt; list  	&amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;错误  
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;find /home -name .bashrc &amp;gt; list 2&amp;amp;&amp;gt;1 		&amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;正确  
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;find /home -name .bashrc &amp;amp;&amp;gt; list 		&amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;正确
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;2&amp;gt;&amp;amp;1&lt;/strong&gt; 这种写法可以理解为将标准错误输出重定向到标准输出&lt;br&gt;
+&lt;strong&gt;&amp;amp;&amp;gt;file&lt;/strong&gt; 这种写法可以理解为将标准输入和输出都重定向到文件file中&lt;br&gt;
+&lt;code&gt;ls 2&amp;gt;1&lt;/code&gt; 测试一下，不会报没有2文件的错误，但会输出一个空的文件1；&lt;br&gt;
+&lt;code&gt;ls xxx 2&amp;gt;1&lt;/code&gt;测试，没有xxx这个文件的错误输出到了1中；&lt;br&gt;
+&lt;code&gt;ls xxx 2&amp;gt;&amp;amp;1&lt;/code&gt;测试，不会生成1这个文件了，不过错误跑到标准输出了；&lt;br&gt;
+&lt;code&gt;ls xxx &amp;gt;out.txt 2&amp;gt;&amp;amp;1&lt;/code&gt;, 实际上可换成 ls xxx 1&amp;gt;out.txt 2&amp;gt;&amp;amp;1；重定向符号&amp;gt;默认是1,错误和输出都传到out.txt了。&lt;/p&gt;</description>
     </item>
-    
   </channel>
 </rss>

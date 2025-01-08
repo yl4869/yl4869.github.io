@@ -4,40 +4,138 @@
     <title>C/C&#43;&#43; on FunForever</title>
     <link>http://yl4869.github.io/tags/c/c&#43;&#43;/</link>
     <description>Recent content in C/C&#43;&#43; on FunForever</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <generator>Hugo -- 0.140.2</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Mon, 13 Dec 2021 23:36:06 +0800</lastBuildDate><atom:link href="http://yl4869.github.io/tags/c/c++/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 13 Dec 2021 23:36:06 +0800</lastBuildDate>
+    <atom:link href="http://yl4869.github.io/tags/c/c++/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>C语言的声明</title>
       <link>http://yl4869.github.io/posts/learn_c_cpp/declarations/</link>
       <pubDate>Mon, 13 Dec 2021 23:36:06 +0800</pubDate>
-      
       <guid>http://yl4869.github.io/posts/learn_c_cpp/declarations/</guid>
-      <description>前言 编程语言的类型模型（type model）一直都是编程语言学习的重点。虽然但是，C语言声明的语法实在是过于奇怪，以至于我们需要花费一些时间认真理解一下，首先思考一下简单的类型模型,考虑下面的C语言声明:
-typedef char * string; string punchline = &amp;#34;I&amp;#39;m a frayed knot&amp;#34;; 可以将其分为两部分：变量的类型和变量来理解
-被称作 是 变量的类型 string char * 变量 punchline &amp;ldquo;I;m a frayed knot&amp;rdquo; C语言声明的产生 C语言中的声明器（declarator） 简单地说，声明器就是标识符以及和他组合在一起的任何指针、函数符号、数组下标（本表额外添加了初始化内容）
-数量 C语言中的名字 C语言中出现的形式 零个或多个 指针 const volatile;volatile;; const; * volatile const 有且只有一个 直接声明器 标识符;标识符[下标];标识符(参数);(声明器) 零个或一个 初始化内容 = 初始值 声明器是一个很模糊的概念，一个简单的思考方式是C语言的声明器是声明中缺少类型以及对类型限定后剩下的部分，这也可以理解 int *p,*q,r 都是什么类型了（p，q是指针，r是int型变量）
-C语言的声明 声明增加了至少一个类型说明符（包括类型说明，存储说明和类型限定符），声明器（一个或多个，逗号分割）分号（语句结束）但也请注意，合法的声明存在限定条件，举例说明：
-函数的返回值不能是一个函数，所以 foo()() 是非法的 函数的返回值不能是一个数组，所以 foo()[] 是非法的 数组里面不能有函数，所以 foo 是非法的 你也许很快想到，针对这些问题可以用指针解决，所以
-函数的返回值允许是一个函数指针，如 int(* fun()) () 函数的返回值允许是一个指向数组的指针， 如 int(*foo())[] 数组里面允许有函数指针 如 int (*foo[])() 数组里面允许有其他数组，所以你经常看到 int foo[][] 优先级规则 C语言声明的优先级规则是阅读C语言声明关键的一步：因为C语言的声明并不是简单的从左到右，下面给出这条规则</description>
+      <description>&lt;h1 id=&#34;前言&#34;&gt;前言&lt;/h1&gt;
+&lt;p&gt;编程语言的类型模型（type model）一直都是编程语言学习的重点。虽然但是，C语言声明的语法实在是过于奇怪，以至于我们需要花费一些时间认真理解一下，首先思考一下简单的类型模型,考虑下面的C语言声明:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;typedef&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;char&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt; string;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;string punchline &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;I&amp;#39;m a frayed knot&amp;#34;&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;可以将其分为两部分：变量的类型和变量来理解&lt;/p&gt;
+&lt;table&gt;
+  &lt;thead&gt;
+      &lt;tr&gt;
+          &lt;th style=&#34;text-align: left&#34;&gt;&lt;/th&gt;
+          &lt;th style=&#34;text-align: left&#34;&gt;被称作&lt;/th&gt;
+          &lt;th style=&#34;text-align: left&#34;&gt;是&lt;/th&gt;
+      &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;变量的类型&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;string&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;char *&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;变量&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;punchline&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;&amp;ldquo;I;m a frayed knot&amp;rdquo;&lt;/td&gt;
+      &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id=&#34;c语言声明的产生&#34;&gt;C语言声明的产生&lt;/h2&gt;
+&lt;h3 id=&#34;c语言中的声明器declarator&#34;&gt;C语言中的声明器（declarator）&lt;/h3&gt;
+&lt;p&gt;简单地说，声明器就是标识符以及和他组合在一起的任何指针、函数符号、数组下标（本表额外添加了初始化内容）&lt;/p&gt;
+&lt;table&gt;
+  &lt;thead&gt;
+      &lt;tr&gt;
+          &lt;th style=&#34;text-align: left&#34;&gt;数量&lt;/th&gt;
+          &lt;th style=&#34;text-align: left&#34;&gt;C语言中的名字&lt;/th&gt;
+          &lt;th style=&#34;text-align: left&#34;&gt;C语言中出现的形式&lt;/th&gt;
+      &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;零个或多个&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;指针&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;&lt;em&gt;const volatile;&lt;em&gt;volatile;&lt;/em&gt;;&lt;/em&gt; const; * volatile const&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;有且只有一个&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;直接声明器&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;标识符;标识符[下标];标识符(参数);(声明器)&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;零个或一个&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;初始化内容&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;= 初始值&lt;/td&gt;
+      &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;blockquote&gt;
+&lt;p&gt;声明器是一个很模糊的概念，一个简单的思考方式是C语言的声明器是声明中缺少类型以及对类型限定后剩下的部分，这也可以理解 &lt;strong&gt;int *p,*q,r&lt;/strong&gt; 都是什么类型了（p，q是指针，r是int型变量）&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;c语言的声明&#34;&gt;C语言的声明&lt;/h3&gt;
+&lt;p&gt;声明增加了至少一个类型说明符（包括类型说明，存储说明和类型限定符），声明器（一个或多个，逗号分割）分号（语句结束）但也请注意，合法的声明存在限定条件，举例说明：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;函数的返回值不能是一个函数，所以 &lt;strong&gt;foo()()&lt;/strong&gt; 是非法的&lt;/li&gt;
+&lt;li&gt;函数的返回值不能是一个数组，所以 &lt;strong&gt;foo()[]&lt;/strong&gt; 是非法的&lt;/li&gt;
+&lt;li&gt;数组里面不能有函数，所以 &lt;strong&gt;foo&lt;a href=&#34;&#34;&gt;&lt;/a&gt;&lt;/strong&gt; 是非法的&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;你也许很快想到，针对这些问题可以用指针解决，所以&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;函数的返回值允许是一个函数指针，如 &lt;strong&gt;int(* fun()) ()&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;函数的返回值允许是一个指向数组的指针， 如 &lt;strong&gt;int(*foo())[]&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;数组里面允许有函数指针 如 &lt;strong&gt;int (*foo[])()&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;数组里面允许有其他数组，所以你经常看到 &lt;strong&gt;int foo[][]&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;优先级规则&#34;&gt;优先级规则&lt;/h2&gt;
+&lt;p&gt;C语言声明的优先级规则是阅读C语言声明关键的一步：因为C语言的声明并不是简单的从左到右，下面给出这条规则&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>C&#43;&#43;下的四种cast转换方法</title>
       <link>http://yl4869.github.io/posts/learn_c_cpp/type_coversions_cast/</link>
       <pubDate>Wed, 08 Dec 2021 19:36:06 +0800</pubDate>
-      
       <guid>http://yl4869.github.io/posts/learn_c_cpp/type_coversions_cast/</guid>
-      <description>前言 C++有四种显式类型转换方法，分别是dynamic_cast, reinterpret_cast, static_cast, const_cast。
-他们的使用方法为
-dynamic_cast &amp;lt;new_type&amp;gt; (expression) reinterpret_cast &amp;lt;new_type&amp;gt; (expression) static_cast &amp;lt;new_type&amp;gt; (expression) const_cast &amp;lt;new_type&amp;gt; (expression) 与之相对，我们也回忆一下传统的类型转换方法
-(new_type) expression new_type (expression) 下面就四种类型转换进行简单介绍。
-dynamic_cast 有需要提前指出的是，dynamic_cast运算符更多是用来实现RTTI（运行时类型识别 run-time type identification） 功能,其中dynamic_cast用来将基类的指针或引用安全地转移成派生类的指针或引用。
-使用RTTI时必须加倍小心，更多时候最好定义虚函数，使用时程序员必须清楚地知道转换的目标模型并且必须检查类型转换是否被成功执行。
-dynamic_cast只用在指向类的指针，引用（或void *)上。这种转换允许upcast（从派生类向基类的转换）也能downcast（从基类向派生类的转换），这时需要转过去的指针所指向的目标有效且完整。
-举例说明
-#include&amp;lt;iostream&amp;gt; #include&amp;lt;exception&amp;gt; using namespace std; class Base {virtual void dummy() {} }; class Derived : public Base { int a; }; int main() { try { Base * pba = new Derived; Base * pbb = new Base; Derived * pd; pd = dynamic_cast&amp;lt;Derived*&amp;gt;(pba); if( pd == 0 ) cout &amp;lt;&amp;lt; &amp;#34;Null pointer on first type-case.</description>
+      <description>&lt;h1 id=&#34;前言&#34;&gt;前言&lt;/h1&gt;
+&lt;p&gt;C++有四种显式类型转换方法，分别是&lt;strong&gt;dynamic_cast&lt;/strong&gt;, &lt;strong&gt;reinterpret_cast&lt;/strong&gt;, &lt;strong&gt;static_cast&lt;/strong&gt;, &lt;strong&gt;const_cast&lt;/strong&gt;。&lt;br&gt;
+他们的使用方法为&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;dynamic_cast&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt;new_type&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt; (expression)  
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;reinterpret_cast&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt;new_type&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt; (expression)  
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;static_cast&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt;new_type&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt; (expression)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;const_cast&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt;new_type&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt; (expression)
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;与之相对，我们也回忆一下传统的类型转换方法&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;(new_type) expression
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;new_type (expression)
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;下面就四种类型转换进行简单介绍。&lt;/p&gt;
+&lt;h2 id=&#34;dynamic_cast&#34;&gt;dynamic_cast&lt;/h2&gt;
+&lt;p&gt;有需要提前指出的是，&lt;em&gt;dynamic_cast&lt;/em&gt;运算符更多是用来实现&lt;strong&gt;RTTI&lt;/strong&gt;（运行时类型识别 &lt;em&gt;run-time type identification&lt;/em&gt;） 功能,其中&lt;em&gt;dynamic_cast&lt;/em&gt;用来将基类的指针或引用安全地转移成派生类的指针或引用。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;使用RTTI时必须加倍小心，更多时候最好定义虚函数，使用时程序员必须清楚地知道转换的目标模型并且必须检查类型转换是否被成功执行。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;em&gt;dynamic_cast&lt;/em&gt;只用在指向类的指针，引用（或void *)上。这种转换允许upcast（从派生类向基类的转换）也能downcast（从基类向派生类的转换），这时需要转过去的指针所指向的目标有效且完整。&lt;br&gt;
+举例说明&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#include&amp;lt;iostream&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#include&amp;lt;exception&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;using&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;namespace&lt;/span&gt; std;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Base&lt;/span&gt; {&lt;span style=&#34;color:#66d9ef&#34;&gt;virtual&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;dummy&lt;/span&gt;() {} };
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Derived&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; Base { &lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; a; };
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;main&lt;/span&gt;()
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;{
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;try&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        Base &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt; pba &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;new&lt;/span&gt; Derived;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        Base &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt; pbb &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;new&lt;/span&gt; Base;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        Derived &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt; pd;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        pd &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;dynamic_cast&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt;Derived&lt;span style=&#34;color:#f92672&#34;&gt;*&amp;gt;&lt;/span&gt;(pba);
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt;( pd &lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt; ) cout &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Null pointer on first type-case.&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;\n&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        pd &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;dynamic_cast&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt;Derived&lt;span style=&#34;color:#f92672&#34;&gt;*&amp;gt;&lt;/span&gt;(pbb);
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt;( pd &lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt; ) cout &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Null pointer on second type-cast.&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;\n&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    } &lt;span style=&#34;color:#66d9ef&#34;&gt;catch&lt;/span&gt; ( exception&lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&lt;/span&gt; e ) { cout &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Exception: &amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; e.what(); }
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;输出：&lt;/p&gt;</description>
     </item>
-    
   </channel>
 </rss>
