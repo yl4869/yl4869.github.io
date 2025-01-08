@@ -9,20 +9,22 @@ buildDrafts: false
 buildFuture: false
 buildExpired: false
 
-googleAnalytics: UA-123-45
+# googleAnalytics: UA-123-45
+#
+pagination:
+  pagerSize: 5
 
 minify:
   disableXML: true
   minifyOutput: true
 
 params:
-  math: true
   env: production # to enable google analytics, opengraph, twitter-cards and schema.
   title: HomeSite
   description: "欲将心事付瑶琴。知音少，弦断有谁听？"
   keywords: [Blog, Portfolio, PaperMod]
   author: yunlang
-  # author: ["Me", "You"] # multiple authors
+  math: true
   DateFormat: "January 2, 2006"
   defaultTheme: auto # dark, light
   disableThemeToggle: false
@@ -44,11 +46,11 @@ params:
   assets:
     # disableHLJS: true # to disable highlight.js
     # disableFingerprinting: true
-    favicon: "<link / abs url>"
-    favicon16x16: "<link / abs url>"
-    favicon32x32: "<link / abs url>"
-    apple_touch_icon: "<link / abs url>"
-    safari_pinned_tab: "<link / abs url>"
+    favicon: "images/image.jpg"
+    favicon16x16: "images/image.jpg"
+    favicon32x32: "images/image.jpg"
+    apple_touch_icon: "images/image.jpg"
+    safari_pinned_tab: "images/image.jpg"
 
   label:
     text: "主页"
@@ -57,10 +59,10 @@ params:
     enabled: true # needs to be explicitly set
     title: "Hi there is yunlang's blog"
     subtitle: "欲将心事付瑶琴。知音少，弦断有谁听？"
-    imageUrl: "image/image.jpg"
+    imageUrl: "images/image.jpg"
     imageWidth: 120
     imageHeight: 120
-    imageTitle: my image
+    imageTitle: fivicon
     buttons:
       - name: 帖子
         url: posts
