@@ -1,7 +1,6 @@
 baseURL: "http://yl4869.github.io/"
 title: FunForever
 languageCode: zh-cn
-paginate: 5
 theme: PaperMod
 
 enableRobotsTXT: true

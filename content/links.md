@@ -14,6 +14,12 @@ searchHidden: true
     logo="https://s2.loli.net/2022/11/21/I9QUtsXcZK6wgH4.png" 
     word="transient" >}}
 
+{{<friend name="Zoet"
+    url="https://www.zoet.site/" 
+    logo="https://www.zoet.site/avatar2.png" 
+    word="互联网苦b | 欢迎致电 ∠(｀ω´)" >}}
+
+
 ## 友链要求
 
 
